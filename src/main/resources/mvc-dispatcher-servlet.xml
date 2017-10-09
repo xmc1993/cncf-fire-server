@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+
+    <!-- 自动扫描如下包 ，将带有注解的类纳入Spring容器管理 -->
+    <context:component-scan base-package="com.cncf.controller">
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+    <context:component-scan base-package="com.cncf.dao" />
+    <context:component-scan base-package="com.cncf.service.impl" />
+
+
+    <context:property-placeholder location="classpath:datasource.properties" order="1"/>
+
+    <!-- 设置Spring MVC的注解驱动 -->
+    <mvc:annotation-driven/>
+
+    <!--<bean id="jsonUtil" class="cn.edu.nju.software.util.JsonUtil"/>-->
+
+    <mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
+    <!--<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/**"/>-->
+
+    <mvc:interceptors>
+        <!-- token拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/admin/**"/>
+
+            <mvc:exclude-mapping path="/swagger/**"/>
+            <bean class="com.cncf.filter.AdminAccessTokenValidationInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--加载静态资源 -->
+    <mvc:resources mapping="/css/**" location="/WEB-INF/swagger/css/"/>
+    <mvc:resources mapping="/fonts/**" location="/WEB-INF/swagger/fonts/"/>
+    <mvc:resources mapping="/images/**" location="/WEB-INF/swagger/images/"/>
+    <mvc:resources mapping="/lang/**" location="/WEB-INF/swagger/lang/"/>
+    <mvc:resources mapping="/lib/**" location="/WEB-INF/swagger/lib/"/>
+    <mvc:resources mapping="/*.html" location="/WEB-INF/swagger/"/>
+    <mvc:resources mapping="/*.js" location="/WEB-INF/swagger/"/>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+</beans>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cncf.dao.ArticleDao">
+
+    <sql id="fields">
+        articleId,
+        title,
+        publishTime,
+        source,
+        click,
+        wordSize,
+        type,
+        content
+    </sql>
+
+    <resultMap id="article" type="com.cncf.entity.Article">
+        <id column="articleId" property="articleId"/>
+        <id column="title" property="title"/>
+        <id column="publishTime" property="publishTime"/>
+        <id column="source" property="source"/>
+        <id column="click" property="click"/>
+        <id column="wordSize" property="wordSize"/>
+        <id column="type" property="type"/>
+        <id column="content" property="content"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.cncf.entity.Article" keyProperty="articleId"
+            useGeneratedKeys="true">
+        insert into Article(
+        <include refid="fields"></include>
+        )
+        VALUES
+        (
+        #{articleId},
+        #{title},
+        #{publishTime},
+        #{source},
+        #{click},
+        #{wordSize},
+        #{type},
+        #{content}
+        )
+    </insert>
+
+    <select id="getAdminByName" resultType="com.cncf.entity.Admin">
+        SELECT
+        <include refid="fields"></include>
+        FROM admin
+        WHERE adminName = #{0}
+    </select>
+
+
+    <select id="getAdminByAccessToken" resultType="com.cncf.entity.Admin">
+        select
+        <include refid="fields"></include>
+        from admin
+        where accessToken = #{0}
+    </select>
+
+    <update id="updateToken" parameterType="com.cncf.entity.Admin">
+        UPDATE admin
+        SET
+        accessToken=#{accessToken},
+        expireTime=#{expireTime}
+        WHERE adminName = #{adminName}
+    </update>
+
+</mapper>
