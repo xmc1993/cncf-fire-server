@@ -24,7 +24,7 @@
     <context:component-scan base-package="com.cncf.service.impl" />
 
 
-    <context:property-placeholder location="classpath:datasource.properties" order="1"/>
+    <context:property-placeholder location="classpath*:datasource.properties" order="1"/>
 
     <!-- 设置Spring MVC的注解驱动 -->
     <mvc:annotation-driven/>

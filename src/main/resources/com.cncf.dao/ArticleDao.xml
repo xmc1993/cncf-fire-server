@@ -26,7 +26,7 @@
     </resultMap>
 
 
-    <insert id="insert" parameterType="com.cncf.entity.Article" keyProperty="articleId"
+    <insert id="insertArticle" parameterType="com.cncf.entity.Article" keyProperty="articleId"
             useGeneratedKeys="true">
         insert into Article(
         <include refid="fields"></include>

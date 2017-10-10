@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by zj on 2017/10/9.
- */
 @Service
 public class AdminServiceImpl implements AdminService {
 

@@ -9,13 +9,15 @@ import java.util.List;
 public interface ArticleDao {
     public boolean deleteById(int id);
 
-    public boolean insert(Article article);
+    public boolean insertArticle(Article article);
 
-    public Article selectTitleById(int id);
+    public String selectTitleById(int id);
 
     public List selectByType(String type);
 
     public boolean updateTitleById(int id,String title);
 
     public boolean updateContentById(int id,String content);
+
+    public boolean updateArticle(Article article);
 }
