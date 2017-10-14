@@ -331,7 +331,7 @@ Handlebars.registerHelper('renderTextParam', function(param) {
     var defaultValue = isArray && Array.isArray(param.default) ? param.default.join('\n') : param.default;
 
     var dataVendorExtensions = Object.keys(param).filter(function(property) {
-        // interceptor X-data- properties
+        // filter X-data- properties
         return property.match(/^X-data-/i) !== null;
     }).reduce(function(result, property) {
         // remove X- from property name, so it results in html attributes like data-foo='bar'
@@ -537,7 +537,7 @@ this["Handlebars"]["templates"]["operation"] = Handlebars.template({"1":function
     + ")</h4>\n              ";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.successDescription : depth0), {"name":"if","hash":{},"fn":this.program(10, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n            <p><span class=\"entity-signature\" /></p>\n            <br/>\n            <div class=\"response-content-type\" />\n            </div>\n";
+  return buffer + "\n            <p><span class=\"model-signature\" /></p>\n            <br/>\n            <div class=\"response-content-type\" />\n            </div>\n";
 },"10":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<div class=\"markdown\">";
   stack1 = ((helper = (helper = helpers.successDescription || (depth0 != null ? depth0.successDescription : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"successDescription","hash":{},"data":data}) : helper));
@@ -693,7 +693,7 @@ this["Handlebars"]["templates"]["param_list"] = Handlebars.template({"1":functio
   buffer += "</td>\n<td>";
   stack1 = ((helper = (helper = helpers.paramType || (depth0 != null ? depth0.paramType : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"paramType","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td><span class=\"entity-signature\"></span></td>\n";
+  return buffer + "</td>\n<td><span class=\"model-signature\"></span></td>\n";
 },"useData":true});
 this["Handlebars"]["templates"]["param_readonly_required"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -730,7 +730,7 @@ this["Handlebars"]["templates"]["param_readonly_required"] = Handlebars.template
   buffer += "</td>\n<td>";
   stack1 = ((helper = (helper = helpers.paramType || (depth0 != null ? depth0.paramType : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"paramType","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td><span class=\"entity-signature\"></span></td>\n";
+  return buffer + "</td>\n<td><span class=\"model-signature\"></span></td>\n";
 },"useData":true});
 this["Handlebars"]["templates"]["param_readonly"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -767,7 +767,7 @@ this["Handlebars"]["templates"]["param_readonly"] = Handlebars.template({"1":fun
   buffer += "</td>\n<td>";
   stack1 = ((helper = (helper = helpers.paramType || (depth0 != null ? depth0.paramType : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"paramType","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td><span class=\"entity-signature\"></span></td>\n";
+  return buffer + "</td>\n<td><span class=\"model-signature\"></span></td>\n";
 },"useData":true});
 this["Handlebars"]["templates"]["param_required"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, buffer = "";
@@ -835,7 +835,7 @@ this["Handlebars"]["templates"]["param_required"] = Handlebars.template({"1":fun
   buffer += "</span></strong>\n</td>\n<td>";
   stack1 = ((helper = (helper = helpers.paramType || (depth0 != null ? depth0.paramType : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"paramType","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td><span class=\"entity-signature\"></span></td>\n";
+  return buffer + "</td>\n<td><span class=\"model-signature\"></span></td>\n";
 },"useData":true});
 this["Handlebars"]["templates"]["param"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, buffer = "";
@@ -896,7 +896,7 @@ this["Handlebars"]["templates"]["param"] = Handlebars.template({"1":function(dep
   buffer += "</td>\n<td>";
   stack1 = ((helper = (helper = helpers.paramType || (depth0 != null ? depth0.paramType : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"paramType","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td>\n	<span class=\"entity-signature\"></span>\n</td>\n";
+  return buffer + "</td>\n<td>\n	<span class=\"model-signature\"></span>\n</td>\n";
 },"useData":true});
 this["Handlebars"]["templates"]["parameter_content_type"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, buffer = "";
@@ -1041,7 +1041,7 @@ this["Handlebars"]["templates"]["status_code"] = Handlebars.template({"1":functi
     + "</td>\n<td class=\"markdown\">";
   stack1 = ((helper = (helper = helpers.message || (depth0 != null ? depth0.message : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"message","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  buffer += "</td>\n<td width='50%'><span class=\"entity-signature\" /></td>\n<td class=\"headers\">\n  <table>\n    <tbody>\n";
+  buffer += "</td>\n<td width='50%'><span class=\"model-signature\" /></td>\n<td class=\"headers\">\n  <table>\n    <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.headers : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "    </tbody>\n  </table>\n</td>";
@@ -1265,7 +1265,7 @@ var _ = {
 };
 var auth = require('./auth');
 var helpers = require('./helpers');
-var Model = require('./types/entity');
+var Model = require('./types/model');
 var Operation = require('./types/operation');
 var OperationGroup = require('./types/operationGroup');
 var Resolver = require('./resolver');
@@ -3659,7 +3659,7 @@ SwaggerSpecConverter.prototype.declaration = function(obj, swagger) {
     swagger.produces = obj.produces;
   }
 
-  // build a mapping of id to name for 1.0 entity resolutions
+  // build a mapping of id to name for 1.0 model resolutions
   if(_.isObject(obj)) {
     for(name in obj.models) {
       var existingModel = obj.models[name];
@@ -4003,10 +4003,10 @@ SwaggerSpecConverter.prototype.toJsonSchema = function(source) {
   } else if(lcType === 'void' || lcType === '') {
     {return {};}
   } else if (this.modelMap[source.type]) {
-    // If this a entity using `type` instead of `$ref`, that's fine.
+    // If this a model using `type` instead of `$ref`, that's fine.
     return {$ref: '#/definitions/' + this.modelMap[source.type]};
   } else {
-    // Unknown entity type or 'object', pass it along.
+    // Unknown model type or 'object', pass it along.
     return {type: source.type};
   }
 };
@@ -4262,7 +4262,7 @@ var _ = {
   isObject: require('lodash-compat/lang/isObject')
 };
 var helpers = require('../helpers');
-var Model = require('./entity');
+var Model = require('./model');
 var SwaggerHttp = require('../http');
 var Q = require('q');
 
@@ -4452,7 +4452,7 @@ var Operation = module.exports = function (parent, scheme, operationId, httpMeth
       this.successResponse = {};
       successResponse = this.successResponse[defaultResponseCode] = resolvedModel;
     } else if (!response.schema.type || response.schema.type === 'object' || response.schema.type === 'array') {
-      // Inline entity
+      // Inline model
       this.successResponse = {};
       successResponse = this.successResponse[defaultResponseCode] = new Model(undefined, response.schema || {}, this.models, parent.modelPropertyMacro);
     } else {
@@ -4566,7 +4566,7 @@ Operation.prototype.getType = function (param) {
 };
 
 /**
- * adds an inline schema (entity) to a hash, where we can ref it later
+ * adds an inline schema (model) to a hash, where we can ref it later
  * @param {object} schema a schema
  * @return {number} the ID of the schema being added, or null
  **/
@@ -4575,15 +4575,15 @@ Operation.prototype.addInlineModel = function (schema) {
   var model = this.resolveModel(schema, {});
   if(model) {
     this.inlineModels.push(model);
-    return 'Inline Model '+len; // return string ref of the inline entity (used with #getInlineModel)
+    return 'Inline Model '+len; // return string ref of the inline model (used with #getInlineModel)
   }
   return null; // report errors?
 };
 
 /**
- * gets the internal ref to an inline entity
- * @param {string} inline_str a string reference to an inline entity
- * @return {Model} the entity being referenced. Or null
+ * gets the internal ref to an inline model
+ * @param {string} inline_str a string reference to an inline model
+ * @return {Model} the model being referenced. Or null
  **/
 Operation.prototype.getInlineModel = function(inlineStr) {
   if(/^Inline Model \d+$/.test(inlineStr)) {
@@ -4646,7 +4646,7 @@ Operation.prototype.getModelSignature = function (type, definitions) {
     isPrimitive = true;
 
   } else if (definitions[type]){
-    // a entity def exists?
+    // a model def exists?
     type = definitions[type]; /* Model */
     isPrimitive = false;
 
@@ -11395,7 +11395,7 @@ var hasOwnProperty = objectProto.hasOwnProperty;
  * `replace` and `split`
  *
  * The wrapper methods that support shortcut fusion are:
- * `compact`, `drop`, `dropRight`, `dropRightWhile`, `dropWhile`, `interceptor`,
+ * `compact`, `drop`, `dropRight`, `dropRightWhile`, `dropWhile`, `filter`,
  * `first`, `initial`, `last`, `map`, `pluck`, `reject`, `rest`, `reverse`,
  * `slice`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `toArray`,
  * and `where`
@@ -11405,7 +11405,7 @@ var hasOwnProperty = objectProto.hasOwnProperty;
  * `callback`, `chain`, `chunk`, `commit`, `compact`, `concat`, `constant`,
  * `countBy`, `create`, `curry`, `debounce`, `defaults`, `defaultsDeep`,
  * `defer`, `delay`, `difference`, `drop`, `dropRight`, `dropRightWhile`,
- * `dropWhile`, `fill`, `interceptor`, `flatten`, `flattenDeep`, `flow`, `flowRight`,
+ * `dropWhile`, `fill`, `filter`, `flatten`, `flattenDeep`, `flow`, `flowRight`,
  * `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`,
  * `functions`, `groupBy`, `indexBy`, `initial`, `intersection`, `invert`,
  * `invoke`, `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`,
@@ -11663,7 +11663,7 @@ var arrayMap = require('../internal/arrayMap'),
  * object, else `false`.
  *
  * Many lodash methods are guarded to work as iteratees for methods like
- * `_.every`, `_.interceptor`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
+ * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
  *
  * The guarded methods are:
  * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`,
@@ -19247,7 +19247,7 @@ window.SwaggerUi = Backbone.Router.extend({
       $(this).html(marked($(this).html()));
     });
 
-    $('.propDesc', '.entity-signature .description').each(function () {
+    $('.propDesc', '.model-signature .description').each(function () {
       $(this).html(marked($(this).html())).addClass('markdown');
     });
   }
@@ -20389,10 +20389,10 @@ SwaggerUi.Views.OperationView = Backbone.View.extend({
         router: this.router,
         tagName: 'div'
       });
-      $('.entity-signature', $(this.el)).append(responseSignatureView.render().el);
+      $('.model-signature', $(this.el)).append(responseSignatureView.render().el);
     } else {
       this.model.responseClassSignature = 'string';
-      $('.entity-signature', $(this.el)).html(this.model.type);
+      $('.model-signature', $(this.el)).html(this.model.type);
     }
     contentTypeModel = {
       isParam: false
@@ -21128,10 +21128,10 @@ SwaggerUi.Views.ParameterView = Backbone.View.extend({
 
     if (sampleJSON) {
       signatureView = new SwaggerUi.Views.SignatureView({model: signatureModel, tagName: 'div'});
-      $('.entity-signature', $(this.el)).append(signatureView.render().el);
+      $('.model-signature', $(this.el)).append(signatureView.render().el);
     }
     else {
-      $('.entity-signature', $(this.el)).html(this.model.signature);
+      $('.model-signature', $(this.el)).html(this.model.signature);
     }
 
     var isParam = false;
@@ -21830,7 +21830,7 @@ SwaggerUi.partials.signature = (function () {
         isPrimitive = true;
 
       } else if (definitions[type]){
-        // a entity def exists?
+        // a model def exists?
         type = definitions[type]; /* Model */
         isPrimitive = false;
 
@@ -22416,7 +22416,7 @@ SwaggerUi.Views.StatusCodeView = Backbone.View.extend({
     }
 
     responseModelView = new SwaggerUi.Views.SignatureView({model: responseModel, tagName: 'div'});
-    $('.entity-signature', this.$el).append(responseModelView.render().el);
+    $('.model-signature', this.$el).append(responseModelView.render().el);
     return this;
   }
 });}).call(this);
