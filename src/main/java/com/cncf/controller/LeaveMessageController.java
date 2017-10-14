@@ -4,6 +4,7 @@ import com.cncf.entity.Message;
 import com.cncf.entity.MessageSet;
 import com.cncf.service.MessageService;
 import com.cncf.service.MessageSetService;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class LeaveMessageController {
     @Autowired
     private MessageService messageService;
 
+    @ApiOperation(value = "添加留言", notes = "")
     @RequestMapping(value = "insertMessageSet", method = {RequestMethod.POST})
     @ResponseBody
     public String insertMessageSet(MessageSet messageSet){
