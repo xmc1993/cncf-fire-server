@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cncf.dao.MessageDao">
+
+    <sql id="fields">
+        mid,
+        setId,
+        author,
+        createTime,
+        valid,
+        content
+    </sql>
+
+    <resultMap id="message" type="com.cncf.entity.Message">
+        <id column="mid" property="mid"/>
+        <id column="setId" property="setId"/>
+        <id column="author" property="author"/>
+        <id column="createTime" property="createTime"/>
+        <id column="valid" property="valid"/>
+        <id column="content" property="content"/>
+    </resultMap>
+
+
+    <insert id="insertMessage" parameterType="com.cncf.entity.Message" keyProperty="mid"
+            useGeneratedKeys="true">
+        insert into message(
+        <include refid="fields"></include>
+        )
+        VALUES
+        (
+        #{mid},
+        #{setId},
+        #{author},
+        #{createTime},
+        #{valid},
+        #{content}
+        )
+    </insert>
+
+    <update id="updateValid" parameterType="cn.edu.nju.software.entity.Message">
+        UPDATE message
+        SET
+        valid=#{1}
+        WHERE mid=#{0}
+    </update>
+
+    <select id="selectMessageBySetId" resultType="com.cncf.entity.Message">
+        SELECT
+        <include refid="fields"></include>
+        FROM message
+        WHERE setId=#{0}
+    </select>
+
+</mapper>
