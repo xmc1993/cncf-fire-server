@@ -8,10 +8,6 @@ import java.util.List;
 public interface AdminDao {
     Admin getAdminByName(String name);
 
-    Admin getAdminByAccessToken(String accessToken);
-
-    boolean updateToken(Admin admin);
-
     boolean saveAdmin(Admin admin);
 
     boolean deleteAdmin(int id);

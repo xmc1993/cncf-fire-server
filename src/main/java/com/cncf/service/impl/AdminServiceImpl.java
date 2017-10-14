@@ -20,16 +20,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin getAdminByAccessToken(String accessToken) {
-        return adminDao.getAdminByAccessToken(accessToken);
-    }
-
-    @Override
-    public boolean updateAccessToken(Admin admin) {
-        return adminDao.updateToken(admin);
-    }
-
-    @Override
     public boolean saveAdmin(Admin admin) {
         return adminDao.saveAdmin(admin);
     }

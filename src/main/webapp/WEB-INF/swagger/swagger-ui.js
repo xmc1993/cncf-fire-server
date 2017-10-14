@@ -331,7 +331,7 @@ Handlebars.registerHelper('renderTextParam', function(param) {
     var defaultValue = isArray && Array.isArray(param.default) ? param.default.join('\n') : param.default;
 
     var dataVendorExtensions = Object.keys(param).filter(function(property) {
-        // filter X-data- properties
+        // interceptor X-data- properties
         return property.match(/^X-data-/i) !== null;
     }).reduce(function(result, property) {
         // remove X- from property name, so it results in html attributes like data-foo='bar'
@@ -11395,7 +11395,7 @@ var hasOwnProperty = objectProto.hasOwnProperty;
  * `replace` and `split`
  *
  * The wrapper methods that support shortcut fusion are:
- * `compact`, `drop`, `dropRight`, `dropRightWhile`, `dropWhile`, `filter`,
+ * `compact`, `drop`, `dropRight`, `dropRightWhile`, `dropWhile`, `interceptor`,
  * `first`, `initial`, `last`, `map`, `pluck`, `reject`, `rest`, `reverse`,
  * `slice`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `toArray`,
  * and `where`
@@ -11405,7 +11405,7 @@ var hasOwnProperty = objectProto.hasOwnProperty;
  * `callback`, `chain`, `chunk`, `commit`, `compact`, `concat`, `constant`,
  * `countBy`, `create`, `curry`, `debounce`, `defaults`, `defaultsDeep`,
  * `defer`, `delay`, `difference`, `drop`, `dropRight`, `dropRightWhile`,
- * `dropWhile`, `fill`, `filter`, `flatten`, `flattenDeep`, `flow`, `flowRight`,
+ * `dropWhile`, `fill`, `interceptor`, `flatten`, `flattenDeep`, `flow`, `flowRight`,
  * `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`,
  * `functions`, `groupBy`, `indexBy`, `initial`, `intersection`, `invert`,
  * `invoke`, `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`,
@@ -11663,7 +11663,7 @@ var arrayMap = require('../internal/arrayMap'),
  * object, else `false`.
  *
  * Many lodash methods are guarded to work as iteratees for methods like
- * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
+ * `_.every`, `_.interceptor`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
  *
  * The guarded methods are:
  * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`,

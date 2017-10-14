@@ -7,17 +7,17 @@ import java.util.List;
 
 @Repository
 public interface ArticleDao {
-    public boolean deleteById(int id);
+    boolean deleteById(int id);
 
-    public boolean insertArticle(Article article);
+    boolean insertArticle(Article article);
 
-    public String selectTitleById(int id);
+    String selectTitleById(int id);
 
-    public List selectByType(String type);
+    List selectByType(String type);
 
-    public boolean updateTitleById(int id,String title);
+    boolean updateTitleById(int id,String title);
 
-    public boolean updateContentById(int id,String content);
+    boolean updateContentById(int id,String content);
 
-    public boolean updateArticle(Article article);
+    boolean updateArticle(Article article);
 }
