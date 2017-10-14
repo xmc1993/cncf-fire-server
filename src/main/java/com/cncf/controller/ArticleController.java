@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("article")
+@RequestMapping("/manage/article")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;

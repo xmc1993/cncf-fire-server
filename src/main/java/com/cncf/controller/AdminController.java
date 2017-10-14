@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 @Api(value = "Admin", description = "管理接口")
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/manage/admin")
 public class AdminController {
 
     private static final Log logger = LogFactory.getLog(AdminController.class);
