@@ -1,23 +1,27 @@
 package com.cncf.entity;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class User {
-    private Integer userid;
-    private String nickname;
-    private String email;
-    private String qq;
-    private String homepage;
-
-    public User(Integer userid, String nickname, String email, String qq, String homepage) {
-        this.userid = userid;
-        this.nickname = nickname;
-        this.email = email;
-        this.qq = qq;
-        this.homepage = homepage;
-    }
-
-    public User() {
-        super();
-    }
+    private Integer id;
+    private String nickname = "游客";//用户名
+    private String realName;//用户名
+    private String sex;//性别
+    private String headImgUrl;//头像
+    private String mobile;//手机号
+    private String password;//密码
+    private String company;//公司
+    private String city;//城市
+    private String email;//邮箱
+    private String qq;//qq
+    private String homepage;//主页
+    private String accessToken;//story token
+    private String verifyCode;//验证码
+    private Date expireTime;//验证码的过期事件
+    private Integer identification = 0;//是否通过了手机验证
+    private Integer valid = 1;//用于软删除
+    private Date createTime;
+    private Date updateTime;
 }

@@ -1,4 +1,4 @@
-package com.cncf.controller;
+package com.cncf.controller.manage;
 
 import com.cncf.entity.Admin;
 import com.cncf.response.ResponseData;
