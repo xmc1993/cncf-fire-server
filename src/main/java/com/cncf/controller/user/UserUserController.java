@@ -29,7 +29,7 @@ public class UserUserController {
     private UserService userService;
 
     @ApiOperation(value = "获取注册验证码", notes = "获取注册验证码")
-    @RequestMapping(value = "/getRegisterVerifyCode", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/getRegisterVerifyCode", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData getVerifyCode(@ApiParam("mobile") @RequestParam("mobile") String mobile,
                                       HttpServletRequest request, HttpServletResponse response) {
@@ -52,7 +52,7 @@ public class UserUserController {
     }
 
     @ApiOperation(value = "注册", notes = "注册")
-    @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/register", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData register(@ApiParam("手机号") @RequestParam("mobile") String mobile,
                                  @ApiParam("密码") @RequestParam("password") String password,
@@ -86,7 +86,7 @@ public class UserUserController {
     }
 
     @ApiOperation(value = "更新个人信息", notes = "")
-    @RequestMapping(value = "/updateProfile", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/updateProfile", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData updateProfile(
             @ApiParam("昵称") @RequestParam(value = "nickname", required = false) String nickname,
@@ -119,7 +119,7 @@ public class UserUserController {
     }
 
     @ApiOperation(value = "根据ID获得信息", notes = "")
-    @RequestMapping(value = "/getProfileByUserId", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/getProfileByUserId", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<UserBase> getProfileByUserId(
             @ApiParam("用户ID") @RequestParam("userId") Integer userId
