@@ -23,7 +23,7 @@
 
     <!--<bean id="jsonUtil" class="cn.edu.nju.software.util.JsonUtil"/>-->
 
-    <mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
+    <mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/**"/>
     <!--<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/**"/>-->
 
     <mvc:interceptors>
@@ -39,18 +39,10 @@
 
             <mvc:exclude-mapping path="/admin/regist"/>
             <mvc:exclude-mapping path="/swagger/**"/>
+            <mvc:exclude-mapping path="/api-docs/**"/>
             <bean class="com.cncf.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
-    <!--加载静态资源 -->
-    <mvc:resources mapping="/css/**" location="/WEB-INF/swagger/css/"/>
-    <mvc:resources mapping="/fonts/**" location="/WEB-INF/swagger/fonts/"/>
-    <mvc:resources mapping="/images/**" location="/WEB-INF/swagger/images/"/>
-    <mvc:resources mapping="/lang/**" location="/WEB-INF/swagger/lang/"/>
-    <mvc:resources mapping="/lib/**" location="/WEB-INF/swagger/lib/"/>
-    <mvc:resources mapping="/*.html" location="/WEB-INF/swagger/"/>
-    <mvc:resources mapping="/*.js" location="/WEB-INF/swagger/"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -58,4 +50,5 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
+    <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig"/>
 </beans>
