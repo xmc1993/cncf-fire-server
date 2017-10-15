@@ -1,10 +1,16 @@
 package com.cncf.service.impl;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.cncf.dao.UserDao;
 import com.cncf.entity.User;
 import com.cncf.entity.UserBase;
 import com.cncf.service.UserService;
+import com.cncf.util.SmsUtils;
+import com.cncf.util.Util;
 import com.github.pagehelper.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +21,50 @@ import java.util.Date;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserDao userDao;
 
     @Override
     public String getVerifyCode(User user) {
-        return null;
+        User userIndb = userDao.getUserByMobile(user.getMobile());
+        if (userIndb != null && userIndb.getIdentification() == 1) {
+            return null;
+        }
+        String verifyCode = Util.getRandomCode();
+        try {
+            SendSmsResponse res = SmsUtils.sendMessage("SMS_101110009", user.getMobile(), verifyCode);
+        } catch (ClientException e) {
+            e.printStackTrace();
+            logger.info("send code:" + verifyCode + " to " + user.getMobile() + "\n");
+            return null;
+        }
+        boolean emptyFlag = userIndb == null ? true : false;
+        User tempUser = userIndb;
+        if (tempUser == null) {
+            tempUser = new User();
+        }
+        tempUser.setMobile(user.getMobile());
+        tempUser.setCreateTime(new Date());
+        tempUser.setUpdateTime(new Date());
+        tempUser.setVerifyCode(verifyCode);
+        //失效时间为30分钟
+        long now = System.currentTimeMillis();
+        now += 30 * 60 * 1000;
+        Date date = new Date(now);
+        tempUser.setExpireTime(date);
+
+        boolean res;
+        if (emptyFlag) {
+            res = userDao.saveUser(tempUser);
+        } else {
+            res = userDao.updateUser(tempUser);
+        }
+        if (!res) {
+            return null;
+        }
+        return verifyCode;
     }
 
     @Override

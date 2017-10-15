@@ -1,10 +1,11 @@
 package com.cncf.entity;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class User {
+public class User implements Serializable{
     private Integer id;
     private String nickname = "游客";//用户名
     private String realName;//用户名
@@ -20,7 +21,7 @@ public class User {
     private String accessToken;//story token
     private String verifyCode;//验证码
     private Date expireTime;//验证码的过期事件
-    private Integer identification = 0;//是否通过了手机验证
+    private int identification = 0;//是否通过了手机验证
     private Integer valid = 1;//用于软删除
     private Date createTime;
     private Date updateTime;

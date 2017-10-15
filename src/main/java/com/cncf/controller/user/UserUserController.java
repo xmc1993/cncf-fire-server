@@ -64,13 +64,24 @@ public class UserUserController {
             responseData.jsonFill(2, "获取验证码出错。", null);
             return responseData;
         }
+        if (user.getIdentification() == 1) {
+            responseData.jsonFill(2, "该号码已被注册。", null);
+            return responseData;
+        }
         if (!userService.checkVerifyCode(user, verifyCode)) {
             responseData.jsonFill(2, "验证码无效。", null);
             return responseData;
         } else {
             user.setPassword(password);
+            user.setIdentification(1);
+            boolean res = userService.updateUser(user);
+            if (res){
+                responseData.setStatus(1);
+            }else {
+                responseData.jsonFill(2, "注册失败服务器错误。", null);
+            }
         }
-        responseData.setStatus(1);
+
         return responseData;
     }
 
@@ -78,14 +89,14 @@ public class UserUserController {
     @RequestMapping(value = "/updateProfile", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResponseData updateProfile(
-            @ApiParam("昵称") @RequestParam("nickname") String nickname,
-            @ApiParam("真实姓名") @RequestParam("realName") String realName,
-            @ApiParam("性别") @RequestParam("sex") String sex,
-            @ApiParam("公司") @RequestParam("company") String company,
-            @ApiParam("城市") @RequestParam("city") String city,
-            @ApiParam("邮箱") @RequestParam("email") String email,
-            @ApiParam("QQ") @RequestParam("qq") String qq,
-            @ApiParam("主页") @RequestParam("homepage") String homepage,
+            @ApiParam("昵称") @RequestParam(value = "nickname", required = false) String nickname,
+            @ApiParam("真实姓名") @RequestParam(value = "realName", required = false) String realName,
+            @ApiParam("性别") @RequestParam(value = "sex", required = false) String sex,
+            @ApiParam("公司") @RequestParam(value = "company", required = false) String company,
+            @ApiParam("城市") @RequestParam(value = "city", required = false) String city,
+            @ApiParam("邮箱") @RequestParam(value = "email", required = false) String email,
+            @ApiParam("QQ") @RequestParam(value = "qq", required = false) String qq,
+            @ApiParam("主页") @RequestParam(value = "homepage", required = false) String homepage,
             HttpServletRequest request, HttpServletResponse response) {
         ResponseData responseData = new ResponseData();
         User user = UserUtil.getSessionUser(request);
@@ -159,6 +170,7 @@ public class UserUserController {
         LoginVo loginVo = new LoginVo();
         loginVo.setId(user.getId());
         loginVo.setAccessToken(user.getAccessToken());
+        responseData.jsonFill(1, null, loginVo);
         return responseData;
     }
 

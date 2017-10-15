@@ -37,7 +37,7 @@
 		homepage,
 	</sql>
 
-	<insert id="saveUser" parameterType="com.cncf.entity.User" keyProperty="id" useGeneratedKeys="true">
+	<insert id="saveUser" parameterType="com.cncf.entity.User" useGeneratedKeys="true">
 		insert into user (
 		<include refid="fields"></include>
 		) values (
@@ -59,7 +59,7 @@
 		#{identification},
 		#{valid},
 		#{createTime},
-		#{updateTime},
+		#{updateTime}
 		)
 	</insert>
 
@@ -73,7 +73,9 @@
 		city=#{city},
 		email=#{email},
 		qq=#{qq},
-		homepage=#{homepage}
+		homepage=#{homepage},
+		identification=#{identification},
+		password=#{password}
 		where
 		id=#{id}
 	</update>
