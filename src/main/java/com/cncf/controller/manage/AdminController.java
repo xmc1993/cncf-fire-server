@@ -1,4 +1,4 @@
-package com.cncf.controller;
+package com.cncf.controller.manage;
 
 import com.cncf.entity.Admin;
 import com.cncf.response.ResponseData;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 @Api(value = "Admin", description = "管理接口")
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/manage/admin")
 public class AdminController {
 
     private static final Log logger = LogFactory.getLog(AdminController.class);

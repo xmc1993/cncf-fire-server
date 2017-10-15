@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("leaveMessage")
+@RequestMapping("/manage/leaveMessage")
 public class LeaveMessageController {
 
     private static final Log logger = LogFactory.getLog(LeaveMessageController.class);
