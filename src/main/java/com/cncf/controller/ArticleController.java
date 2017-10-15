@@ -58,7 +58,7 @@ public class ArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型获得温江", notes = "")
+    @ApiOperation(value = "根据类型获得文章", notes = "")
     @RequestMapping(value = "selectByType", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List> selectByType(String type) {
