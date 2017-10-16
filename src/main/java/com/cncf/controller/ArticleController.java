@@ -4,6 +4,7 @@ import com.cncf.entity.Article;
 import com.cncf.response.ResponseData;
 import com.cncf.service.ArticleService;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class ArticleController {
     @ApiOperation(value = "根据ID删除文章", notes = "")
     @RequestMapping(value = "deleteById", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<String> deleteById(int id) {
+    public ResponseData<String> deleteById(@ApiParam("文章ID") int id) {
         ResponseData<String> responseData = new ResponseData<String>();
         boolean result = articleService.deleteById(id);
         if (!result) {
@@ -35,7 +36,7 @@ public class ArticleController {
     @ApiOperation(value = "插入文章", notes = "")
     @RequestMapping(value = "insertArticle", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> insertArticle(Article article) {
+    public ResponseData<String> insertArticle(@ApiParam("文章类") Article article) {
         ResponseData<String> responseData = new ResponseData<String>();
 
         boolean result = articleService.insertArticle(article);
@@ -50,7 +51,7 @@ public class ArticleController {
     @ApiOperation(value = "根据ID获得文章的标题", notes = "")
     @RequestMapping(value = "selectTitleById", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<String> selectTitleById(int id) {
+    public ResponseData<String> selectTitleById(@ApiParam("文章ID") int id) {
         ResponseData<String> responseData = new ResponseData<String>();
 
         String title = articleService.selectTitleById(id);
@@ -58,24 +59,21 @@ public class ArticleController {
         return responseData;
     }
 
-    /*
-    * 做一下分页！！！！！！！！！！！！！！！！！！！！！！！
-    *
-    * */
     @ApiOperation(value = "根据类型获得文章", notes = "")
     @RequestMapping(value = "selectArticleByTypeAndPage", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List> selectArticleByTypeAndPage(String type,int page,int pageSize) {
+    public ResponseData<List> selectArticleByTypeAndPage(
+            @ApiParam("文章类型") String type,@ApiParam("当前页数") int page,@ApiParam("页面大小") int pageSize) {
         ResponseData<List> responseData = new ResponseData<List>();
-        List list = articleService.selectArticleByTypeAndPage(type,page,pageSize);
-        responseData.jsonFill(1, null, list);
+        List articleList = articleService.selectArticleByTypeAndPage(type,page,pageSize);
+        responseData.jsonFill(1, null, articleList);
         return responseData;
     }
 
     @ApiOperation(value = "更新文章标题", notes = "")
     @RequestMapping(value = "updateTitleById", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> updateTitleById(int id, String title) {
+    public ResponseData<String> updateTitleById(@ApiParam("文章ID") int id, @ApiParam("文章标题") String title) {
         ResponseData<String> responseData = new ResponseData<String>();
 
         boolean result = articleService.updateTitleById(id, title);
@@ -90,7 +88,7 @@ public class ArticleController {
     @ApiOperation(value = "更新文章内容", notes = "")
     @RequestMapping(value = "updateContentById", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> updateContentById(int id, String content) {
+    public ResponseData<String> updateContentById(@ApiParam("文章ID") int id, @ApiParam("文章内容") String content) {
         ResponseData<String> responseData = new ResponseData<String>();
 
         boolean result = articleService.updateContentById(id, content);
@@ -105,7 +103,7 @@ public class ArticleController {
     @ApiOperation(value = "更新文章", notes = "")
     @RequestMapping(value = "updateArticle", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> updateArticle(Article article) {
+    public ResponseData<String> updateArticle(@ApiParam("文章类") Article article) {
         ResponseData<String> responseData = new ResponseData<String>();
         boolean result = articleService.updateArticle(article);
         if (!result) {
