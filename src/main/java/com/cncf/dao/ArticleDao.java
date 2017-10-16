@@ -13,7 +13,7 @@ public interface ArticleDao {
 
     String selectTitleById(int id);
 
-    List selectByType(String type);
+    List selectArticleByTypeAndPage(String type,int offset,int limit);
 
     boolean updateTitleById(int id,String title);
 

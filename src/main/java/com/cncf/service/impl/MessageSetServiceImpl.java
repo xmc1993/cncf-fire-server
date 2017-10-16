@@ -1,7 +1,6 @@
 package com.cncf.service.impl;
 
 import com.cncf.dao.MessageSetDao;
-import com.cncf.entity.Message;
 import com.cncf.entity.MessageSet;
 import com.cncf.service.MessageSetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,14 @@ public class MessageSetServiceImpl implements MessageSetService{
         return messageSetDao.insertMessageSet(messageSet);
     }
 
-    public boolean updateValid(int id, int valid) {
-        return messageSetDao.updateValid(id,valid);
+    public boolean updateMessageSetValid(int id, int valid) {
+        return messageSetDao.updateMessageSetValid(id,valid);
     }
 
-    public List selectAllMessageSet() {
-        return messageSetDao.selectAllMessageSet();
+    public List selectAllMessageSet(int page,int pageSize) {
+        int offset = page*pageSize;
+        int limit = pageSize;
+        return messageSetDao.selectAllMessageSet(offset,limit);
     }
 
 }

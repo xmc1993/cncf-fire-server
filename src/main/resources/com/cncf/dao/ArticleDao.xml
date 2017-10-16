@@ -55,11 +55,12 @@
     </select>
 
 
-    <select id="selectByType" resultType="com.cncf.entity.Article">
+    <select id="selectArticleByTypeAndPage" resultType="com.cncf.entity.Article">
         select
         <include refid="fields"></include>
         from article
         where type = #{0}
+        limit #{1},#{2}
     </select>
 
     <update id="updateTitleById" parameterType="com.cncf.entity.Article">

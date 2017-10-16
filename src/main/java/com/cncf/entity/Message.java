@@ -2,12 +2,15 @@ package com.cncf.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Message {
     private Integer mid;
     private Integer setId;
-    private String author;
-    private String createTime;
-    private Integer valid;
+    private Integer authorId;
+    private Date createTime;
+    private Integer type;
+    private int valid;
     private String content;
 }

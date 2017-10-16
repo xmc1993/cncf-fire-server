@@ -5,8 +5,9 @@
     <sql id="fields">
         mid,
         setId,
-        author,
+        authorId,
         createTime,
+        type,
         valid,
         content
     </sql>
@@ -14,8 +15,9 @@
     <resultMap id="message" type="com.cncf.entity.Message">
         <id column="mid" property="mid"/>
         <id column="setId" property="setId"/>
-        <id column="author" property="author"/>
+        <id column="authorId" property="authorId"/>
         <id column="createTime" property="createTime"/>
+        <id column="type" property="type"/>
         <id column="valid" property="valid"/>
         <id column="content" property="content"/>
     </resultMap>
@@ -30,8 +32,9 @@
         (
         #{mid},
         #{setId},
-        #{author},
+        #{authorId},
         #{createTime},
+        #{type},
         #{valid},
         #{content}
         )

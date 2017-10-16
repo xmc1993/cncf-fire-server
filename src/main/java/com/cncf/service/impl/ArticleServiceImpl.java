@@ -24,8 +24,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.selectTitleById(id);
     }
 
-    public List selectByType(String type) {
-        return articleDao.selectByType(type);
+    public List selectArticleByTypeAndPage(String type,int page,int pageSize) {
+        int offset = page*pageSize;
+        int limit = pageSize;
+        return articleDao.selectArticleByTypeAndPage(type,offset,limit);
     }
 
     public boolean updateTitleById(int id, String title) {

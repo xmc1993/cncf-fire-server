@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface MessageSetDao {
     boolean insertMessageSet(MessageSet messageSet);
-    boolean updateValid(int id,int valid);
-    List selectAllMessageSet();
+    boolean updateMessageSetValid(int id, int valid);
+    List selectAllMessageSet(int offset,int limit);
 }

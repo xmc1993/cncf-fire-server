@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MessageSetService {
     boolean insertMessageSet(MessageSet messageSet);
-    boolean updateValid(int id,int valid);
-    List selectAllMessageSet();
+    boolean updateMessageSetValid(int id, int valid);
+    List selectAllMessageSet(int page,int pageSize);
 }

@@ -29,15 +29,30 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user/user/updateProfile"/>
+            <mvc:mapping path="/user/leaveMessage/**"/>
+
             <bean class="com.cncf.interceptor.AccessTokenValidationInterceptor"/>
         </mvc:interceptor>
 
         <mvc:interceptor>
-            <mvc:mapping path="/manage/admin/**"/>
+            <mvc:mapping path="/manage/**"/>
 
+            <mvc:exclude-mapping path="/manage/admin/login"/>
             <mvc:exclude-mapping path="/manage/admin/regist"/>
             <mvc:exclude-mapping path="/swagger/**"/>
             <mvc:exclude-mapping path="/api-docs/**"/>
+
+            <bean class="com.cncf.interceptor.AdminAccessTokenValidationInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/manage/**"/>
+
+            <mvc:exclude-mapping path="/manage/admin/login"/>
+            <mvc:exclude-mapping path="/manage/admin/regist"/>
+            <mvc:exclude-mapping path="/swagger/**"/>
+            <mvc:exclude-mapping path="/api-docs/**"/>
+
             <bean class="com.cncf.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
 

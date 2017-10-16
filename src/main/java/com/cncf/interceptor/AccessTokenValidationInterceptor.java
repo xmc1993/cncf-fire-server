@@ -45,7 +45,7 @@ public class AccessTokenValidationInterceptor extends HandlerInterceptorAdapter 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
+        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);//"Fire-Access-Token"
         Jedis jedis = null;
         try {
             jedis = JedisUtil.getJedis();

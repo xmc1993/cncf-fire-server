@@ -4,7 +4,7 @@
 
     <sql id="fields">
         setId,
-        nickName,
+        userId,
         theme,
         createTime,
         valid
@@ -12,7 +12,7 @@
 
     <resultMap id="messageSet" type="com.cncf.entity.MessageSet">
         <id column="setId" property="setId"/>
-        <id column="nickName" property="nickName"/>
+        <id column="userId" property="userId"/>
         <id column="theme" property="theme"/>
         <id column="createTime" property="createTime"/>
         <id column="valid" property="valid"/>
@@ -27,7 +27,7 @@
         VALUES
         (
         #{setId},
-        #{nickName},
+        #{userId},
         #{theme},
         #{createTime},
         #{valid}
@@ -45,6 +45,7 @@
         SELECT
         <include refid="fields"></include>
         FROM messageSet
+        limit #{0},#{1}
     </select>
 
 </mapper>

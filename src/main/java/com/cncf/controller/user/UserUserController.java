@@ -99,6 +99,8 @@ public class UserUserController {
             @ApiParam("主页") @RequestParam(value = "homepage", required = false) String homepage,
             HttpServletRequest request, HttpServletResponse response) {
         ResponseData responseData = new ResponseData();
+        //用户想要修改自己的信息，须通过AccessTokenValidationInterceptor验证登录，然后将user存入request然后拦截器放行，
+        // 请求来到这里从存入request中的user中取userId来用
         User user = UserUtil.getSessionUser(request);
         user = userService.getUserById(user.getId());
         user.setNickname(nickname);

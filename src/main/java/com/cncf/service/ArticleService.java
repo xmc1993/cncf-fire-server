@@ -11,7 +11,7 @@ public interface ArticleService {
 
     String selectTitleById(int id);
 
-    List selectByType(String type);
+    List selectArticleByTypeAndPage(String type,int page,int pageSize);
 
     boolean updateTitleById(int id,String title);
 

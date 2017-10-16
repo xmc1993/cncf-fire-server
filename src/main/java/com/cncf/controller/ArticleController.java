@@ -19,7 +19,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @ApiOperation(value = "根据ID删除文章", notes = "")
-    @RequestMapping("deleteById")
+    @RequestMapping(value = "deleteById", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<String> deleteById(int id) {
         ResponseData<String> responseData = new ResponseData<String>();
@@ -58,12 +58,16 @@ public class ArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型获得温江", notes = "")
-    @RequestMapping(value = "selectByType", method = {RequestMethod.GET})
+    /*
+    * 做一下分页！！！！！！！！！！！！！！！！！！！！！！！
+    *
+    * */
+    @ApiOperation(value = "根据类型获得文章", notes = "")
+    @RequestMapping(value = "selectArticleByTypeAndPage", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List> selectByType(String type) {
+    public ResponseData<List> selectArticleByTypeAndPage(String type,int page,int pageSize) {
         ResponseData<List> responseData = new ResponseData<List>();
-        List list = articleService.selectByType(type);
+        List list = articleService.selectArticleByTypeAndPage(type,page,pageSize);
         responseData.jsonFill(1, null, list);
         return responseData;
     }

@@ -2,11 +2,13 @@ package com.cncf.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class MessageSet {
     private Integer setId;
-    private String nickName;
+    private Integer userId;
     private String theme;
-    private String createTime;
+    private Date createTime;
     private int valid;
 }
