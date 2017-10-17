@@ -23,8 +23,8 @@
 
     <!--<bean id="jsonUtil" class="cn.edu.nju.software.util.JsonUtil"/>-->
 
+    <!--备份<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/**"/>-->
     <mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/**"/>
-    <!--<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/**"/>-->
 
     <mvc:interceptors>
         <mvc:interceptor>
