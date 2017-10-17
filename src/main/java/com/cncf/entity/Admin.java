@@ -6,7 +6,8 @@ import java.util.Date;
 
 @Data
 public class Admin {
-    private int adminId;
+    private Integer adminId;
     private String adminName;
     private String password;
+    private Date registTime;
 }

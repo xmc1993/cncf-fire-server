@@ -5,13 +5,15 @@
     <sql id="fields">
         adminId,
         adminName,
-        password
+        password,
+        registTime
     </sql>
 
     <resultMap id="admin" type="com.cncf.entity.Admin">
         <id column="adminId" property="adminId"/>
         <id column="adminName" property="adminName"/>
         <id column="password" property="password"/>
+        <id column="registTime" property="registTime"/>
     </resultMap>
 
 
@@ -24,7 +26,8 @@
         (
         #{adminId},
         #{adminName},
-        #{password}
+        #{password},
+        #{registTime}
         )
     </insert>
 

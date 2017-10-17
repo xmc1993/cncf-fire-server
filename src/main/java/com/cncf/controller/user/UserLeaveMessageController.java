@@ -1,6 +1,6 @@
-package com.cncf.controller;
+package com.cncf.controller.user;
 
-import com.cncf.entity.Admin;
+import com.cncf.controller.manage.ManageLeaveMessageController;
 import com.cncf.entity.Message;
 import com.cncf.entity.MessageSet;
 import com.cncf.entity.User;
@@ -37,7 +37,7 @@ public class UserLeaveMessageController {
     @ApiOperation(value = "添加留言集", notes = "")
     @RequestMapping(value = "insertMessageSet", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData insertMessageSet(@ApiParam("留言主题") String theme, HttpServletRequest request){
+    public ResponseData insertMessageSet(@ApiParam("留言主题") @RequestParam("theme") String theme, HttpServletRequest request){
         MessageSet messageSet=new MessageSet();
         Integer idInSession = UserUtil.getSessionUser(request).getId();
         messageSet.setUserId(idInSession);
@@ -57,8 +57,8 @@ public class UserLeaveMessageController {
     @RequestMapping(value = "selectAllMessageSet", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List<MessageSet>> selectAllMessageSet(
-            @ApiParam("PAGE") @RequestParam int page,
-            @ApiParam("SIZE") @RequestParam int pageSize){
+            @ApiParam("PAGE") @RequestParam("page") int page,
+            @ApiParam("SIZE") @RequestParam("pageSize") int pageSize){
         ResponseData<List<MessageSet>> responseData = new ResponseData<>();
         List<MessageSet> MessageSetList=messageSetService.selectAllMessageSet(page,pageSize);
         responseData.jsonFill(1, null, MessageSetList);
@@ -69,7 +69,8 @@ public class UserLeaveMessageController {
     @ApiOperation(value = "添加一条留言或回复", notes = "")
     @RequestMapping(value = "insertMessage", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<Message> insertMessage(@ApiParam("留言集ID") Integer setId, @ApiParam("该条留言的内容") String content,HttpServletRequest request){
+    public ResponseData<Message> insertMessage(@ApiParam("留言集ID") @RequestParam("setId") Integer setId,
+                                               @ApiParam("该条留言的内容") @RequestParam("content") String content, HttpServletRequest request){
         ResponseData<Message> responseData = new ResponseData<>();
         Message message=new Message();
         message.setSetId(setId);
@@ -90,7 +91,7 @@ public class UserLeaveMessageController {
     @ApiOperation(value = "通过留言集ID查询其下所有留言", notes = "")
     @RequestMapping(value = "selectMessageBySetId", method = {RequestMethod.GET})
     @ResponseBody
-    public Message selectMessageBySetId(@ApiParam("留言集ID") @RequestParam int setId){
+    public Message selectMessageBySetId(@ApiParam("留言集ID") @RequestParam("setId") Integer setId){
         return messageService.selectMessageBySetId(setId);
     }
 }

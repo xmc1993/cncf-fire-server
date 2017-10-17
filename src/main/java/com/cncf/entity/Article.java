@@ -10,8 +10,21 @@ public class Article {
     private String title;
     private Date publishTime;
     private String source;
-    private int click;
+    private Integer click;
     private String wordSize;
     private String type;
     private String content;
+
+    public Article() {
+    }
+
+    public Article(String title, Date publishTime, String source, Integer click, String wordSize, String type, String content) {
+        this.title = title;
+        this.publishTime = publishTime;
+        this.source = source;
+        this.click = click;
+        this.wordSize = wordSize;
+        this.type = type;
+        this.content = content;
+    }
 }

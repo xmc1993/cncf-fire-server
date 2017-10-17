@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Api(value = "Admin", description = "管理接口")
 @Controller
@@ -70,6 +71,7 @@ public class AdminController {
             responseData.jsonFill(2, "用户名已存在(adminName already exist)", null);
             return responseData;
         }
+        admin.setRegistTime(new Date());
         if (!adminService.saveAdmin(admin)) {
             System.err.println("注册失败");
             responseData.jsonFill(2, "注册失败", null);

@@ -40,7 +40,7 @@
         )
     </insert>
 
-    <update id="updateValid" parameterType="cn.edu.nju.software.entity.Message">
+    <update id="updateValid" parameterType="com.cncf.entity.Message">
         UPDATE message
         SET
         valid=#{1}

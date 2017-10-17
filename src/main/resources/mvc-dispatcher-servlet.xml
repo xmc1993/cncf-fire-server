@@ -45,7 +45,7 @@
             <bean class="com.cncf.interceptor.AdminAccessTokenValidationInterceptor"/>
         </mvc:interceptor>
 
-        <mvc:interceptor>
+<!--        <mvc:interceptor>
             <mvc:mapping path="/manage/**"/>
 
             <mvc:exclude-mapping path="/manage/admin/login"/>
@@ -54,7 +54,7 @@
             <mvc:exclude-mapping path="/api-docs/**"/>
 
             <bean class="com.cncf.interceptor.AuthInterceptor"/>
-        </mvc:interceptor>
+        </mvc:interceptor>-->
 
     </mvc:interceptors>
 
