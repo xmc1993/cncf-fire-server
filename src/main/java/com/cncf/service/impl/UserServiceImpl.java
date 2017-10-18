@@ -101,4 +101,33 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int userId) {
         return userDao.getUserById(userId);
     }
+
+	@Override
+	public String getVerifyCode(String mobile) {
+        User user = userDao.getUserByMobile(mobile);
+        if(user==null){
+        	return null;
+        }
+        String verifyCode = Util.getRandomCode();
+        try {
+            SendSmsResponse res = SmsUtils.sendMessage("SMS_101110009", user.getMobile(), verifyCode);
+        } catch (ClientException e) {
+            e.printStackTrace();
+            logger.info("send update code:" + verifyCode + " to " + user.getMobile() + "\n");
+            return null;
+        }
+        user.setVerifyCode(verifyCode);
+        
+        //过期时间半小时
+        long now = System.currentTimeMillis();
+        now += 30 * 60 * 1000;
+        Date date = new Date(now);
+        user.setExpireTime(date);
+        
+        boolean res=userDao.updateUser(user);
+        if(res==false){
+        	return null;
+        }
+		return verifyCode;
+	}
 }
