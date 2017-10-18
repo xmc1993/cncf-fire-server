@@ -44,7 +44,7 @@ public class SmsUtils {
 
 	
 	/**
-	 * 获取SMS_72780019短信模板对应的请求
+	 * 获取SMS_101110009短信模板对应的请求
 	 * 
 	 * @return
 	 */
