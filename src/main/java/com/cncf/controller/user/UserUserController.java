@@ -4,8 +4,10 @@ import com.cncf.entity.User;
 import com.cncf.entity.UserBase;
 import com.cncf.response.ResponseData;
 import com.cncf.service.UserService;
+import com.cncf.util.FileUtil;
 import com.cncf.util.JedisUtil;
 import com.cncf.util.ObjectAndByte;
+import com.cncf.util.TokenConfig;
 import com.cncf.util.UserUtil;
 import com.cncf.util.Util;
 import com.cncf.vo.LoginVo;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
+import java.util.Date;
+
+import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -175,4 +180,136 @@ public class UserUserController {
         responseData.jsonFill(1, null, loginVo);
         return responseData;
     }
+    
+    @ApiOperation(value = "手机号获取验证码", notes = "获取修改密码，找回密码的验证码")
+    @RequestMapping(value = "/getPasswordVerifyCode", method = {RequestMethod.POST})
+    @ResponseBody
+    public ResponseData getPasswordVerifyCode(@ApiParam("mobile") @RequestParam("mobile") String mobile,
+                                      HttpServletRequest request, HttpServletResponse response) {
+        ResponseData responseData = new ResponseData();
+        if (!Util.isPhoneNumber(mobile)) {
+            responseData.setErrorMes("手机号格式不正确");
+            responseData.setStatus(2);
+            return responseData;
+        }
+        String cod=userService.getVerifyCode(mobile);
+        if(cod==null){
+        	responseData.setErrorMes("获取验证码失败");
+        	responseData.setStatus(2);
+        	return responseData;
+        }
+        responseData.setStatus(1);
+        return responseData;
+    }
+    
+    @ApiOperation(value="找回密码")
+    @RequestMapping(value="/retrievePassword" ,method ={RequestMethod.POST})
+    @ResponseBody
+    public ResponseData<User> retrievePassword(@ApiParam("手机号") @RequestParam("mobile") String mobile,
+            @ApiParam("验证码") @RequestParam("verifyCode") String verifyCode,
+            HttpServletRequest request, HttpServletResponse response){
+    	ResponseData<User> responseData=new ResponseData<>();
+    	User user=userService.getUserByMobile(mobile);
+    	if(user==null){
+    		responseData.setErrorMes("用户不存在");
+    		responseData.setStatus(2);
+    		return responseData;
+    	}
+    	boolean res=userService.checkVerifyCode(user, verifyCode);
+    	if(res==true){
+    		responseData.setStatus(1);
+    		responseData.setObj(user);
+    		return responseData;
+    	}
+    	responseData.setStatus(2);
+    	responseData.setErrorMes("验证码错误");
+    	return responseData;
+    }
+    
+    @ApiOperation(value="修改密码")
+    @RequestMapping(value="/updatePassword" ,method ={RequestMethod.POST})
+    @ResponseBody
+    public ResponseData updatePassword(@ApiParam("手机号") @RequestParam("mobile") String mobile,
+            @ApiParam("验证码") @RequestParam("verifyCode") String verifyCode,
+            @ApiParam("要修改为啥密码") @RequestParam("passWord") String passWord,
+            HttpServletRequest request, HttpServletResponse response){
+    	ResponseData responseData=new ResponseData<>();
+    	User user=userService.getUserByMobile(mobile);
+    	if(user==null){
+    		responseData.setErrorMes("用户不存在");
+    		responseData.setStatus(2);
+    		return responseData;
+    	}
+    	boolean res=userService.checkVerifyCode(user, verifyCode);
+    	if(res==true){
+    		boolean success=false;
+    		user.setUpdateTime(new Date());
+    		user.setPassword(passWord);
+    		success=userService.updateUser(user);
+    		if(success==true){
+    			responseData.setStatus(1);
+    			return responseData;
+    		}
+    		responseData.setStatus(2);
+    		responseData.setErrorMes("修改密码失败");
+    		return responseData;
+    	}
+    	responseData.setStatus(2);
+    	responseData.setErrorMes("验证码错误");
+    	return responseData;
+    }
+    
+    @ApiOperation(value="变更绑定手机",notes="需要登录")
+    @RequestMapping(value="/updatePhoneNumber" ,method ={RequestMethod.POST})
+    @ResponseBody
+    public ResponseData updatePhoneNumber(@ApiParam("手机号") @RequestParam("mobile") String mobile,
+            HttpServletRequest request, HttpServletResponse response){
+    	ResponseData responseData=new ResponseData<>();
+        User user=(User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
+        if(user==null){
+        	responseData.setStatus(2);
+        	responseData.setErrorMes("用户未登录");
+        	return responseData;
+        }
+        user.setUpdateTime(new Date());
+        user.setMobile(mobile);
+        boolean res=userService.updateUser(user);
+        if(res==false){
+        	responseData.setStatus(2);
+        	responseData.setErrorMes("更新失败");
+        	return responseData;
+        }
+        responseData.setStatus(1);
+        return responseData;
+        }
+    
+    
+    @ApiOperation(value="修改头像",notes="需要登录")
+    @RequestMapping(value="/updateHeadimgUrl" ,method ={RequestMethod.POST})
+    @ResponseBody
+    public ResponseData updateHeadimgUrl(@ApiParam("头像Url") @RequestParam("headImgUrl") String headImgUrl,
+            HttpServletRequest request, HttpServletResponse response){
+    	ResponseData responseData=new ResponseData<>();
+        User user=(User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
+        if(user==null){
+        	responseData.setStatus(2);
+        	responseData.setErrorMes("用户未登录");
+        	return responseData;
+        }
+        //如果用户头像存在，先在服务器把头像给删了
+        if(user.getHeadImgUrl()!=null||!user.getHeadImgUrl().isEmpty()){
+        	FileUtil.deleteFile(user.getHeadImgUrl());
+        }
+        
+        user.setUpdateTime(new Date());
+        user.setHeadImgUrl(headImgUrl);
+        boolean res=userService.updateUser(user);
+        if(res==false){
+        	responseData.setStatus(2);
+        	responseData.setErrorMes("更新头像失败");
+        	return responseData;
+        }
+        responseData.setStatus(1);
+        return responseData;
+        }
 }
