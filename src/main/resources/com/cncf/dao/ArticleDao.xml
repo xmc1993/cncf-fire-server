@@ -10,7 +10,7 @@
         source,
         click,
         wordSize,
-        type,
+        categoryId,
         content
     </sql>
 
@@ -21,7 +21,7 @@
         <id column="source" property="source"/>
         <id column="click" property="click"/>
         <id column="wordSize" property="wordSize"/>
-        <id column="type" property="type"/>
+        <id column="categoryId" property="categoryId"/>
         <id column="content" property="content"/>
     </resultMap>
 
@@ -43,7 +43,7 @@
         #{source},
         #{click},
         #{wordSize},
-        #{type},
+        #{categoryId},
         #{content}
         )
     </insert>
@@ -55,11 +55,11 @@
     </select>
 
 
-    <select id="selectArticleByTypeAndPage" resultType="com.cncf.entity.Article">
+    <select id="selectArticleByCategoryAndPage" resultType="com.cncf.entity.Article">
         select
         <include refid="fields"></include>
         from article
-        where type = #{0}
+        where categoryId = #{0}
         limit #{1},#{2}
     </select>
 
@@ -95,8 +95,8 @@
         <if test="wordSize!=null and wordSize!=''">
             AND wordSize = #{wordSize}
         </if>
-        <if test="type!=null and type!=''">
-            AND type = #{type}
+        <if test="categoryId!=null and categoryId!=''">
+            AND categoryId = #{categoryId}
         </if>
         <if test="content!=null and content!=''">
             AND content = #{content}

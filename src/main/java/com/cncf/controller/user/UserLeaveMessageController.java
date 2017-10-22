@@ -7,6 +7,7 @@ import com.cncf.entity.User;
 import com.cncf.response.ResponseData;
 import com.cncf.service.MessageService;
 import com.cncf.service.MessageSetService;
+import com.cncf.util.CaptchaUtil;
 import com.cncf.util.TokenConfig;
 import com.cncf.util.UserUtil;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -34,23 +38,49 @@ public class UserLeaveMessageController {
     @Autowired
     private MessageService messageService;
 
-    @ApiOperation(value = "添加留言集", notes = "")
+    @ApiOperation(value = "获取留言所需的验证码", notes = "")
+    @RequestMapping(value = "getCaptcha", method = RequestMethod.GET)
+    @ResponseBody
+    public void getCaptcha(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        System.err.println("访问了captcha");
+        CaptchaUtil.outputCaptcha(request, response);
+    }
+
+    @ApiOperation(value = "初始化留言集并添加第一条留言", notes = "内容参数即为第一条留言")
     @RequestMapping(value = "insertMessageSet", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData insertMessageSet(@ApiParam("留言主题") @RequestParam("theme") String theme, HttpServletRequest request){
-        MessageSet messageSet=new MessageSet();
-        Integer idInSession = UserUtil.getSessionUser(request).getId();
-        messageSet.setUserId(idInSession);
-        messageSet.setTheme(theme);
-        messageSet.setCreateTime(new Date());
-        ResponseData<MessageSet> responseData = new ResponseData<MessageSet>();
-        boolean result=messageSetService.insertMessageSet(messageSet);
-        if (!result) {
-            responseData.jsonFill(2, "添加留言集失败", null);
+    public ResponseData<Message> insertMessageSet(
+            @ApiParam("留言主题（标题）") @RequestParam("theme") String theme,
+            @ApiParam("验证码") @RequestParam("captcha") String captcha,
+            @ApiParam("留言内容") @RequestParam("content") String content,
+            HttpServletRequest request){
+
+        //添加验证码验证
+        ResponseData<Message> responseData = new ResponseData<>();
+        String randomString=(String) request.getSession().getAttribute("randomString");
+        if (captcha == null && randomString == null && !captcha.equalsIgnoreCase(randomString)){
+            responseData.jsonFill(2,"验证码不正确",null);
             return responseData;
         }
-        responseData.jsonFill(1,"添加留言集成功",messageSet);
-        return responseData;
+
+        //验证登录
+        User user=(User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
+        if (user==null){
+            responseData.jsonFill(2, "用户未登录", null);
+            return responseData;
+        }
+
+        //存储留言集
+        MessageSet messageSet=new MessageSet();
+        messageSet.setUserId(user.getId());
+        messageSet.setTheme(theme);
+        messageSet.setCreateTime(new Date());
+        messageSet.setValid(1);
+        messageSet=messageSetService.insertMessageSet(messageSet);
+
+        //添加留言并放回结果
+        return addMessage(messageSet.getSetId(),content,request);
     }
 
     @ApiOperation(value = "分页查询所有留言集", notes = "")
@@ -71,7 +101,10 @@ public class UserLeaveMessageController {
     @ResponseBody
     public ResponseData<Message> insertMessage(@ApiParam("留言集ID") @RequestParam("setId") Integer setId,
                                                @ApiParam("该条留言的内容") @RequestParam("content") String content, HttpServletRequest request){
-        ResponseData<Message> responseData = new ResponseData<>();
+        return addMessage(setId,content,request);
+    }
+
+    public ResponseData<Message> addMessage(Integer setId, String content, HttpServletRequest request){
         Message message=new Message();
         message.setSetId(setId);
         User user=(User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
@@ -80,6 +113,7 @@ public class UserLeaveMessageController {
         message.setContent(content);
         message.setType(1);
         boolean result=messageService.insertMessage(message);
+        ResponseData<Message> responseData = new ResponseData<>();
         if (!result){
             responseData.jsonFill(2, "留言失败", null);
             return responseData;

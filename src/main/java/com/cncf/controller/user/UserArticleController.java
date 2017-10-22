@@ -30,15 +30,17 @@ public class UserArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型获得文章", notes = "")
-    @RequestMapping(value = "selectArticleByTypeAndPage", method = {RequestMethod.GET})
+    @ApiOperation(value = "根据类型ID获得文章", notes =
+            "1-中心概况；2-法律地位；3-授权证书；4-重点设备；5-地理位置；6-火灾报警产品；7-火灾防护产品；8-灭火设备产品；9-消防装备产品；10-非3C认证产品\n" +
+                    "11-通知公告；12-图片新闻；13-行业动态；14-法律法规；15-一分委；16-二分委；17-三分委；18-八分委；19-ISO/TC21/SC6；20-文件下载")
+    @RequestMapping(value = "selectArticleByCategoryAndPage", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List> selectArticleByTypeAndPage(
-            @ApiParam("文章类型") @RequestParam("type") String type,
+    public ResponseData<List> selectArticleByCategoryAndPage(
+            @ApiParam("文章类型ID") @RequestParam("categoryId") Integer categoryId,
             @ApiParam("当前页数") @RequestParam("page") int page,
             @ApiParam("页面大小") @RequestParam("pageSize") int pageSize) {
         ResponseData<List> responseData = new ResponseData<>();
-        List articleList = articleService.selectArticleByTypeAndPage(type,page,pageSize);
+        List articleList = articleService.selectArticleByCategoryAndPage(categoryId,page,pageSize);
         responseData.jsonFill(1, null, articleList);
         return responseData;
     }

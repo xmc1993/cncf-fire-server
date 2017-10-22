@@ -1,5 +1,11 @@
+build/
+/.settings/
+.idea/
+out/
 target/
-.settings/
+classes/
+*.iml
+.DS_Store
 .classpath
 .project
 .gitignore
