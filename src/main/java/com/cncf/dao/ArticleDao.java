@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author zj
+ */
 @Repository
 public interface ArticleDao {
     boolean deleteById(int id);
@@ -13,7 +16,7 @@ public interface ArticleDao {
 
     String selectTitleById(int id);
 
-    List selectArticleByTypeAndPage(String type,int offset,int limit);
+    List selectArticleByCategoryAndPage(Integer categoryId, int offset, int limit);
 
     boolean updateTitleById(int id,String title);
 
