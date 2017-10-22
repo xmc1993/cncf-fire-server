@@ -14,8 +14,11 @@ public class MessageSetServiceImpl implements MessageSetService{
     @Autowired
     private MessageSetDao messageSetDao;
 
-    public boolean insertMessageSet(MessageSet messageSet) {
-        return messageSetDao.insertMessageSet(messageSet);
+    public MessageSet insertMessageSet(MessageSet messageSet) {
+        if (messageSetDao.insertMessageSet(messageSet)){
+            return messageSet;
+        }
+        return null;
     }
 
     public boolean updateMessageSetValid(int id, int valid) {
