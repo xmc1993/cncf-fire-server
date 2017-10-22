@@ -12,13 +12,13 @@ public class Article {
     private String source;
     private Integer click;
     private String wordSize;
-    private String type;
+    private int type;
     private String content;
 
     public Article() {
     }
 
-    public Article(String title, Date publishTime, String source, Integer click, String wordSize, String type, String content) {
+    public Article(String title, Date publishTime, String source, Integer click, String wordSize, int type, String content) {
         this.title = title;
         this.publishTime = publishTime;
         this.source = source;
