@@ -46,9 +46,7 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         String AccessToken = request.getHeader("Authorization");
-        System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Jedis jedis = JedisUtil.getJedis();
         try {
             byte[] bytes = jedis.get(AccessToken.getBytes());

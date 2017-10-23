@@ -85,7 +85,6 @@ public class AdminController {
     public ResponseData<Admin> regist(@ApiParam("管理员用户名") @RequestParam("adminName") String adminName,
                                       @ApiParam("管理员密码") @RequestParam("password") String password) {
         logger.info("regist called");
-        System.err.println("进入注册方法");
         ResponseData<Admin> responseData = new ResponseData<>();
         if (adminService.getAdminByName(adminName) != null) {
             responseData.jsonFill(2, "用户名已存在(adminName already exist)", null);
@@ -98,6 +97,7 @@ public class AdminController {
             return responseData;
         } else{
             responseData.jsonFill(1, null, admin);
+            System.err.println(admin.getRegistTime());
             return responseData;
         }
     }

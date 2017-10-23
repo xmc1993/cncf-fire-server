@@ -41,11 +41,11 @@
         WHERE adminName = #{0}
     </select>
 
-    <update id="updateAccessToken" parameterType="cn.edu.nju.software.entity.Admin">
+    <update id="updateAccessToken" parameterType="com.cncf.entity.Admin">
         UPDATE admin
         SET
-        accessToken=#{accessToken},
-        WHERE username = #{username}
+        accessToken=#{accessToken}
+        WHERE adminName = #{adminName}
     </update>
 
 </mapper>

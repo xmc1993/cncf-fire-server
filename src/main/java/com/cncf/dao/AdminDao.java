@@ -6,7 +6,7 @@ import java.util.List;
 
 @Repository
 public interface AdminDao {
-    Admin getAdminByName(String name);
+    Admin getAdminByName(String adminName);
 
     boolean saveAdmin(Admin admin);
 
