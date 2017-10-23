@@ -98,7 +98,9 @@ public class UserUserController {
             @ApiParam("真实姓名") @RequestParam(value = "realName", required = false) String realName,
             @ApiParam("性别") @RequestParam(value = "sex", required = false) String sex,
             @ApiParam("公司") @RequestParam(value = "company", required = false) String company,
+            @ApiParam("省份") @RequestParam(value = "province", required = false) String province,
             @ApiParam("城市") @RequestParam(value = "city", required = false) String city,
+            @ApiParam("详细地址") @RequestParam(value = "detailAddress", required = false) String detailAddress,
             @ApiParam("邮箱") @RequestParam(value = "email", required = false) String email,
             @ApiParam("QQ") @RequestParam(value = "qq", required = false) String qq,
             @ApiParam("主页") @RequestParam(value = "homepage", required = false) String homepage,
@@ -112,7 +114,9 @@ public class UserUserController {
         user.setRealName(realName);
         user.setSex(sex);
         user.setCompany(company);
+        user.setProvince(province);
         user.setCity(city);
+        user.setDetailAddress(detailAddress);
         user.setEmail(email);
         user.setQq(qq);
         user.setHomepage(homepage);

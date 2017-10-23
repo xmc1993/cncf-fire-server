@@ -25,4 +25,9 @@ public class AdminServiceImpl implements AdminService {
     public boolean deleteAdmin(int adminId) {
         return adminDao.deleteAdmin(adminId);
     }
+
+    @Override
+    public boolean updateAccessToken(Admin admin) {
+        return adminDao.updateAccessToken(admin);
+    }
 }

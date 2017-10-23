@@ -6,6 +6,7 @@
         adminId,
         adminName,
         password,
+        accessToken,
         registTime
     </sql>
 
@@ -13,6 +14,7 @@
         <id column="adminId" property="adminId"/>
         <id column="adminName" property="adminName"/>
         <id column="password" property="password"/>
+        <id column="accessToken" property="accessToken"/>
         <id column="registTime" property="registTime"/>
     </resultMap>
 
@@ -27,6 +29,7 @@
         #{adminId},
         #{adminName},
         #{password},
+        #{accessToken},
         #{registTime}
         )
     </insert>
@@ -37,5 +40,12 @@
         FROM admin
         WHERE adminName = #{0}
     </select>
+
+    <update id="updateAccessToken" parameterType="cn.edu.nju.software.entity.Admin">
+        UPDATE admin
+        SET
+        accessToken=#{accessToken},
+        WHERE username = #{username}
+    </update>
 
 </mapper>

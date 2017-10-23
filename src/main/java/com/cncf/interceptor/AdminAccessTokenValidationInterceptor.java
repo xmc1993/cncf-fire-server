@@ -39,14 +39,16 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         logger.info("************:" + request.getRequestURI());
+        System.err.println("进入preHandle()方法");
         this.checkLogin(request, response, handler);
         return super.preHandle(request, response, handler);
     }
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-
+        System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         String AccessToken = request.getHeader("Authorization");
+        System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Jedis jedis = JedisUtil.getJedis();
         try {
             byte[] bytes = jedis.get(AccessToken.getBytes());
@@ -67,7 +69,7 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
                     //刷新token的时间
 
 
-                    jedis.set(AccessToken.getBytes(), bytes);
+                    //有新的访问时session重新计时
                     jedis.expire(AccessToken.getBytes(), 60 * 60 * 6);//缓存用户信息30天
                 }
             }
@@ -78,7 +80,6 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
         }finally {
             jedis.close();
         }
-
         return true;
     }
 
