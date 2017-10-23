@@ -3,15 +3,19 @@ package com.cncf.controller.manage;
 import com.cncf.entity.Admin;
 import com.cncf.response.ResponseData;
 import com.cncf.service.AdminService;
+import com.cncf.util.JedisUtil;
+import com.cncf.util.ObjectAndByte;
+import com.cncf.util.Util;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,9 +34,11 @@ public class AdminController {
     @ApiOperation(value = "登录", notes = "")
     @RequestMapping(value = "login", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> login(String adminName, String password, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseData<Admin> login(@ApiParam("管理员用户名") @RequestParam("adminName") String adminName,
+                                     @ApiParam("管理员密码") @RequestParam("password") String password,
+                                     HttpServletRequest request, HttpServletResponse response) {
         logger.info("login called");
-        ResponseData<String> responseData = new ResponseData<String>();
+        ResponseData<Admin> responseData = new ResponseData<>();
         Admin admin = adminService.getAdminByName(adminName);
         if (admin == null) {
             responseData.jsonFill(2, "管理员不存在", null);
@@ -42,9 +48,19 @@ public class AdminController {
             responseData.jsonFill(2, "账号密码不一致", null);
             return responseData;
         }
-        request.getSession().setAttribute("admin", admin);
-        responseData.jsonFill(2, "登陆成功", null);
 
+        admin.setAccessToken(Util.getToken());
+        boolean res = adminService.updateAccessToken(admin);
+        if (!res) {
+            responseData.jsonFill(2,"登录失败，服务器错误。",null);
+        }
+
+        // 在缓存中存入登录信息
+        Jedis jedis = JedisUtil.getJedis();
+        jedis.set(admin.getAccessToken().getBytes(), ObjectAndByte.toByteArray(admin));
+        jedis.expire(admin.getAccessToken().getBytes(), 60 * 60 * 6);// 缓存用户信息6小时
+        jedis.close();
+        responseData.jsonFill(1,null, admin);
         return responseData;
     }
 
@@ -62,22 +78,27 @@ public class AdminController {
         return responseData;
     }
 
-    @RequestMapping(value = "regist", method = {RequestMethod.POST})
+    @ApiOperation(value = "注册", notes = "")
+    @RequestMapping(value = "/regist", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> regist(Admin admin) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseData<Admin> regist(@ApiParam("管理员用户名") @RequestParam("adminName") String adminName,
+                                      @ApiParam("管理员密码") @RequestParam("password") String password) {
         logger.info("regist called");
-        ResponseData<String> responseData = new ResponseData<String>();
-        if (adminService.getAdminByName(admin.getAdminName()) != null) {
+        ResponseData<Admin> responseData = new ResponseData<>();
+        if (adminService.getAdminByName(adminName) != null) {
             responseData.jsonFill(2, "用户名已存在(adminName already exist)", null);
             return responseData;
         }
-        admin.setRegistTime(new Date());
+        Admin admin=new Admin(); admin.setAdminName(adminName);
+        admin.setPassword(password); admin.setRegistTime(new Date());
         if (!adminService.saveAdmin(admin)) {
-            System.err.println("注册失败");
             responseData.jsonFill(2, "注册失败", null);
             return responseData;
-        } else
-            responseData.jsonFill(2, "注册成功", null);
-        return responseData;
+        } else{
+            responseData.jsonFill(1, null, admin);
+            System.err.println(admin.getRegistTime());
+            return responseData;
+        }
     }
 }
