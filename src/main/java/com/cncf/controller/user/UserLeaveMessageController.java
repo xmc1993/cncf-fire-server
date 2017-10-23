@@ -12,6 +12,7 @@ import com.cncf.util.TokenConfig;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 
+import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.apache.commons.logging.Log;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+@Api(value = "用户留言接口", description = "用户留言接口")
 @Controller
 @RequestMapping("/user/leaveMessage")
 public class UserLeaveMessageController {
