@@ -10,6 +10,8 @@ import com.cncf.service.MessageSetService;
 import com.cncf.util.CaptchaUtil;
 import com.cncf.util.TokenConfig;
 import com.cncf.util.UserUtil;
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.apache.commons.logging.Log;
@@ -20,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -37,14 +44,42 @@ public class UserLeaveMessageController {
     private MessageSetService messageSetService;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private Producer captchaProducer = null;
 
     @ApiOperation(value = "获取留言所需的验证码", notes = "")
     @RequestMapping(value = "getCaptcha", method = RequestMethod.GET)
     @ResponseBody
-    public void getCaptcha(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.err.println("访问了captcha");
-        CaptchaUtil.outputCaptcha(request, response);
+/*        HttpSession session = request.getSession();
+        String code = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        System.out.println("******************验证码是: " + code + "******************");*/
+
+        response.setDateHeader("Expires", 0);
+        // Set standard HTTP/1.1 no-cache headers.
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        // Set IE extended HTTP/1.1 no-cache headers (use addHeader).
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+        // Set standard HTTP/1.0 no-cache header.
+        response.setHeader("Pragma", "no-cache");
+        // return a jpeg
+        response.setContentType("image/jpeg");
+        // create the text for the image
+        String capText = captchaProducer.createText();
+        // store the text in the session
+        request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        // create the image with the text
+        BufferedImage bi = captchaProducer.createImage(capText);
+        ServletOutputStream out = response.getOutputStream();
+        // write the data out
+        ImageIO.write(bi, "jpg", out);
+        try {
+            out.flush();
+        } finally {
+            out.close();
+        }
+        //return null;
     }
 
     @ApiOperation(value = "初始化留言集并添加第一条留言", notes = "内容参数即为第一条留言")
@@ -58,7 +93,7 @@ public class UserLeaveMessageController {
 
         //添加验证码验证
         ResponseData<Message> responseData = new ResponseData<>();
-        String randomString=(String) request.getSession().getAttribute("randomString");
+        String randomString=(String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (captcha == null && randomString == null && !captcha.equalsIgnoreCase(randomString)){
             responseData.jsonFill(2,"验证码不正确",null);
             return responseData;
@@ -100,7 +135,18 @@ public class UserLeaveMessageController {
     @RequestMapping(value = "insertMessage", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Message> insertMessage(@ApiParam("留言集ID") @RequestParam("setId") Integer setId,
-                                               @ApiParam("该条留言的内容") @RequestParam("content") String content, HttpServletRequest request){
+                                               @ApiParam("该条留言的内容") @RequestParam("content") String content,
+                                               @ApiParam("验证码") @RequestParam("captcha") String captcha,
+                                               HttpServletRequest request){
+
+        //添加验证码验证
+        ResponseData<Message> responseData = new ResponseData<>();
+        String randomString=(String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        if (captcha == null && randomString == null && !captcha.equalsIgnoreCase(randomString)){
+            responseData.jsonFill(2,"验证码不正确",null);
+            return responseData;
+        }
+
         return addMessage(setId,content,request);
     }
 

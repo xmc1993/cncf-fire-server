@@ -30,7 +30,7 @@ public class UserArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型ID获得文章", notes =
+    @ApiOperation(value = "根据类型ID获得文章列表并分页显示", notes =
             "1-中心概况；2-法律地位；3-授权证书；4-重点设备；5-地理位置；6-火灾报警产品；7-火灾防护产品；8-灭火设备产品；9-消防装备产品；10-非3C认证产品\n" +
                     "11-通知公告；12-图片新闻；13-行业动态；14-法律法规；15-一分委；16-二分委；17-三分委；18-八分委；19-ISO/TC21/SC6；20-文件下载")
     @RequestMapping(value = "selectArticleByCategoryAndPage", method = {RequestMethod.GET})
