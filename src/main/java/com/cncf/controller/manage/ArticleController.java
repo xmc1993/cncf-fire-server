@@ -1,8 +1,11 @@
 package com.cncf.controller.manage;
 
 import com.cncf.entity.Article;
+import com.cncf.entity.Category;
 import com.cncf.response.ResponseData;
 import com.cncf.service.ArticleService;
+import com.cncf.service.CategoryService;
+import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 import java.util.List;
 
+@Api(value = "文章管理接口", description = "文章管理接口")
 @Controller
 @RequestMapping("/manage/article")
 public class ArticleController {

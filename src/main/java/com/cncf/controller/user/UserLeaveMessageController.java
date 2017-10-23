@@ -7,11 +7,12 @@ import com.cncf.entity.User;
 import com.cncf.response.ResponseData;
 import com.cncf.service.MessageService;
 import com.cncf.service.MessageSetService;
-import com.cncf.util.CaptchaUtil;
 import com.cncf.util.TokenConfig;
-import com.cncf.util.UserUtil;
+
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+
+import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.apache.commons.logging.Log;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+@Api(value = "用户留言接口", description = "用户留言接口")
 @Controller
 @RequestMapping("/user/leaveMessage")
 public class UserLeaveMessageController {

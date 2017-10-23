@@ -279,11 +279,19 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.code.kaptcha/kaptcha -->
-        <dependency>
+<!--        <dependency>
             <groupId>com.google.code.kaptcha</groupId>
             <artifactId>kaptcha</artifactId>
             <version>2.3</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
         </dependency>
+
 
     </dependencies>
 

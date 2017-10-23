@@ -14,6 +14,8 @@ public class User implements Serializable{
     private String mobile;//手机号
     private String password;//密码
     private String company;//公司
+    private String province;//省份
+    private String detailAddress;
     private String city;//城市
     private String email;//邮箱
     private String qq;//qq
