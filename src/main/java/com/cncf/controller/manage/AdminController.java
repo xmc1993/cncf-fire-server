@@ -6,6 +6,7 @@ import com.cncf.service.AdminService;
 import com.cncf.util.JedisUtil;
 import com.cncf.util.ObjectAndByte;
 import com.cncf.util.Util;
+import com.cncf.vo.LoginVo;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -34,11 +35,11 @@ public class AdminController {
     @ApiOperation(value = "登录", notes = "")
     @RequestMapping(value = "login", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<Admin> login(@ApiParam("管理员用户名") @RequestParam("adminName") String adminName,
+    public ResponseData<LoginVo> login(@ApiParam("管理员用户名") @RequestParam("adminName") String adminName,
                                      @ApiParam("管理员密码") @RequestParam("password") String password,
                                      HttpServletRequest request, HttpServletResponse response) {
         logger.info("login called");
-        ResponseData<Admin> responseData = new ResponseData<>();
+        ResponseData<LoginVo> responseData = new ResponseData<>();
         Admin admin = adminService.getAdminByName(adminName);
         if (admin == null) {
             responseData.jsonFill(2, "管理员不存在", null);
@@ -60,7 +61,12 @@ public class AdminController {
         jedis.set(admin.getAccessToken().getBytes(), ObjectAndByte.toByteArray(admin));
         jedis.expire(admin.getAccessToken().getBytes(), 60 * 60 * 6);// 缓存用户信息6小时
         jedis.close();
-        responseData.jsonFill(1,null, admin);
+
+        LoginVo loginVo=new LoginVo();
+        loginVo.setId(admin.getAdminId());
+        loginVo.setAccessToken(admin.getAccessToken());
+
+        responseData.jsonFill(1,null, loginVo);
         return responseData;
     }
 
