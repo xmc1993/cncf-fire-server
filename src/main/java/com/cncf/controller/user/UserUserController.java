@@ -110,16 +110,26 @@ public class UserUserController {
         // 请求来到这里从存入request中的user中取userId来用
         User user = UserUtil.getSessionUser(request);
         user = userService.getUserById(user.getId());
-        user.setNickname(nickname);
-        user.setRealName(realName);
-        user.setSex(sex);
-        user.setCompany(company);
-        user.setProvince(province);
-        user.setCity(city);
-        user.setDetailAddress(detailAddress);
-        user.setEmail(email);
-        user.setQq(qq);
-        user.setHomepage(homepage);
+        if (nickname!=null)
+            user.setNickname(nickname);
+        if (realName!=null)
+            user.setRealName(realName);
+        if (sex!=null)
+            user.setSex(sex);
+        if (company!=null)
+            user.setCompany(company);
+        if (province!=nickname)
+            user.setProvince(province);
+        if (city!=null)
+            user.setCity(city);
+        if (detailAddress!=null)
+            user.setDetailAddress(detailAddress);
+        if (email!=null)
+            user.setEmail(email);
+        if (qq!=null)
+            user.setQq(qq);
+        if (homepage!=null)
+            user.setHomepage(homepage);
         boolean res = userService.updateUser(user);
         if (!res){
             responseData.jsonFill(2, "更新失败", null);

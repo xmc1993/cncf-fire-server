@@ -9,7 +9,7 @@ public interface AdminService {
 
     boolean saveAdmin(Admin admin);
 
-    boolean deleteAdmin(int adminId);
+    boolean deleteAdmin(Integer adminId);
 
     boolean updateAccessToken(Admin admin);
 }

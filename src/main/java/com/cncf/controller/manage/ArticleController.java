@@ -71,9 +71,7 @@ public class ArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型ID获得文章", notes =
-            "1-中心概况；2-法律地位；3-授权证书；4-重点设备；5-地理位置；6-火灾报警产品；7-火灾防护产品；8-灭火设备产品；9-消防装备产品；10-非3C认证产品\n" +
-                    "11-通知公告；12-图片新闻；13-行业动态；14-法律法规；15-一分委；16-二分委；17-三分委；18-八分委；19-ISO/TC21/SC6；20-文件下载")
+    @ApiOperation(value = "根据类型ID获得文章", notes = "")
     @RequestMapping(value = "selectArticleByCategoryAndPage", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List> selectArticleByCategoryAndPage(
@@ -105,30 +103,45 @@ public class ArticleController {
     @ApiOperation(value = "更新文章内容", notes = "")
     @RequestMapping(value = "updateContentById", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> updateContentById(@ApiParam("文章ID") @RequestParam("id") Integer id,
+    public ResponseData<Boolean> updateContentById(@ApiParam("文章ID") @RequestParam("id") Integer id,
                                                   @ApiParam("文章内容") @RequestParam("content") String content) {
-        ResponseData<String> responseData = new ResponseData<>();
-
-        boolean result = articleService.updateContentById(id, content);
-        if (!result) {
-            responseData.jsonFill(2, "更新失败", null);
+        ResponseData<Boolean> responseData = new ResponseData<>();
+        if (content==null){
+            responseData.jsonFill(2,"文章内容为空",false);
             return responseData;
         }
-        responseData.jsonFill(1, null, "更新成功");
+        boolean result = articleService.updateContentById(id, content);
+        if (!result) {
+            responseData.jsonFill(2, "更新失败", false);
+            return responseData;
+        }
+        responseData.jsonFill(1, null,true);
         return responseData;
     }
 
     @ApiOperation(value = "更新文章", notes = "")
     @RequestMapping(value = "updateArticle", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> updateArticle(@ApiParam("文章类") @RequestParam("article") Article article) {
-        ResponseData<String> responseData = new ResponseData<>();
+    public ResponseData<Boolean> updateArticle(
+            @ApiParam("文章ID") @RequestParam(value = "id") Integer id,
+            @ApiParam("文章标题") @RequestParam(value = "title",required = false) String title,
+            @ApiParam("文章发布时间") @RequestParam(value = "publishTime",required = false) String publishTime,
+            @ApiParam("来源") @RequestParam(value = "source",required = false) String source,
+            @ApiParam("点击次数") @RequestParam(value = "click",required = false) String click,
+            @ApiParam("字号") @RequestParam(value = "wordSize",required = false) String wordSize,
+            @ApiParam("文章类型ID") @RequestParam(value = "categoryId",required = false) String categoryId,
+            @ApiParam("文章内容") @RequestParam(value = "content",required = false) String content
+            ) {
+        ResponseData<Boolean> responseData=new ResponseData<>();
+        Article article=new Article();
+        article.setArticleId(id);
+
         boolean result = articleService.updateArticle(article);
         if (!result) {
-            responseData.jsonFill(2, "更新失败", null);
+            responseData.jsonFill(2, "更新失败", false);
             return responseData;
         }
-        responseData.jsonFill(1, null, "更新成功");
+        responseData.jsonFill(1, null, true);
         return responseData;
     }
 

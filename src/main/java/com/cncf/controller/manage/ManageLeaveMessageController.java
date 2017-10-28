@@ -51,8 +51,8 @@ public class ManageLeaveMessageController {
             @ApiParam("PAGE") @RequestParam("page") int page,
             @ApiParam("SIZE") @RequestParam("pageSize") int pageSize){
         ResponseData<List<MessageSet>> responseData = new ResponseData<>();
-        List<MessageSet> MessageSetList=(List<MessageSet>)messageSetService.selectAllMessageSet(page,pageSize);
-        responseData.jsonFill(1, null, MessageSetList);
+        List<MessageSet> messageSetList=(List<MessageSet>)messageSetService.selectAllMessageSet(page,pageSize);
+        responseData.jsonFill(1, null, messageSetList);
         return responseData;
     }
 

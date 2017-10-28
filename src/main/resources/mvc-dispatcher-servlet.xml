@@ -39,6 +39,7 @@
 
             <mvc:exclude-mapping path="/manage/admin/login"/>
             <mvc:exclude-mapping path="/manage/admin/regist"/>
+            <mvc:exclude-mapping path="/manage/btcm/register"/>
             <mvc:exclude-mapping path="/swagger/**"/>
             <mvc:exclude-mapping path="/api-docs/**"/>
 

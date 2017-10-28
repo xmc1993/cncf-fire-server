@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.saveAdmin(admin);
     }
 
-    public boolean deleteAdmin(int adminId) {
+    public boolean deleteAdmin(Integer adminId) {
         return adminDao.deleteAdmin(adminId);
     }
 
