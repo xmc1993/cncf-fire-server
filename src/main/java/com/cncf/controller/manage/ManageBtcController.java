@@ -35,7 +35,7 @@ public class ManageBtcController {
     public ResponseData<List<Btc>> selectAllBtc(){
         List<Btc> btcList=btcService.selectAllBtc();
         ResponseData<List<Btc>> responseData=new ResponseData<>();
-        if (btcList==null){
+        if (btcList.size()==0){
             responseData.jsonFill(2,"无分委会信息",null);
             return responseData;
         }
@@ -80,6 +80,7 @@ public class ManageBtcController {
             @ApiParam("分委会简称") @RequestParam(value = "shortName",required = false) String shortName,
             @ApiParam("分委会编号") @RequestParam(value = "serialNumber",required = false) String serialNumber,
             @ApiParam("分委会简介") @RequestParam(value = "btcBrief",required = false) String btcBrief,
+            @ApiParam("分委会联系方式") @RequestParam(value = "connection",required = false) String connection,
             @ApiParam("模块ID") @RequestParam(value = "moduleId",required = false) String moduleId){
         ResponseData<Boolean> responseData=new ResponseData<>();
         Btc btc=new Btc();
@@ -88,6 +89,7 @@ public class ManageBtcController {
         btc.setShortName(shortName);
         btc.setSerialNumber(serialNumber);
         btc.setBtcBrief(btcBrief);
+        btc.setConnection(connection);
         btc.setModuleId(moduleId);
         boolean res=btcService.updateBtc(btc);
         if (!res){

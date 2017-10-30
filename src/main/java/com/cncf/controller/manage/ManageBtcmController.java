@@ -5,6 +5,7 @@ import com.cncf.response.ResponseData;
 import com.cncf.service.BtcmService;
 import com.cncf.util.JedisUtil;
 import com.cncf.util.ObjectAndByte;
+import com.cncf.util.TokenConfig;
 import com.cncf.util.Util;
 import com.cncf.vo.LoginVo;
 import com.wordnik.swagger.annotations.Api;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import java.util.List;
  * @author zj
  * @date 2017/10/27 21:32
  */
-@Api(value = "Admin", description = "管理技术委员会分委会的委员的接口")
+@Api(value = "admin", description = "管理端的技术委员会分委会的委员的接口")
 @Controller
 @RequestMapping("/manage/btcm")
 public class ManageBtcmController {
@@ -57,42 +59,6 @@ public class ManageBtcmController {
             return responseData;
         }
         responseData.jsonFill(1,"注册成功",btcm);
-        return responseData;
-    }
-
-    @ApiOperation(value = "委员登录", notes = "")
-    @RequestMapping(value = "login", method = {RequestMethod.POST})
-    @ResponseBody
-    public ResponseData<LoginVo> login(
-            @ApiParam("委员账号") @RequestParam("code") String code,
-            @ApiParam("密码") @RequestParam("password") String password){
-        logger.info("login called");
-        ResponseData<LoginVo> responseData = new ResponseData<>();
-        Btcm btcm=btcmService.getBtcmByCode(code);
-        if (btcm==null){
-            responseData.jsonFill(2,"该账号不存在",null);
-            return responseData;
-        }
-        if (!btcm.getPassword().equals(password)){
-            responseData.jsonFill(2, "账号密码不一致", null);
-            return responseData;
-        }
-        btcm.setAccessToken(Util.getToken());
-        boolean res=btcmService.updateAccessToken(btcm);
-        if (!res) {
-            responseData.jsonFill(2,"登录失败，服务器错误。",null);
-        }
-
-        // 在缓存中存入登录信息
-        Jedis jedis = JedisUtil.getJedis();
-        jedis.set(btcm.getAccessToken().getBytes(), ObjectAndByte.toByteArray(btcm));
-        jedis.expire(btcm.getAccessToken().getBytes(), 60 * 60 * 6);// 缓存用户信息6小时
-        jedis.close();
-
-        LoginVo loginVo=new LoginVo();
-        loginVo.setId(btcm.getId());
-        loginVo.setAccessToken(btcm.getAccessToken());
-        responseData.jsonFill(1,null, loginVo);
         return responseData;
     }
 
@@ -136,14 +102,28 @@ public class ManageBtcmController {
         return responseData;
     }
 
-    @ApiOperation(value = "更新委员信息", notes = "只可更新密码、accessToken、所属分委会btcId")
+    @ApiOperation(value = "更新委员信息", notes = "此接口只可用于更新密码、所属分委会btcId")
     @RequestMapping(value = "updateBtcm", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Boolean> updateBtcm(
-            @ApiParam("委员ID") @RequestParam(value="id") Integer id,
             @ApiParam("密码") @RequestParam(value="password",required = false) String password,
-            @ApiParam("真实姓名") @RequestParam(value = "realName",required = false) String realName){
-        return null;
+            @ApiParam("所属分委会") @RequestParam(value = "btcId",required = false) Integer btcId,
+            HttpServletRequest request){
+        Btcm btcm=(Btcm) request.getAttribute(TokenConfig.DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME);
+        if (password!=null){
+            btcm.setPassword(password);
+        }
+        if (btcId!=null){
+            btcm.setBtcId(btcId);
+        }
+        ResponseData<Boolean> responseData=new ResponseData<>();
+        boolean res=btcmService.updateBtcm(btcm);
+        if (!res){
+            responseData.jsonFill(2,"更新失败",false);
+            return responseData;
+        }
+        responseData.jsonFill(1,null,true);
+        return responseData;
     }
 
 }

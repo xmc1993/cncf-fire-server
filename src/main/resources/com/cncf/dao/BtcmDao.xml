@@ -65,12 +65,6 @@
         <if test="password!=null and password!=''">
             password = #{password},
         </if>
-        <if test="realName!=null and realName!=''">
-            realName = #{realName},
-        </if>
-        <if test="accessToken!=null and accessToken!=''">
-            accessToken = #{accessToken},
-        </if>
         <if test="btcId!=null and btcId!=''">
             btcId = #{btcId}
         </if>

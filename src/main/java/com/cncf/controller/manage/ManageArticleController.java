@@ -21,28 +21,28 @@ import java.util.List;
 @Api(value = "文章管理接口", description = "文章管理接口")
 @Controller
 @RequestMapping("/manage/article")
-public class ArticleController {
+public class ManageArticleController {
     @Autowired
     private ArticleService articleService;
 
     @ApiOperation(value = "根据ID删除文章", notes = "")
     @RequestMapping(value = "deleteById", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<String> deleteById(@ApiParam("文章ID") @RequestParam("id") int id) {
-        ResponseData<String> responseData = new ResponseData<>();
+    public ResponseData<Boolean> deleteById(@ApiParam("文章ID") @RequestParam("id") int id) {
+        ResponseData<Boolean> responseData = new ResponseData<>();
         boolean result = articleService.deleteById(id);
         if (!result) {
-            responseData.jsonFill(2, "删除失败", null);
+            responseData.jsonFill(2, "删除失败", false);
             return responseData;
         }
-        responseData.jsonFill(2, "删除成功", null);
+        responseData.jsonFill(2, "删除成功", true);
         return responseData;
     }
 
     @ApiOperation(value = "插入文章", notes = "")
     @RequestMapping(value = "insertArticle", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> insertArticle(
+    public ResponseData<Article> insertArticle(
             @ApiParam("文章标题") @RequestParam("title") String title,
             @ApiParam("文章来源") @RequestParam("source") String source,
             @ApiParam("文章字号") @RequestParam("wordSize") String wordSize,
@@ -50,13 +50,13 @@ public class ArticleController {
             @ApiParam("文章正文") @RequestParam("content") String content) {
 
         Article article=new Article(title,new Date(),source,0,wordSize,categoryId,content);
-        ResponseData<String> responseData = new ResponseData<>();
+        ResponseData<Article> responseData = new ResponseData<>();
         boolean result = articleService.insertArticle(article);
         if (!result) {
             responseData.jsonFill(2, "发布失败", null);
             return responseData;
         }
-        responseData.jsonFill(1, null, "发布成功");
+        responseData.jsonFill(1, null, article);
         return responseData;
     }
 
@@ -87,16 +87,16 @@ public class ArticleController {
     @ApiOperation(value = "更新文章标题", notes = "")
     @RequestMapping(value = "updateTitleById", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<String> updateTitleById(@ApiParam("文章ID") @RequestParam("id") Integer id,
+    public ResponseData<Boolean> updateTitleById(@ApiParam("文章ID") @RequestParam("id") Integer id,
                                                 @ApiParam("文章标题") @RequestParam("title") String title) {
-        ResponseData<String> responseData = new ResponseData<>();
+        ResponseData<Boolean> responseData = new ResponseData<>();
 
         boolean result = articleService.updateTitleById(id, title);
         if (!result) {
-            responseData.jsonFill(2, "更新失败", null);
+            responseData.jsonFill(2, "更新失败", false);
             return responseData;
         }
-        responseData.jsonFill(1, null, "更新成功");
+        responseData.jsonFill(1, null, true);
         return responseData;
     }
 
@@ -106,10 +106,6 @@ public class ArticleController {
     public ResponseData<Boolean> updateContentById(@ApiParam("文章ID") @RequestParam("id") Integer id,
                                                   @ApiParam("文章内容") @RequestParam("content") String content) {
         ResponseData<Boolean> responseData = new ResponseData<>();
-        if (content==null){
-            responseData.jsonFill(2,"文章内容为空",false);
-            return responseData;
-        }
         boolean result = articleService.updateContentById(id, content);
         if (!result) {
             responseData.jsonFill(2, "更新失败", false);

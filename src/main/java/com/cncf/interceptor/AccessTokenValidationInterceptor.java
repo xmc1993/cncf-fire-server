@@ -62,8 +62,7 @@ public class AccessTokenValidationInterceptor extends HandlerInterceptorAdapter 
                 } else {
                     request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, user);
                     //刷新token的时间
-//                    jedis.set(AccessToken.getBytes(), bytes);
-//                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);//缓存用户信息30天
+                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);//缓存用户信息30天
                 }
             }
 

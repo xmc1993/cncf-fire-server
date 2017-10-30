@@ -60,15 +60,8 @@ public class BtcmAccessTokenValidationInterceptor extends HandlerInterceptorAdap
                     response.setStatus(401);
                     throw new LoginException("session invalid");
                 } else {
-                    request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, btcm);
-
-
-                    //设置权限码
-                    //setPowerCodes(request, admin);
-                    //刷新token的时间
-
-
-                    //有新的访问时session重新计时
+                    request.setAttribute(TokenConfig.DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME, btcm);
+                    //request.setAttribute("btcm",btcm);
                     jedis.expire(AccessToken.getBytes(), 60 * 60 * 6);//缓存用户信息30天
                 }
             }

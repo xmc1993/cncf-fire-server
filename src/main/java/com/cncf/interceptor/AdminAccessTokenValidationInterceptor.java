@@ -59,7 +59,7 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
                     response.setStatus(401);
                     throw new LoginException("session invalid");
                 } else {
-                    request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, admin);
+                    request.setAttribute(TokenConfig.DEFAULT_ADMINID_REQUEST_ATTRIBUTE_NAME, admin);
 
 
                     //设置权限码

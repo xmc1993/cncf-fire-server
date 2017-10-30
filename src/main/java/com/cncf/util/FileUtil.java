@@ -1,6 +1,11 @@
 package com.cncf.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 /**
  * Created by zs on 2017/10/18.
@@ -84,6 +89,36 @@ public class FileUtil {
             }
         }
         file.delete();
+    }
+//---------------------------------------以下是ZJ添加的方法----------------------------------------
+
+    public File getFileByName(String fileName){
+        String classPath=getClassPath();
+        File file=new File(classPath+"\\"+fileName);
+        return file;
+    }
+
+    public String getClassPath(){
+        URL url = getClass().getResource("/");
+        File directory = null;
+        try {
+            directory = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String classPath=directory.getAbsolutePath();
+        return classPath;
+    }
+
+    public void cleanup(BufferedReader br, BufferedWriter bw, File tempFile){
+        try {
+            br.close();//提前退出如果不关闭流则会导致后面进来的线程无法删除文件
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        boolean deleteResult = tempFile.delete();
+        System.out.println("临时文件删除结果： " + deleteResult);
     }
 
 }

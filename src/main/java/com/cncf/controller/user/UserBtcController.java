@@ -21,7 +21,7 @@ import java.util.List;
  * @author zj
  * @date 2017/10/26 18:09
  */
-@Api(value = "User", description = "用户接口")
+@Api(value = "user", description = "用户端分委会接口")
 @Controller
 @RequestMapping("/user/btc")
 public class UserBtcController {
@@ -35,7 +35,7 @@ public class UserBtcController {
     public ResponseData<List<Btc>> selectAllBtc(){
         List<Btc> btcList=btcService.selectAllBtc();
         ResponseData<List<Btc>> responseData=new ResponseData<>();
-        if (btcList==null){
+        if (btcList.size()==0){
             responseData.jsonFill(2,"无分委会信息",null);
             return responseData;
         }

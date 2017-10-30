@@ -26,9 +26,9 @@ import java.util.Date;
 @Api(value = "Admin", description = "管理接口")
 @Controller
 @RequestMapping("/manage/admin")
-public class AdminController {
+public class ManageAdminController {
 
-    private static final Log logger = LogFactory.getLog(AdminController.class);
+    private static final Log logger = LogFactory.getLog(ManageAdminController.class);
     @Autowired
     private AdminService adminService;
 

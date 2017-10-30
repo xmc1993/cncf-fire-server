@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
@@ -43,4 +47,10 @@ public class UserArticleController {
         return responseData;
     }
 
+    @ApiOperation(value = "文件下载", notes = "文件下载模块")
+    @RequestMapping(value = "fileDown", method = {RequestMethod.GET})
+    @ResponseBody
+    public void download(HttpServletRequest request, HttpServletResponse response) throws IOException, URISyntaxException, InterruptedException {
+        articleService.download(request,response);
+    }
 }

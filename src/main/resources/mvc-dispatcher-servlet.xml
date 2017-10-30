@@ -47,7 +47,7 @@
         </mvc:interceptor>
 
 <!--        <mvc:interceptor>
-            <mvc:mapping path="/manage/**"/>
+            <mvc:mapping path="/user/**"/>
 
             <mvc:exclude-mapping path="/manage/admin/login"/>
             <mvc:exclude-mapping path="/manage/admin/regist"/>
@@ -56,6 +56,8 @@
 
             <bean class="com.cncf.interceptor.AuthInterceptor"/>
         </mvc:interceptor>-->
+
+
 
     </mvc:interceptors>
 
