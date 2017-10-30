@@ -30,8 +30,18 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/user/updateProfile"/>
             <mvc:mapping path="/user/leaveMessage/**"/>
-
             <bean class="com.cncf.interceptor.AccessTokenValidationInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/btc/cms/insertCms"/>
+            <mvc:mapping path="/btc/cms/deleteCms"/>
+            <mvc:mapping path="/btc/cms/updateCms"/>
+            <mvc:mapping path="/btc/crs/insertCrs"/>
+            <mvc:mapping path="/btc/crs/deleteCrs"/>
+            <mvc:mapping path="/btc/crs/updateCrs"/>
+
+            <bean class="com.cncf.interceptor.BtcmAccessTokenValidationInterceptor"/>
         </mvc:interceptor>
 
         <mvc:interceptor>
@@ -46,7 +56,7 @@
         </mvc:interceptor>
 
 <!--        <mvc:interceptor>
-            <mvc:mapping path="/manage/**"/>
+            <mvc:mapping path="/user/**"/>
 
             <mvc:exclude-mapping path="/manage/admin/login"/>
             <mvc:exclude-mapping path="/manage/admin/regist"/>
@@ -55,6 +65,8 @@
 
             <bean class="com.cncf.interceptor.AuthInterceptor"/>
         </mvc:interceptor>-->
+
+
 
     </mvc:interceptors>
 

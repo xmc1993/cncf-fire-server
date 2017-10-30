@@ -81,26 +81,27 @@
         UPDATE article
         SET
         <if test="title!=null and title!=''">
-            AND title = #{title}
+            title = #{title},
         </if>
         <if test="publishTime!=null and publishTime!=''">
-            AND publishTime = #{publishTime}
+            publishTime = #{publishTime},
         </if>
         <if test="source!=null and source!=''">
-            AND source = #{source}
+            source = #{source},
         </if>
         <if test="click!=null and click!=''">
-            AND click = #{click}
+            click = #{click},
         </if>
         <if test="wordSize!=null and wordSize!=''">
-            AND wordSize = #{wordSize}
+            wordSize = #{wordSize},
         </if>
         <if test="categoryId!=null and categoryId!=''">
-            AND categoryId = #{categoryId}
+            categoryId = #{categoryId},
         </if>
         <if test="content!=null and content!=''">
-            AND content = #{content}
+            content = #{content}
         </if>
+        WHERE articleId=#{0}
     </update>
 
 </mapper>

@@ -10,7 +10,7 @@ public interface AdminDao {
 
     boolean saveAdmin(Admin admin);
 
-    boolean deleteAdmin(int id);
+    boolean deleteAdmin(Integer adminId);
 
     boolean updateAccessToken(Admin admin);
 }

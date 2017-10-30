@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cncf.dao.BtcDao">
+
+    <sql id="fields">
+        id,
+        btcName,
+        shortName,
+        serialNumber,
+        btcBrief,
+        connection
+    </sql>
+
+    <resultMap id="btc" type="com.cncf.entity.Btc">
+        <id column="id" property="id"/>
+        <id column="btcName" property="btcName"/>
+        <id column="shortName" property="shortName"/>
+        <id column="serialNumber" property="serialNumber"/>
+        <id column="btcBrief" property="btcBrief"/>
+        <id column="connection" property="connection"/>
+    </resultMap>
+
+    <insert id="insertBtc" parameterType="com.cncf.entity.Btc" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into btc(
+        <include refid="fields"></include>
+        )
+        VALUES
+        (
+        #{id},
+        #{btcName},
+        #{shortName},
+        #{serialNumber},
+        #{btcBrief},
+        #{connection}
+        )
+    </insert>
+
+    <select id="selectAllBtc" resultType="com.cncf.entity.Btc">
+        SELECT
+        <include refid="fields"></include>
+        FROM btc
+    </select>
+
+    <select id="selectBtcById" resultType="com.cncf.entity.Btc">
+        SELECT
+        <include refid="fields"></include>
+        FROM btc
+        WHERE id = #{0}
+    </select>
+
+    <update id="updateBtc" parameterType="com.cncf.entity.Btc">
+        update btc
+        set
+        <if test="btcName!=null and btcName!=''">
+            btcName = #{btcName},
+        </if>
+        <if test="shortName!=null and shortName!=''">
+            shortName = #{shortName},
+        </if>
+        <if test="serialNumber!=null and serialNumber!=''">
+            serialNumber = #{serialNumber},
+        </if>
+        <if test="btcBrief!=null and btcBrief!=''">
+            btcBrief = #{btcBrief},
+        </if>
+        <if test="connection!=null and connection!=''">
+            connection = #{connection},
+        </if>
+        <if test="moduleId!=null and moduleId!=''">
+            moduleId = #{moduleId}
+        </if>
+        where
+        id=#{id}
+    </update>
+
+</mapper>

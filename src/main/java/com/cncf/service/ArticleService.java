@@ -2,6 +2,10 @@ package com.cncf.service;
 
 import com.cncf.entity.Article;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public interface ArticleService {
@@ -18,4 +22,5 @@ public interface ArticleService {
     boolean updateContentById(int id,String content);
 
     boolean updateArticle(Article article);
+    public void download(HttpServletRequest request, HttpServletResponse response) throws IOException, URISyntaxException, InterruptedException;
 }

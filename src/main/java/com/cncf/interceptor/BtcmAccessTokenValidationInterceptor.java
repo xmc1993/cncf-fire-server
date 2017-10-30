@@ -1,6 +1,7 @@
 package com.cncf.interceptor;
 
 import com.cncf.entity.Admin;
+import com.cncf.entity.Btcm;
 import com.cncf.util.JedisUtil;
 import com.cncf.util.ObjectAndByte;
 import com.cncf.util.TokenConfig;
@@ -28,9 +29,9 @@ import java.util.List;
  * </ul>
  *
  */
-public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAdapter {
+public class BtcmAccessTokenValidationInterceptor extends HandlerInterceptorAdapter {
 
-    private static Logger logger = LoggerFactory.getLogger(AdminAccessTokenValidationInterceptor.class);
+    private static Logger logger = LoggerFactory.getLogger(BtcmAccessTokenValidationInterceptor.class);
 
     //@Autowired
     //private AdminPowerService adminPowerService;
@@ -54,20 +55,13 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
                 response.setStatus(401);
                 throw new LoginException("session invalid");
             } else {
-                Admin admin = (Admin) ObjectAndByte.toObject(bytes);
-                if (admin == null) {
+                Btcm btcm = (Btcm) ObjectAndByte.toObject(bytes);
+                if (btcm == null) {
                     response.setStatus(401);
                     throw new LoginException("session invalid");
                 } else {
-                    request.setAttribute(TokenConfig.DEFAULT_ADMINID_REQUEST_ATTRIBUTE_NAME, admin);
-
-
-                    //设置权限码
-                    //setPowerCodes(request, admin);
-                    //刷新token的时间
-
-
-                    //有新的访问时session重新计时
+                    request.setAttribute(TokenConfig.DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME, btcm);
+                    //request.setAttribute("btcm",btcm);
                     jedis.expire(AccessToken.getBytes(), 60 * 60 * 6);//缓存用户信息30天
                 }
             }

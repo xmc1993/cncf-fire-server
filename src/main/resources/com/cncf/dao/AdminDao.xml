@@ -45,7 +45,7 @@
         UPDATE admin
         SET
         accessToken=#{accessToken}
-        WHERE adminName = #{adminName}
+        WHERE adminId = #{adminId}
     </update>
 
 </mapper>
