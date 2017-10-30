@@ -29,6 +29,27 @@ public class ManageBtcController {
     @Autowired
     private BtcService btcService;
 
+    @ApiOperation(value = "新增Btc(分委会)", notes = "")
+    @RequestMapping(value = "insertBtc", method = {RequestMethod.POST})
+    @ResponseBody
+    public ResponseData<Btc> insertBtc(
+            @ApiParam("分委会名") @RequestParam(value="btcName",required = false) String btcName,
+            @ApiParam("分委会简称") @RequestParam(value = "shortName",required = false) String shortName,
+            @ApiParam("分委会编号") @RequestParam(value = "serialNumber",required = false) String serialNumber,
+            @ApiParam("分委会简介") @RequestParam(value = "btcBrief",required = false) String btcBrief,
+            @ApiParam("分委会联系方式") @RequestParam(value = "connection",required = false) String connection){
+        ResponseData<Btc> responseData=new ResponseData<>();
+        Btc btc=new Btc(); btc.setBtcName(btcName); btc.setShortName(shortName);
+        btc.setSerialNumber(serialNumber); btc.setBtcBrief(btcBrief); btc.setConnection(connection);
+        Boolean res=btcService.insertBtc(btc);
+        if (!res){
+            responseData.jsonFill(2,"新增分委会失败",null);
+            return responseData;
+        }
+        responseData.jsonFill(1,null,btc);
+        return responseData;
+    }
+
     @ApiOperation(value = "获取所有的Btc(分委会)", notes = "")
     @RequestMapping(value = "selectAllBtc", method = {RequestMethod.GET})
     @ResponseBody
@@ -40,21 +61,6 @@ public class ManageBtcController {
             return responseData;
         }
         responseData.jsonFill(1,null,btcList);
-        return responseData;
-    }
-
-    @ApiOperation(value = "通过模块ID获取需要显示其信息的Btc(分委会)", notes = "")
-    @RequestMapping(value = "selectBtcByModuleId", method = {RequestMethod.GET})
-    @ResponseBody
-    public ResponseData<Btc> selectBtcByModuleId(@ApiParam("模块ID") @RequestParam("moduleId") String moduleId){
-
-        Btc btc=btcService.selectBtcByModuleId(moduleId);
-        ResponseData<Btc> responseData=new ResponseData<>();
-        if (btc==null){
-            responseData.jsonFill(2,"无分委会信息",null);
-            return responseData;
-        }
-        responseData.jsonFill(1,null,btc);
         return responseData;
     }
 
@@ -80,8 +86,7 @@ public class ManageBtcController {
             @ApiParam("分委会简称") @RequestParam(value = "shortName",required = false) String shortName,
             @ApiParam("分委会编号") @RequestParam(value = "serialNumber",required = false) String serialNumber,
             @ApiParam("分委会简介") @RequestParam(value = "btcBrief",required = false) String btcBrief,
-            @ApiParam("分委会联系方式") @RequestParam(value = "connection",required = false) String connection,
-            @ApiParam("模块ID") @RequestParam(value = "moduleId",required = false) String moduleId){
+            @ApiParam("分委会联系方式") @RequestParam(value = "connection",required = false) String connection){
         ResponseData<Boolean> responseData=new ResponseData<>();
         Btc btc=new Btc();
         btc.setId(id);
@@ -90,7 +95,6 @@ public class ManageBtcController {
         btc.setSerialNumber(serialNumber);
         btc.setBtcBrief(btcBrief);
         btc.setConnection(connection);
-        btc.setModuleId(moduleId);
         boolean res=btcService.updateBtc(btc);
         if (!res){
             responseData.jsonFill(2,"更新失败",false);

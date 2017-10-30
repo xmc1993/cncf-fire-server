@@ -8,14 +8,6 @@
     <result column="btcId" property="btcid" jdbcType="INTEGER" />
   </resultMap>
 
-  <select id="selectByBtcIdPage" resultType="com.cncf.entity.Cms">
-    select
-    <include refid="fields"></include>
-    from cms
-    where btcId = #{0}
-    limit #{1},#{2}
-  </select>
-
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -77,6 +69,7 @@
   <sql id="Base_Column_List" >
     id, snumber, sname, btcId
   </sql>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cncf.entity.CmsExample" >
     select
     <if test="distinct" >
@@ -203,4 +196,13 @@
       btcId = #{btcid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByBtcIdPage" resultType="com.cncf.entity.Cms">
+    select
+    <include refid="Base_Column_List"></include>
+    from cms
+    where btcId = #{0}
+    limit #{1},#{2}
+  </select>
+
 </mapper>

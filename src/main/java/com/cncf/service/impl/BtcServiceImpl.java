@@ -18,13 +18,13 @@ public class BtcServiceImpl implements BtcService {
     private BtcDao btcDao;
 
     @Override
-    public List<Btc> selectAllBtc() {
-        return btcDao.selectAllBtc();
+    public boolean insertBtc(Btc btc) {
+        return btcDao.insertBtc(btc);
     }
 
     @Override
-    public Btc selectBtcByModuleId(String moduleId) {
-        return btcDao.selectBtcByModuleId(moduleId);
+    public List<Btc> selectAllBtc() {
+        return btcDao.selectAllBtc();
     }
 
     @Override

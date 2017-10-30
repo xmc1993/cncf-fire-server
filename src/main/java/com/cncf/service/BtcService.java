@@ -10,8 +10,8 @@ import java.util.List;
  * @date 2017/10/25 18:41
  */
 public interface BtcService {
+    boolean insertBtc(Btc btc);
     List<Btc> selectAllBtc();
-    Btc selectBtcByModuleId(String moduleId);
     Btc selectBtcById(Integer id);
     boolean updateBtc(Btc btc);
 }

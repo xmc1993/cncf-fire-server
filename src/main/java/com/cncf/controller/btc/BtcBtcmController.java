@@ -1,4 +1,4 @@
-package com.cncf.controller.user;
+package com.cncf.controller.btc;
 
 import com.cncf.entity.Btcm;
 import com.cncf.response.ResponseData;
@@ -20,18 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
-import java.util.Date;
-import java.util.List;
-
 /**
  * @author zj
  * @date 2017/10/27 21:32
  */
-@Api(value = "user/btcm", description = "用户端的技术委员会分委会的委员的接口")
+@Api(value = "BTCM", description = "和委员有关的接口")
 @Controller
-@RequestMapping("/user/btcm")
-public class UserBtcmController {
-    private static final Log logger = LogFactory.getLog(UserBtcmController.class);
+@RequestMapping("/btc/btcm")
+public class BtcBtcmController {
+    private static final Log logger = LogFactory.getLog(BtcBtcmController.class);
     @Autowired
     private BtcmService btcmService;
 

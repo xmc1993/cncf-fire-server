@@ -8,8 +8,7 @@
         shortName,
         serialNumber,
         btcBrief,
-        connection,
-        moduleId
+        connection
     </sql>
 
     <resultMap id="btc" type="com.cncf.entity.Btc">
@@ -19,20 +18,28 @@
         <id column="serialNumber" property="serialNumber"/>
         <id column="btcBrief" property="btcBrief"/>
         <id column="connection" property="connection"/>
-        <id column="moduleId" property="moduleId"/>
     </resultMap>
+
+    <insert id="insertBtc" parameterType="com.cncf.entity.Btc" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into btc(
+        <include refid="fields"></include>
+        )
+        VALUES
+        (
+        #{id},
+        #{btcName},
+        #{shortName},
+        #{serialNumber},
+        #{btcBrief},
+        #{connection}
+        )
+    </insert>
 
     <select id="selectAllBtc" resultType="com.cncf.entity.Btc">
         SELECT
         <include refid="fields"></include>
         FROM btc
-    </select>
-
-    <select id="selectBtcByModuleId" resultType="com.cncf.entity.Btc">
-        SELECT
-        <include refid="fields"></include>
-        FROM btc
-        WHERE moduleId = #{0}
     </select>
 
     <select id="selectBtcById" resultType="com.cncf.entity.Btc">

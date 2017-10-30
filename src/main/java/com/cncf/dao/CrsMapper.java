@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface CrsMapper {
+    List<Crs> selectByBtcIdPage(Integer btcid, int page, int pageSize);
+
     int countByExample(CrsExample example);
 
     int deleteByExample(CrsExample example);

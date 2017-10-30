@@ -14,5 +14,4 @@ public class Btc {
     private String serialNumber;
     private String btcBrief;
     private String connection;
-    private String moduleId;
 }

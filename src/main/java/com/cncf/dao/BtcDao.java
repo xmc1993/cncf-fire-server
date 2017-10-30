@@ -12,8 +12,8 @@ import java.util.List;
  */
 @Repository
 public interface BtcDao {
+    boolean insertBtc(Btc btc);
     List<Btc> selectAllBtc();
-    Btc selectBtcByModuleId(String moduleId);
     Btc selectBtcById(Integer id);
     boolean updateBtc(Btc btc);
 }

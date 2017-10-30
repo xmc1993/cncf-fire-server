@@ -1,4 +1,4 @@
-package com.cncf.controller.user;
+package com.cncf.controller.btc;
 
 import com.cncf.entity.Btc;
 import com.cncf.response.ResponseData;
@@ -21,11 +21,11 @@ import java.util.List;
  * @author zj
  * @date 2017/10/26 18:09
  */
-@Api(value = "user", description = "用户端分委会接口")
+@Api(value = "Btc", description = "分委会模块接口")
 @Controller
-@RequestMapping("/user/btc")
-public class UserBtcController {
-    private static final Log logger = LogFactory.getLog(UserBtcController.class);
+@RequestMapping("/btc/btc")
+public class BtcBtcController {
+    private static final Log logger = LogFactory.getLog(BtcBtcController.class);
     @Autowired
     private BtcService btcService;
 
@@ -40,21 +40,6 @@ public class UserBtcController {
             return responseData;
         }
         responseData.jsonFill(1,null,btcList);
-        return responseData;
-    }
-
-    @ApiOperation(value = "通过模块ID获取需要显示其信息的Btc(分委会)", notes = "")
-    @RequestMapping(value = "selectBtcByModuleId", method = {RequestMethod.GET})
-    @ResponseBody
-    public ResponseData<Btc> selectBtcByModuleId(@ApiParam("模块ID") @RequestParam("moduleId") String moduleId){
-
-        Btc btc=btcService.selectBtcByModuleId(moduleId);
-        ResponseData<Btc> responseData=new ResponseData<>();
-        if (btc==null){
-            responseData.jsonFill(2,"无分委会信息",null);
-            return responseData;
-        }
-        responseData.jsonFill(1,null,btc);
         return responseData;
     }
 

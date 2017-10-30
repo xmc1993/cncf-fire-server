@@ -1,4 +1,4 @@
-package com.cncf.controller.user;
+package com.cncf.controller.btc;
 
 import com.cncf.entity.Cms;
 import com.cncf.response.ResponseData;
@@ -21,10 +21,10 @@ import java.util.List;
  */
 @Api(value = "CMS", description = "目前管理的标准（Current Management Standard）")
 @Controller
-@RequestMapping("/user/cms")
-public class CmsController {
+@RequestMapping("/btc/cms")
+public class BtcCmsController {
     @Autowired
-    CmsService cmsService;
+    private CmsService cmsService;
 
     @ApiOperation(value = "添加一个目前管理的标准", notes = "")
     @RequestMapping(value = "insertCms", method = {RequestMethod.POST})
@@ -32,7 +32,7 @@ public class CmsController {
     public Cms insertCms(
             @ApiParam("标准的编号") @RequestParam("snumber") String snumber,
             @ApiParam("标准名称") @RequestParam("sname") String sname,
-            @ApiParam("非委会ID") @RequestParam("btcid") Integer btcid){
+            @ApiParam("所属分委会ID") @RequestParam("btcid") Integer btcid){
         Cms cms=new Cms(); cms.setSnumber(snumber);
         cms.setSname(sname); cms.setBtcid(btcid);
         int res=cmsService.insertCms(cms);
