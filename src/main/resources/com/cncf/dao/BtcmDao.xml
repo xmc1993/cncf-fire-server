@@ -40,6 +40,13 @@
         )
     </insert>
 
+    <select id="getBtcmById" resultType="com.cncf.entity.Btcm">
+        SELECT
+        <include refid="fields"></include>
+        FROM btcm
+        WHERE id = #{0}
+    </select>
+
     <select id="getBtcmByCode" resultType="com.cncf.entity.Btcm">
         SELECT
         <include refid="fields"></include>

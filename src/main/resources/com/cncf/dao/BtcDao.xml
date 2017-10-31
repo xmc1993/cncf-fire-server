@@ -62,7 +62,7 @@
             serialNumber = #{serialNumber},
         </if>
         <if test="btcBrief!=null and btcBrief!=''">
-            btcBrief = #{btcBrief},
+            btcBrief = #{btcBrief}
         </if>
         <if test="connection!=null and connection!=''">
             connection = #{connection}
