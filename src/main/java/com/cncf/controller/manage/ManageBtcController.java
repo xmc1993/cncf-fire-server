@@ -72,6 +72,7 @@ public class ManageBtcController {
         Btc btc=btcService.selectBtcById(id);
         if (btc==null){
             responseData.jsonFill(2,"无效的分委会id",null);
+            return responseData;
         }
         responseData.jsonFill(1,null,btc);
         return responseData;

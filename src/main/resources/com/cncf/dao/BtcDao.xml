@@ -65,10 +65,7 @@
             btcBrief = #{btcBrief},
         </if>
         <if test="connection!=null and connection!=''">
-            connection = #{connection},
-        </if>
-        <if test="moduleId!=null and moduleId!=''">
-            moduleId = #{moduleId}
+            connection = #{connection}
         </if>
         where
         id=#{id}
