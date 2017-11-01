@@ -41,7 +41,7 @@ public class ManageArticleController {
     @RequestMapping(value = "insertArticle", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Article> insertArticle(
-            @ApiParam("文章标题") @RequestParam("title") String title,
+            @ApiParam("文章标题(不得多于100个字符/汉字)") @RequestParam("title") String title,
             @ApiParam("文章来源") @RequestParam("source") String source,
             @ApiParam("文章字号") @RequestParam(value = "wordSize" ,required = false) String wordSize,
             @ApiParam("文章类型") @RequestParam("categoryId") Integer categoryId,
@@ -89,7 +89,7 @@ public class ManageArticleController {
     @RequestMapping(value = "updateTitleById", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Boolean> updateTitleById(@ApiParam("文章ID") @RequestParam("id") Integer id,
-                                                @ApiParam("文章标题") @RequestParam("title") String title) {
+                                                @ApiParam("文章标题(不得多于100个字符/汉字)") @RequestParam("title") String title) {
         ResponseData<Boolean> responseData = new ResponseData<>();
 
         boolean result = articleService.updateTitleById(id, title);
@@ -121,7 +121,7 @@ public class ManageArticleController {
     @ResponseBody
     public ResponseData<Boolean> updateArticle(
             @ApiParam("文章ID") @RequestParam(value = "id") Integer id,
-            @ApiParam("文章标题") @RequestParam(value = "title",required = false) String title,
+            @ApiParam("文章标题(不得多于100个字符/汉字)") @RequestParam(value = "title",required = false) String title,
             @ApiParam("来源") @RequestParam(value = "source",required = false) String source,
             @ApiParam("点击次数") @RequestParam(value = "click",required = false) Integer click,
             @ApiParam("字号") @RequestParam(value = "wordSize",required = false) String wordSize,
