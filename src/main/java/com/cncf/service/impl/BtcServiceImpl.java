@@ -36,4 +36,9 @@ public class BtcServiceImpl implements BtcService {
     public boolean updateBtc(Btc btc) {
         return btcDao.updateBtc(btc);
     }
+
+    @Override
+    public boolean deleteBtc(Integer id) {
+        return btcDao.deleteBtc(id);
+    }
 }

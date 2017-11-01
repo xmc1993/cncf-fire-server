@@ -2,6 +2,7 @@ package com.cncf.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
  * @date 2017/10/27 3:33
  */
 @Data
-public class Btcm {
+public class Btcm implements Serializable {
 
     private Integer id;
     private String code;

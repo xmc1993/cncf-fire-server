@@ -137,6 +137,7 @@
       </if>
     </trim>
   </insert>
+
   <select id="countByExample" parameterType="com.cncf.entity.CmsExample" resultType="java.lang.Integer" >
     select count(*) from cms
     <if test="_parameter != null" >

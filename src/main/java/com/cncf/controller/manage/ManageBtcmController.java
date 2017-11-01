@@ -99,6 +99,7 @@ public class ManageBtcmController {
         ResponseData<List<Btcm>> responseData = new ResponseData<>();
         List<Btcm> btcmList=btcmService.selectAllBtcmByPage(page,pageSize);
         responseData.jsonFill(1, null,btcmList);
+        responseData.setCount(btcmList.size());
         return responseData;
     }
 
@@ -106,17 +107,21 @@ public class ManageBtcmController {
     @RequestMapping(value = "updateBtcm", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Boolean> updateBtcm(
+            @ApiParam("委员id") @RequestParam(value="id") Integer id,
             @ApiParam("密码") @RequestParam(value="password",required = false) String password,
-            @ApiParam("所属分委会") @RequestParam(value = "btcId",required = false) Integer btcId,
-            HttpServletRequest request){
-        Btcm btcm=(Btcm) request.getAttribute(TokenConfig.DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME);
+            @ApiParam("所属分委会") @RequestParam(value = "btcId",required = false) Integer btcId){
+        ResponseData<Boolean> responseData=new ResponseData<>();
+        Btcm btcm=btcmService.getBtcmById(id);
+        if (btcm==null){
+            responseData.jsonFill(2,"无效的id",false);
+            return responseData;
+        }
         if (password!=null){
             btcm.setPassword(password);
         }
         if (btcId!=null){
             btcm.setBtcId(btcId);
         }
-        ResponseData<Boolean> responseData=new ResponseData<>();
         boolean res=btcmService.updateBtcm(btcm);
         if (!res){
             responseData.jsonFill(2,"更新失败",false);

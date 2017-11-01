@@ -10,10 +10,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -26,16 +23,17 @@ public class ManageArticleController {
     private ArticleService articleService;
 
     @ApiOperation(value = "根据ID删除文章", notes = "")
-    @RequestMapping(value = "deleteById", method = {RequestMethod.GET})
+    @RequestMapping(value = "deleteById/{articleId}", method = {RequestMethod.DELETE})
     @ResponseBody
-    public ResponseData<Boolean> deleteById(@ApiParam("文章ID") @RequestParam("id") int id) {
+    public ResponseData<Boolean> deleteById(@ApiParam("文章ID") @PathVariable Integer articleId) {
         ResponseData<Boolean> responseData = new ResponseData<>();
-        boolean result = articleService.deleteById(id);
+        System.err.println(articleId);
+        boolean result = articleService.deleteById(articleId);
         if (!result) {
             responseData.jsonFill(2, "删除失败", false);
             return responseData;
         }
-        responseData.jsonFill(2, "删除成功", true);
+        responseData.jsonFill(1, "删除成功", true);
         return responseData;
     }
 
@@ -45,11 +43,13 @@ public class ManageArticleController {
     public ResponseData<Article> insertArticle(
             @ApiParam("文章标题") @RequestParam("title") String title,
             @ApiParam("文章来源") @RequestParam("source") String source,
-            @ApiParam("文章字号") @RequestParam("wordSize") String wordSize,
+            @ApiParam("文章字号") @RequestParam(value = "wordSize" ,required = false) String wordSize,
             @ApiParam("文章类型") @RequestParam("categoryId") Integer categoryId,
-            @ApiParam("文章正文") @RequestParam("content") String content) {
+            @ApiParam("文章正文") @RequestParam("content") String content,
+            @ApiParam("图片URL") @RequestParam(value = "imgUrl" ,required = false) String imgUrl,
+            @ApiParam("附件URL") @RequestParam(value = "attachUrl" ,required = false) String attachUrl) {
 
-        Article article=new Article(title,new Date(),source,0,wordSize,categoryId,content);
+        Article article=new Article(title,new Date(),source,0,wordSize,categoryId,content,imgUrl,attachUrl);
         ResponseData<Article> responseData = new ResponseData<>();
         boolean result = articleService.insertArticle(article);
         if (!result) {
@@ -71,7 +71,7 @@ public class ManageArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型ID获得文章", notes = "")
+    @ApiOperation(value = "根据类型ID获得文章列表并分页显示", notes = "")
     @RequestMapping(value = "selectArticleByCategoryAndPage", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List> selectArticleByCategoryAndPage(
@@ -81,6 +81,7 @@ public class ManageArticleController {
         ResponseData<List> responseData = new ResponseData<>();
         List articleList = articleService.selectArticleByCategoryAndPage(categoryId,page,pageSize);
         responseData.jsonFill(1, null, articleList);
+        responseData.setCount(articleList.size());
         return responseData;
     }
 
@@ -121,16 +122,20 @@ public class ManageArticleController {
     public ResponseData<Boolean> updateArticle(
             @ApiParam("文章ID") @RequestParam(value = "id") Integer id,
             @ApiParam("文章标题") @RequestParam(value = "title",required = false) String title,
-            @ApiParam("文章发布时间") @RequestParam(value = "publishTime",required = false) String publishTime,
             @ApiParam("来源") @RequestParam(value = "source",required = false) String source,
-            @ApiParam("点击次数") @RequestParam(value = "click",required = false) String click,
+            @ApiParam("点击次数") @RequestParam(value = "click",required = false) Integer click,
             @ApiParam("字号") @RequestParam(value = "wordSize",required = false) String wordSize,
-            @ApiParam("文章类型ID") @RequestParam(value = "categoryId",required = false) String categoryId,
-            @ApiParam("文章内容") @RequestParam(value = "content",required = false) String content
+            @ApiParam("文章类型ID") @RequestParam(value = "categoryId",required = false) Integer categoryId,
+            @ApiParam("文章内容") @RequestParam(value = "content",required = false) String content,
+            @ApiParam("图片URL") @RequestParam(value = "imgUrl",required = false) String imgUrl,
+            @ApiParam("附件URL") @RequestParam(value = "attachUrl",required = false) String attachUrl
             ) {
         ResponseData<Boolean> responseData=new ResponseData<>();
-        Article article=new Article();
-        article.setArticleId(id);
+
+        Article article=new Article(); article.setArticleId(id); article.setTitle(title);
+        article.setSource(source); article.setClick(click); article.setWordSize(wordSize);
+        article.setCategoryId(categoryId); article.setContent(content);
+        article.setImgUrl(imgUrl); article.setAttachUrl(attachUrl);
 
         boolean result = articleService.updateArticle(article);
         if (!result) {

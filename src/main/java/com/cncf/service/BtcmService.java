@@ -10,6 +10,7 @@ import java.util.List;
  * @date 2017/10/27 3:37
  */
 public interface BtcmService {
+    Btcm getBtcmById(Integer id);
     Btcm getBtcmByCode(String code);
     List<Btcm> selectAllBtcmByPage(int page, int pageSize);
     boolean saveBtcm(Btcm btcm);

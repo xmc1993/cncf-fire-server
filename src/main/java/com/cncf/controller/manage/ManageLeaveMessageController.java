@@ -53,6 +53,7 @@ public class ManageLeaveMessageController {
         ResponseData<List<MessageSet>> responseData = new ResponseData<>();
         List<MessageSet> messageSetList=(List<MessageSet>)messageSetService.selectAllMessageSet(page,pageSize);
         responseData.jsonFill(1, null, messageSetList);
+        responseData.setCount(messageSetList.size());
         return responseData;
     }
 

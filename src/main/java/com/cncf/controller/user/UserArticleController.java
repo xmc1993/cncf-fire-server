@@ -44,13 +44,14 @@ public class UserArticleController {
         ResponseData<List> responseData = new ResponseData<>();
         List articleList = articleService.selectArticleByCategoryAndPage(categoryId,page,pageSize);
         responseData.jsonFill(1, null, articleList);
+        responseData.setCount(articleList.size());
         return responseData;
     }
 
-    @ApiOperation(value = "文件下载", notes = "文件下载模块")
+/*    @ApiOperation(value = "文件下载", notes = "文件下载模块")
     @RequestMapping(value = "fileDown", method = {RequestMethod.GET})
     @ResponseBody
     public void download(HttpServletRequest request, HttpServletResponse response) throws IOException, URISyntaxException, InterruptedException {
         articleService.download(request,response);
-    }
+    }*/
 }

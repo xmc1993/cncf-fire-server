@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface BtcmDao {
+    Btcm getBtcmById(Integer id);
     Btcm getBtcmByCode(String code);
     List<Btcm> selectAllBtcmByPage(int page, int pageSize);
     boolean saveBtcm(Btcm btcm);

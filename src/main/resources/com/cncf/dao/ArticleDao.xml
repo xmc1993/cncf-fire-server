@@ -11,7 +11,9 @@
         click,
         wordSize,
         categoryId,
-        content
+        content,
+        imgUrl,
+        attachUrl
     </sql>
 
     <resultMap id="article" type="com.cncf.entity.Article">
@@ -23,11 +25,13 @@
         <id column="wordSize" property="wordSize"/>
         <id column="categoryId" property="categoryId"/>
         <id column="content" property="content"/>
+        <id column="imgUrl" property="imgUrl"/>
+        <id column="attachUrl" property="attachUrl"/>
     </resultMap>
 
     <delete id="deleteById">
         DELETE FROM article
-        WHERE id = #{0}
+        WHERE articleId = #{0}
     </delete>
 
     <insert id="insertArticle" parameterType="com.cncf.entity.Article" keyProperty="articleId"
@@ -44,11 +48,13 @@
         #{click},
         #{wordSize},
         #{categoryId},
-        #{content}
+        #{content},
+        #{imgUrl},
+        #{attachUrl}
         )
     </insert>
 
-    <select id="selectTitleById" resultType="com.cncf.entity.Article">
+    <select id="selectTitleById" resultType="java.lang.String">
         SELECT title
         FROM article
         WHERE articleId = #{0}
@@ -79,12 +85,9 @@
 
     <update id="updateArticle" parameterType="com.cncf.entity.Article">
         UPDATE article
-        SET
+        <set>
         <if test="title!=null and title!=''">
             title = #{title},
-        </if>
-        <if test="publishTime!=null and publishTime!=''">
-            publishTime = #{publishTime},
         </if>
         <if test="source!=null and source!=''">
             source = #{source},
@@ -99,8 +102,15 @@
             categoryId = #{categoryId},
         </if>
         <if test="content!=null and content!=''">
-            content = #{content}
+            content = #{content},
         </if>
+        <if test="imgUrl!=null and imgUrl!=''">
+            imgUrl = #{imgUrl},
+        </if>
+        <if test="attachUrl!=null and attachUrl!=''">
+            attachUrl = #{attachUrl},
+        </if>
+        </set>
         WHERE articleId=#{0}
     </update>
 
