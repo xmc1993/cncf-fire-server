@@ -14,4 +14,5 @@ public interface BtcService {
     List<Btc> selectAllBtc();
     Btc selectBtcById(Integer id);
     boolean updateBtc(Btc btc);
+    boolean deleteBtc(Integer id);
 }

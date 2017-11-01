@@ -198,9 +198,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cncf.entity.Crs" >
     update crs
-    set sname = #{sname,jdbcType=VARCHAR},
+    <set>
+    sname = #{sname,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
-      btcId = #{btcid,jdbcType=INTEGER}
+      btcId = #{btcid,jdbcType=INTEGER},
+    </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

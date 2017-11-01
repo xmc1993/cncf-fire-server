@@ -35,11 +35,12 @@
 
         <mvc:interceptor>
             <mvc:mapping path="/btc/cms/insertCms"/>
-            <mvc:mapping path="/btc/cms/deleteCms"/>
+            <mvc:mapping path="/btc/cms/deleteCms/*"/>
             <mvc:mapping path="/btc/cms/updateCms"/>
             <mvc:mapping path="/btc/crs/insertCrs"/>
             <mvc:mapping path="/btc/crs/deleteCrs"/>
             <mvc:mapping path="/btc/crs/updateCrs"/>
+            <mvc:mapping path="/btc/btcm/logout/*"/>
 
             <bean class="com.cncf.interceptor.BtcmAccessTokenValidationInterceptor"/>
         </mvc:interceptor>

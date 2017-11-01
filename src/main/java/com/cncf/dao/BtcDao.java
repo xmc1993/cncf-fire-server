@@ -16,4 +16,5 @@ public interface BtcDao {
     List<Btc> selectAllBtc();
     Btc selectBtcById(Integer id);
     boolean updateBtc(Btc btc);
+    boolean deleteBtc(Integer id);
 }

@@ -7,6 +7,7 @@ import com.cncf.util.JedisUtil;
 import com.cncf.util.ObjectAndByte;
 import com.cncf.util.Util;
 import com.cncf.vo.LoginVo;
+import com.github.pagehelper.util.StringUtil;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -14,11 +15,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zj
@@ -66,6 +67,20 @@ public class BtcBtcmController {
         loginVo.setAccessToken(btcm.getAccessToken());
         responseData.jsonFill(1,null, loginVo);
         return responseData;
+    }
+
+    @ApiOperation(value = "登出", notes = "")
+    @RequestMapping(value = "logout/{test}", method = { RequestMethod.DELETE })
+    @ResponseBody
+    public void logout(HttpServletRequest request) {
+        String accessToken = request.getHeader("Authorization");
+        if (!StringUtil.isEmpty(accessToken)) {
+            // 注销管理员的session信息
+            Jedis jedis = JedisUtil.getJedis();
+            jedis.del(accessToken.getBytes());
+            jedis.close();
+        }
+
     }
 
 }

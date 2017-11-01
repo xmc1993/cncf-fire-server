@@ -71,7 +71,7 @@
 
 	<update id="updateUser" parameterType="com.cncf.entity.User">
 		update user
-		set
+		<set>
 		nickname=#{nickname},
 		realName=#{realName},
 		sex=#{sex},
@@ -83,7 +83,8 @@
 		qq=#{qq},
 		homepage=#{homepage},
 		identification=#{identification},
-		password=#{password}
+		password=#{password},
+		</set>
 		where
 		id=#{id}
 	</update>

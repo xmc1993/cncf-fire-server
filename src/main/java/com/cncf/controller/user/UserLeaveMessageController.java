@@ -126,8 +126,9 @@ public class UserLeaveMessageController {
             @ApiParam("PAGE") @RequestParam("page") int page,
             @ApiParam("SIZE") @RequestParam("pageSize") int pageSize){
         ResponseData<List<MessageSet>> responseData = new ResponseData<>();
-        List<MessageSet> MessageSetList=messageSetService.selectAllMessageSet(page,pageSize);
-        responseData.jsonFill(1, null, MessageSetList);
+        List<MessageSet> messageSetList=messageSetService.selectAllMessageSet(page,pageSize);
+        responseData.jsonFill(1, null, messageSetList);
+        responseData.setCount(messageSetList.size());
         return responseData;
     }
 

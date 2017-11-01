@@ -18,6 +18,11 @@ public class BtcmServiceImpl implements BtcmService {
     private BtcmDao btcmDao;
 
     @Override
+    public Btcm getBtcmById(Integer id) {
+        return btcmDao.getBtcmById(id);
+    }
+
+    @Override
     public Btcm getBtcmByCode(String code) {
         return btcmDao.getBtcmByCode(code);
     }

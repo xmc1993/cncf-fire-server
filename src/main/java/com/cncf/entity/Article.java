@@ -18,11 +18,13 @@ public class Article {
     private String wordSize;
     private Integer categoryId;
     private String content;
+    private String imgUrl;
+    private String attachUrl;
 
     public Article() {
     }
 
-    public Article(String title, Date publishTime, String source, Integer click, String wordSize, Integer categoryId, String content) {
+    public Article(String title, Date publishTime, String source, Integer click, String wordSize, Integer categoryId, String content,String imgUrl,String attachUrl) {
         this.title = title;
         this.publishTime = publishTime;
         this.source = source;
@@ -30,5 +32,7 @@ public class Article {
         this.wordSize = wordSize;
         this.categoryId = categoryId;
         this.content = content;
+        this.imgUrl=imgUrl;
+        this.attachUrl=attachUrl;
     }
 }
