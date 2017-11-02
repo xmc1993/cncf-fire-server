@@ -5,12 +5,14 @@ import com.cncf.entity.Category;
 import com.cncf.response.ResponseData;
 import com.cncf.service.ArticleService;
 import com.cncf.service.CategoryService;
+import com.cncf.util.UploadFileUtil;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.List;
 public class ManageArticleController {
     @Autowired
     private ArticleService articleService;
+    private static String ARTICLE_IMG_ROOT = "/article/img/";
+    private static String ARTICLE_ATTACH_ROOT = "/article/attach/";
 
     @ApiOperation(value = "根据ID删除文章", notes = "")
     @RequestMapping(value = "deleteById/{articleId}", method = {RequestMethod.DELETE})
@@ -46,14 +50,20 @@ public class ManageArticleController {
             @ApiParam("文章字号") @RequestParam(value = "wordSize" ,required = false) String wordSize,
             @ApiParam("文章类型") @RequestParam("categoryId") Integer categoryId,
             @ApiParam("文章正文") @RequestParam("content") String content,
-            @ApiParam("图片URL") @RequestParam(value = "imgUrl" ,required = false) String imgUrl,
-            @ApiParam("附件URL") @RequestParam(value = "attachUrl" ,required = false) String attachUrl) {
+            @ApiParam("图片文件") @RequestParam(value = "img",required = false) MultipartFile img,
+            @ApiParam("其它附件") @RequestParam(value = "attach" ,required = false) MultipartFile attach) {
 
-        Article article=new Article(title,new Date(),source,0,wordSize,categoryId,content,imgUrl,attachUrl);
+        Article article=new Article(title,new Date(),source,0,wordSize,categoryId,content,null,null);
+
+        String imgUrl = UploadFileUtil.uploadFile(img,ARTICLE_IMG_ROOT);
+        String attachUrl=UploadFileUtil.uploadFile(attach,ARTICLE_ATTACH_ROOT);
+        article.setImgUrl(imgUrl); article.setAttachUrl(attachUrl);
+        System.err.println(imgUrl+"  "+attachUrl);
+
         ResponseData<Article> responseData = new ResponseData<>();
         boolean result = articleService.insertArticle(article);
         if (!result) {
-            responseData.jsonFill(2, "发布失败", null);
+            responseData.jsonFill(2, "文章发布失败", null);
             return responseData;
         }
         responseData.jsonFill(1, null, article);

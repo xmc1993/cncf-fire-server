@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
+/**
+ * @author zj
+ */
 @Api(value = "Admin", description = "管理接口")
 @Controller
 @RequestMapping("/manage/admin")
