@@ -30,8 +30,18 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.insertArticle(article);
     }
 
-    public String selectTitleById(int id) {
+    public String selectTitleById(Integer id) {
         return articleDao.selectTitleById(id);
+    }
+
+    @Override
+    public Article selectArticleById(Integer id) {
+        return articleDao.selectArticleById(id);
+    }
+
+    @Override
+    public List<Article> selectAllArticle() {
+        return articleDao.selectAllArticle();
     }
 
     public List selectArticleByCategoryAndPage(Integer categoryId, int page, int pageSize) {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,19 +47,20 @@ public class ManageArticleController {
     @ResponseBody
     public ResponseData<Article> insertArticle(
             @ApiParam("文章标题(不得多于100个字符/汉字)") @RequestParam("title") String title,
-            @ApiParam("文章来源") @RequestParam("source") String source,
+            @ApiParam("文章来源") @RequestParam(value = "source",required = false) String source,
             @ApiParam("文章字号") @RequestParam(value = "wordSize" ,required = false) String wordSize,
             @ApiParam("文章类型") @RequestParam("categoryId") Integer categoryId,
             @ApiParam("文章正文") @RequestParam("content") String content,
-            @ApiParam("图片文件") @RequestParam(value = "img",required = false) MultipartFile img,
-            @ApiParam("其它附件") @RequestParam(value = "attach" ,required = false) MultipartFile attach) {
+            @ApiParam("是否置顶") @RequestParam(value = "isTop",required = false) Integer isTop,
+            @ApiParam("是否标红") @RequestParam(value = "isRed",required = false) Integer isRed,
+            @ApiParam("图片URL") @RequestParam(value = "imgUrl",required = false) String imgUrl,
+            @ApiParam("附件URL") @RequestParam(value = "attachUrl",required = false) String attachUrl) {
 
-        Article article=new Article(title,new Date(),source,0,wordSize,categoryId,content,null,null);
-
-        String imgUrl = UploadFileUtil.uploadFile(img,ARTICLE_IMG_ROOT);
-        String attachUrl=UploadFileUtil.uploadFile(attach,ARTICLE_ATTACH_ROOT);
+        Article article=new Article();
+        article.setTitle(title); article.setPublishTime(new Date()); article.setSource(source);
+        article.setClick(0); article.setWordSize(wordSize); article.setCategoryId(categoryId);
+        article.setContent(content); article.setIsTop(isTop); article.setIsRed(isRed);
         article.setImgUrl(imgUrl); article.setAttachUrl(attachUrl);
-        System.err.println(imgUrl+"  "+attachUrl);
 
         ResponseData<Article> responseData = new ResponseData<>();
         boolean result = articleService.insertArticle(article);
@@ -73,11 +75,35 @@ public class ManageArticleController {
     @ApiOperation(value = "根据ID获得文章的标题", notes = "")
     @RequestMapping(value = "selectTitleById", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<String> selectTitleById(@ApiParam("文章ID") @RequestParam("id") int id) {
+    public ResponseData<String> selectTitleById(@ApiParam("文章ID") @RequestParam("id") Integer id) {
         ResponseData<String> responseData = new ResponseData<>();
 
         String title = articleService.selectTitleById(id);
         responseData.jsonFill(1, null, title);
+        return responseData;
+    }
+
+    @ApiOperation(value = "根据ID获得文章(不传id时获取所有文章)", notes = "")
+    @RequestMapping(value = "selectArticle", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<List<Article>> selectArticle(
+            @ApiParam("文章ID") @RequestParam(value = "id",required = false) Integer id){
+        ResponseData<List<Article>> responseData = new ResponseData<>();
+        List<Article> articleList=new ArrayList<>();
+        if (id!=null){
+            Article article=articleService.selectArticleById(id);
+            if (article==null){
+                responseData.jsonFill(2,"无效的id",null);
+                return responseData;
+            }
+            articleList.add(article);
+            responseData.jsonFill(1,null,articleList);
+            return responseData;
+        }
+
+        //id为空，查询所有文章
+        articleList=articleService.selectAllArticle();
+        responseData.jsonFill(2,null,articleList);
         return responseData;
     }
 
@@ -132,11 +158,13 @@ public class ManageArticleController {
     public ResponseData<Boolean> updateArticle(
             @ApiParam("文章ID") @RequestParam(value = "id") Integer id,
             @ApiParam("文章标题(不得多于100个字符/汉字)") @RequestParam(value = "title",required = false) String title,
-            @ApiParam("来源") @RequestParam(value = "source",required = false) String source,
+            @ApiParam("来源(不得多于100个字符/汉字)") @RequestParam(value = "source",required = false) String source,
             @ApiParam("点击次数") @RequestParam(value = "click",required = false) Integer click,
             @ApiParam("字号") @RequestParam(value = "wordSize",required = false) String wordSize,
             @ApiParam("文章类型ID") @RequestParam(value = "categoryId",required = false) Integer categoryId,
             @ApiParam("文章内容") @RequestParam(value = "content",required = false) String content,
+            @ApiParam("是否置顶") @RequestParam(value = "isTop",required = false) Integer isTop,
+            @ApiParam("是否标红") @RequestParam(value = "isRed",required = false) Integer isRed,
             @ApiParam("图片URL") @RequestParam(value = "imgUrl",required = false) String imgUrl,
             @ApiParam("附件URL") @RequestParam(value = "attachUrl",required = false) String attachUrl
             ) {
@@ -145,6 +173,7 @@ public class ManageArticleController {
         Article article=new Article(); article.setArticleId(id); article.setTitle(title);
         article.setSource(source); article.setClick(click); article.setWordSize(wordSize);
         article.setCategoryId(categoryId); article.setContent(content);
+        article.setIsTop(isTop); article.setIsRed(isRed);
         article.setImgUrl(imgUrl); article.setAttachUrl(attachUrl);
 
         boolean result = articleService.updateArticle(article);

@@ -12,6 +12,8 @@
         wordSize,
         categoryId,
         content,
+        isTop,
+        isRed,
         imgUrl,
         attachUrl
     </sql>
@@ -25,6 +27,8 @@
         <id column="wordSize" property="wordSize"/>
         <id column="categoryId" property="categoryId"/>
         <id column="content" property="content"/>
+        <id column="isTop" property="isTop"/>
+        <id column="isRed" property="isRed"/>
         <id column="imgUrl" property="imgUrl"/>
         <id column="attachUrl" property="attachUrl"/>
     </resultMap>
@@ -49,6 +53,8 @@
         #{wordSize},
         #{categoryId},
         #{content},
+        #{isTop},
+        #{isRed},
         #{imgUrl},
         #{attachUrl}
         )
@@ -60,6 +66,18 @@
         WHERE articleId = #{0}
     </select>
 
+    <select id="selectArticleById" resultType="com.cncf.entity.Article">
+        SELECT
+        <include refid="fields"></include>
+        FROM article
+        WHERE articleId = #{0}
+    </select>
+
+    <select id="selectAllArticle" resultType="com.cncf.entity.Article">
+        SELECT
+        <include refid="fields"></include>
+        FROM article
+    </select>
 
     <select id="selectArticleByCategoryAndPage" resultType="com.cncf.entity.Article">
         select
@@ -67,6 +85,7 @@
         from article
         where categoryId = #{0}
         limit #{1},#{2}
+        order by isTop desc,publishTime desc
     </select>
 
     <update id="updateTitleById" parameterType="com.cncf.entity.Article">
@@ -103,6 +122,12 @@
         </if>
         <if test="content!=null and content!=''">
             content = #{content},
+        </if>
+        <if test="isTop!=null and isTop!=''">
+            isTop = #{isTop},
+        </if>
+        <if test="isRed!=null and isRed!=''">
+            isRed = #{isRed},
         </if>
         <if test="imgUrl!=null and imgUrl!=''">
             imgUrl = #{imgUrl},
