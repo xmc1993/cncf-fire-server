@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * @author zj
+ */
 @Api(value = "文章类型管理接口", description = "文章类型管理接口")
 @Controller
 @RequestMapping("/manage/category")
