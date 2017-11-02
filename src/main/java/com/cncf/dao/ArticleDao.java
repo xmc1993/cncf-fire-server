@@ -14,7 +14,11 @@ public interface ArticleDao {
 
     boolean insertArticle(Article article);
 
-    String selectTitleById(int id);
+    String selectTitleById(Integer id);
+
+    Article selectArticleById(Integer id);
+
+    List<Article> selectAllArticle();
 
     List selectArticleByCategoryAndPage(Integer categoryId, int offset, int limit);
 

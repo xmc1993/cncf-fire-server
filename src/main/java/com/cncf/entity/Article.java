@@ -20,19 +20,7 @@ public class Article {
     private String content;
     private String imgUrl;
     private String attachUrl;
+    private Integer isTop;
+    private Integer isRed;
 
-    public Article() {
-    }
-
-    public Article(String title, Date publishTime, String source, Integer click, String wordSize, Integer categoryId, String content,String imgUrl,String attachUrl) {
-        this.title = title;
-        this.publishTime = publishTime;
-        this.source = source;
-        this.click = click;
-        this.wordSize = wordSize;
-        this.categoryId = categoryId;
-        this.content = content;
-        this.imgUrl=imgUrl;
-        this.attachUrl=attachUrl;
-    }
 }
