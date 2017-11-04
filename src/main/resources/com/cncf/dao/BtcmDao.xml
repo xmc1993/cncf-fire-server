@@ -72,7 +72,7 @@
         <if test="password!=null and password!=''">
             password = #{password},
         </if>
-        <if test="btcId!=null and btcId!=''">
+        <if test="btcId!=null">
             btcId = #{btcId},
         </if>
         </set>

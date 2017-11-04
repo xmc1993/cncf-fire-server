@@ -1,6 +1,7 @@
 package com.cncf.dao;
 
 import com.cncf.entity.Article;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,13 +15,17 @@ public interface ArticleDao {
 
     boolean insertArticle(Article article);
 
-    String selectTitleById(Integer id);
+    Article selectArticleInfoById(Integer id);
+
+    List<Article> selectAllArticleInfo();
 
     Article selectArticleById(Integer id);
 
     List<Article> selectAllArticle();
 
-    List selectArticleByCategoryAndPage(Integer categoryId, int offset, int limit);
+    //List<Article> selectArticleInfoByCategoryAndPage(@Param("categoryId") Integer categoryId, @Param("offset") int offset, @Param("limit") int limit);
+
+    List<Article> selectArticleInfoByCategory(@Param("categoryId") Integer categoryId);
 
     boolean updateTitleById(int id,String title);
 

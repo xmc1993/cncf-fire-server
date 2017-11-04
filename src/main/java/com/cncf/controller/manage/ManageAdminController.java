@@ -91,8 +91,8 @@ public class ManageAdminController {
     @RequestMapping(value = "/regist", method = {RequestMethod.POST})
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseData<Admin> regist(@ApiParam("管理员用户名") @RequestParam("adminName") String adminName,
-                                      @ApiParam("管理员密码") @RequestParam("password") String password) {
+    public ResponseData<Admin> regist(@ApiParam("管理员用户名（最多20个字符/汉字）") @RequestParam("adminName") String adminName,
+                                      @ApiParam("管理员密码（最多20个字符）") @RequestParam("password") String password) {
         logger.info("regist called");
         ResponseData<Admin> responseData = new ResponseData<>();
         if (adminService.getAdminByName(adminName) != null) {

@@ -1,6 +1,7 @@
 package com.cncf.service;
 
 import com.cncf.entity.Article;
+import com.cncf.response.ResponseData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +14,17 @@ public interface ArticleService {
 
     boolean insertArticle(Article article);
 
-    String selectTitleById(Integer id);
+    Article selectArticleInfoById(Integer id);
+
+    List<Article> selectAllArticleInfo();
 
     Article selectArticleById(Integer id);
 
     List<Article> selectAllArticle();
 
-    List selectArticleByCategoryAndPage(Integer categoryId, int page, int pageSize);
+    //ResponseData<List<Article>> selectArticleInfoByCategoryAndPage(Integer categoryId, Integer page, Integer pageSize);
+
+    ResponseData<List<Article>> selectArticleInfoByCategory(Integer categoryId);
 
     boolean updateTitleById(int id,String title);
 

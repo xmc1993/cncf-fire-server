@@ -61,7 +61,8 @@ public class CmsServiceImpl implements CmsService{
     @Override
     public int updateCms(Cms cms) {
         System.err.println(cms.getId()+"  "+cms.getSnumber()+"  "+cms.getSname()+"  "+cms.getBtcid());
-        return cmsMapper.updateByPrimaryKeySelective(cms);
+        //return cmsMapper.updateByPrimaryKeySelective(cms);
+        return cmsMapper.updateByPrimaryKey(cms);
     }
 
 }

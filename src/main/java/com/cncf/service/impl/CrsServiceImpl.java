@@ -44,6 +44,7 @@ public class CrsServiceImpl implements CrsService{
 
     @Override
     public int updateCrs(Crs crs) {
-        return crsMapper.updateByPrimaryKeySelective(crs);
+        //return crsMapper.updateByPrimaryKeySelective(crs);
+        return crsMapper.updateByPrimaryKey(crs);
     }
 }

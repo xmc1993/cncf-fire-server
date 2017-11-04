@@ -19,7 +19,9 @@ public class Article {
     private Integer categoryId;
     private String content;
     private String imgUrl;
+    private String imgName;
     private String attachUrl;
+    private String attachName;
     private Integer isTop;
     private Integer isRed;
 

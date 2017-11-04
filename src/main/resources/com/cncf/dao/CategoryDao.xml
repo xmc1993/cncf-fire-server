@@ -36,6 +36,12 @@
         valid=#{1}
         WHERE mid=#{0}
     </update>-->
+    <select id="selectCategoryById" resultType="com.cncf.entity.Category">
+        SELECT
+        <include refid="fields"></include>
+        FROM category
+        WHERE id=#{0}
+    </select>
 
     <select id="selectAllCategory" resultType="com.cncf.entity.Category">
         SELECT

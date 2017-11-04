@@ -7,5 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface CategoryService {
+    Category selectCategoryById(Integer id);
     List<Category> selectAllCategory();
 }

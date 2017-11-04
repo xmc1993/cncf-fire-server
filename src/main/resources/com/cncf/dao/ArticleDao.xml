@@ -12,10 +12,21 @@
         wordSize,
         categoryId,
         content,
-        isTop,
-        isRed,
         imgUrl,
-        attachUrl
+        imgName,
+        attachUrl,
+        attachName,
+        isTop,
+        isRed
+    </sql>
+    <sql id="infoFields">
+        articleId,
+        title,
+        publishTime,
+        source,
+        categoryId,
+        isTop,
+        isRed
     </sql>
 
     <resultMap id="article" type="com.cncf.entity.Article">
@@ -27,10 +38,12 @@
         <id column="wordSize" property="wordSize"/>
         <id column="categoryId" property="categoryId"/>
         <id column="content" property="content"/>
+        <id column="imgUrl" property="imgUrl"/>
+        <id column="imgName" property="imgName"/>
+        <id column="attachUrl" property="attachUrl"/>
+        <id column="attachName" property="attachName"/>
         <id column="isTop" property="isTop"/>
         <id column="isRed" property="isRed"/>
-        <id column="imgUrl" property="imgUrl"/>
-        <id column="attachUrl" property="attachUrl"/>
     </resultMap>
 
     <delete id="deleteById">
@@ -53,17 +66,27 @@
         #{wordSize},
         #{categoryId},
         #{content},
-        #{isTop},
-        #{isRed},
         #{imgUrl},
-        #{attachUrl}
+        #{imgName},
+        #{attachUrl},
+        #{attachName},
+        #{isTop},
+        #{isRed}
         )
     </insert>
 
-    <select id="selectTitleById" resultType="java.lang.String">
-        SELECT title
+    <select id="selectArticleInfoById" resultType="com.cncf.entity.Article">
+        SELECT
+        <include refid="infoFields"></include>
         FROM article
         WHERE articleId = #{0}
+    </select>
+
+    <select id="selectAllArticleInfo" resultType="com.cncf.entity.Article">
+        SELECT
+        <include refid="infoFields"></include>
+        FROM article
+        order by isTop desc , publishTime desc
     </select>
 
     <select id="selectArticleById" resultType="com.cncf.entity.Article">
@@ -77,15 +100,30 @@
         SELECT
         <include refid="fields"></include>
         FROM article
+        order by isTop desc , publishTime desc
     </select>
 
-    <select id="selectArticleByCategoryAndPage" resultType="com.cncf.entity.Article">
+<!--    <select id="selectArticleInfoByCategoryAndPage" resultType="com.cncf.entity.Article">
         select
-        <include refid="fields"></include>
+        <include refid="infoFields"></include>
         from article
-        where categoryId = #{0}
-        limit #{1},#{2}
-        order by isTop desc,publishTime desc
+        <if test="categoryId!=null and categoryId!=''">
+            where categoryId = #{categoryId}
+        </if>
+        order by isTop desc , publishTime desc
+        <if test="offset!=0 and limit!=0">
+            limit #{offset},#{limit}
+        </if>
+    </select>-->
+
+    <select id="selectArticleInfoByCategory" resultType="com.cncf.entity.Article">
+        select
+        <include refid="infoFields"></include>
+        from article
+        <if test="categoryId!=null">
+            where categoryId = #{categoryId}
+        </if>
+        order by isTop desc , publishTime desc
     </select>
 
     <update id="updateTitleById" parameterType="com.cncf.entity.Article">
@@ -105,38 +143,20 @@
     <update id="updateArticle" parameterType="com.cncf.entity.Article">
         UPDATE article
         <set>
-        <if test="title!=null and title!=''">
             title = #{title},
-        </if>
-        <if test="source!=null and source!=''">
             source = #{source},
-        </if>
-        <if test="click!=null and click!=''">
             click = #{click},
-        </if>
-        <if test="wordSize!=null and wordSize!=''">
             wordSize = #{wordSize},
-        </if>
-        <if test="categoryId!=null and categoryId!=''">
             categoryId = #{categoryId},
-        </if>
-        <if test="content!=null and content!=''">
             content = #{content},
-        </if>
-        <if test="isTop!=null and isTop!=''">
-            isTop = #{isTop},
-        </if>
-        <if test="isRed!=null and isRed!=''">
-            isRed = #{isRed},
-        </if>
-        <if test="imgUrl!=null and imgUrl!=''">
             imgUrl = #{imgUrl},
-        </if>
-        <if test="attachUrl!=null and attachUrl!=''">
+            imgName = #{imgName},
             attachUrl = #{attachUrl},
-        </if>
+            attachName = #{attachName},
+            isTop = #{isTop},
+            isRed = #{isRed},
         </set>
-        WHERE articleId=#{0}
+        WHERE articleId=#{articleId}
     </update>
 
 </mapper>
