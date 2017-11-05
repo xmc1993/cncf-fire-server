@@ -14,6 +14,11 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryDao categoryDao;
 
     @Override
+    public Category selectCategoryById(Integer id) {
+        return categoryDao.selectCategoryById(id);
+    }
+
+    @Override
     public List<Category> selectAllCategory() {
         return categoryDao.selectAllCategory();
     }

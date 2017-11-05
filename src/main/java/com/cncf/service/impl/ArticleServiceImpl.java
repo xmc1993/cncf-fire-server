@@ -2,6 +2,7 @@ package com.cncf.service.impl;
 
 import com.cncf.dao.ArticleDao;
 import com.cncf.entity.Article;
+import com.cncf.response.ResponseData;
 import com.cncf.service.ArticleService;
 import com.cncf.util.FileUtil;
 import com.cncf.util.HttpUtils;
@@ -30,9 +31,16 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.insertArticle(article);
     }
 
-    public String selectTitleById(Integer id) {
-        return articleDao.selectTitleById(id);
+    @Override
+    public Article selectArticleInfoById(Integer id) {
+        return articleDao.selectArticleInfoById(id);
     }
+
+    @Override
+    public List<Article> selectAllArticleInfo() {
+        return articleDao.selectAllArticleInfo();
+    }
+
 
     @Override
     public Article selectArticleById(Integer id) {
@@ -44,10 +52,31 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.selectAllArticle();
     }
 
-    public List selectArticleByCategoryAndPage(Integer categoryId, int page, int pageSize) {
+    @Override
+    public List<Article> selectArticleByCategoryId(Integer categoryId) {
+        return articleDao.selectArticleByCategoryId(categoryId);
+    }
+
+/*    public ResponseData<List<Article>> selectArticleInfoByCategoryAndPage(
+            Integer categoryId, Integer page, Integer pageSize) {
+        ResponseData<List<Article>> responseData = new ResponseData<>();
         int offset = page*pageSize;
         int limit = pageSize;
-        return articleDao.selectArticleByCategoryAndPage(categoryId,offset,limit);
+        System.err.println(categoryId+" "+offset+" "+limit);
+        List<Article> articleList = articleDao.selectArticleInfoByCategoryAndPage(categoryId,offset,limit);
+        if (articleList.size()==0){
+            if (categoryId!=null) {
+                responseData.jsonFill(2, "无效的类型id", null);
+                return responseData;
+            }
+        }
+        responseData.jsonFill(1,null,articleList);
+        responseData.setCount(articleList.size());
+        return responseData;
+    }*/
+
+    public List<Article> selectArticleInfoByCategoryId(Integer categoryId) {
+        return articleDao.selectArticleInfoByCategoryId(categoryId);
     }
 
     public boolean updateTitleById(int id, String title) {

@@ -1,5 +1,6 @@
 package com.cncf.controller.user;
 
+import com.cncf.entity.Article;
 import com.cncf.response.ResponseData;
 import com.cncf.service.ArticleService;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -23,28 +24,24 @@ public class UserArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @ApiOperation(value = "根据ID获得文章的标题", notes = "")
-    @RequestMapping(value = "selectTitleById", method = {RequestMethod.GET})
+/*    @ApiOperation(value = "根据类型获得文章简要信息列表并分页显示(用户端不能同时查看系统所有文章，因此调用此接口必须传类型id。不传page和pageSize时不分页)", notes = "")
+    @RequestMapping(value = "selectArticleInfoByCategoryIdAndPage", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<String> selectTitleById(@ApiParam("文章ID") @RequestParam("id") Integer id) {
-        ResponseData<String> responseData = new ResponseData<>();
-
-        String title = articleService.selectTitleById(id);
-        responseData.jsonFill(1, null, title);
-        return responseData;
-    }
-
-    @ApiOperation(value = "根据类型ID获得文章列表并分页显示", notes = "")
-    @RequestMapping(value = "selectArticleByCategoryAndPage", method = {RequestMethod.GET})
-    @ResponseBody
-    public ResponseData<List> selectArticleByCategoryAndPage(
+    public ResponseData<List<Article>> selectArticleInfoByCategoryIdAndPage(
             @ApiParam("文章类型ID") @RequestParam("categoryId") Integer categoryId,
-            @ApiParam("当前页数") @RequestParam("page") int page,
-            @ApiParam("页面大小") @RequestParam("pageSize") int pageSize) {
-        ResponseData<List> responseData = new ResponseData<>();
-        List articleList = articleService.selectArticleByCategoryAndPage(categoryId,page,pageSize);
-        responseData.jsonFill(1, null, articleList);
-        responseData.setCount(articleList.size());
+            @ApiParam("当前页数") @RequestParam(value = "page",required = false) int page,
+            @ApiParam("页面大小") @RequestParam(value = "pageSize",required = false) int pageSize) {
+        return articleService.selectArticleInfoByCategoryAndPage(categoryId,page,pageSize);
+    }*/
+
+    @ApiOperation(value = "根据类型获得文章简要信息列表(用户端不能同时查看系统所有文章，因此调用此接口必须传类型id。)", notes = "")
+    @RequestMapping(value = "selectArticleInfoByCategoryId", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<List<Article>> selectArticleInfoByCategoryId(
+            @ApiParam("文章类型ID") @RequestParam("categoryId") Integer categoryId) {
+        ResponseData<List<Article>> responseData=new ResponseData<>();
+        List<Article> articleList=articleService.selectArticleInfoByCategoryId(categoryId);
+        responseData.jsonFill(1,null,articleList);
         return responseData;
     }
 

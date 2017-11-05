@@ -67,8 +67,8 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
                     //刷新token的时间
 
 
-                    //有新的访问时session重新计时
-                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 6);//缓存用户信息30天
+                    //有新的访问时session重新计时。缓存用户信息24小时
+                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24);
                 }
             }
 

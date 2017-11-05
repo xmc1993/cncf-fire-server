@@ -190,6 +190,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.cncf.entity.Cms" >
     update cms
     set snumber = #{snumber,jdbcType=VARCHAR},

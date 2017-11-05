@@ -108,7 +108,7 @@
         WHERE id = #{0}
     </select>
 
-    <update id="updateBtc" parameterType="com.cncf.entity.Btc">
+    <update id="updateBtcSelective" parameterType="com.cncf.entity.Btc">
         update btc
         <set>
         <if test="btcName!=null and btcName!=''">
@@ -126,6 +126,19 @@
         <if test="connection!=null and connection!=''">
             connection = #{connection},
         </if>
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <update id="updateBtc" parameterType="com.cncf.entity.Btc">
+        update btc
+        <set>
+            btcName = #{btcName},
+            shortName = #{shortName},
+            serialNumber = #{serialNumber},
+            btcBrief = #{btcBrief},
+            connection = #{connection}
         </set>
         where
         id=#{id}
