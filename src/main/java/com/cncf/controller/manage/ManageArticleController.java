@@ -5,16 +5,13 @@ import com.cncf.entity.Category;
 import com.cncf.response.ResponseData;
 import com.cncf.service.ArticleService;
 import com.cncf.service.CategoryService;
-import com.cncf.util.UploadFileUtil;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,36 +32,51 @@ public class ManageArticleController {
     @ResponseBody
     public ResponseData<Boolean> deleteById(@ApiParam("文章ID") @PathVariable Integer articleId) {
         ResponseData<Boolean> responseData = new ResponseData<>();
-        System.err.println(articleId);
+        Article article=articleService.selectArticleById(articleId);
+        if (article==null){
+            responseData.jsonFill(2,"无效的文章id",false);
+            return responseData;
+        }
+        Integer categoryId=article.getCategoryId();
+        ResponseData<Integer> rd= articleIfExistCommonByCategoryId(categoryId);
+        Integer integer=rd.getObj();
+        if (integer==null){
+            responseData.jsonFill(2,"这篇文章的类型无效，考虑是否洗数据",false);
+            return responseData;
+        }
+        if (integer==0){
+            //这种情况不存在，因为如果文章篇数为0，一开始就会返回无效的文章id
+        }
+        if (integer==1){
+            responseData.jsonFill(2,"该类文章篇数为1且必须为1，不允许删除",false);
+            return responseData;
+        }
+        //下面就是integer==2的情况
         boolean result = articleService.deleteById(articleId);
-        if (!result) {
-            responseData.jsonFill(2, "删除失败", false);
+        if (!result) {//第一个if已经验证过了文章是否存在
+            responseData.jsonFill(2, "文章存在，但删除失败", false);
             return responseData;
         }
         responseData.jsonFill(1, "删除成功", true);
         return responseData;
     }
 
-    @ApiOperation(value = "验证某一类型的文章是否存在",
-            notes = "返回0则不存在，返回1则存在且只能存在一篇，返回2则可以添加多篇。只能有一篇文章的类型有：中心概况、法律地位、授权证书、法律地位、法律地位、地理位置")
-    @RequestMapping(value = "articleIfExist", method = {RequestMethod.GET})
-    @ResponseBody
-    public ResponseData<Integer> articleIfExist(@ApiParam("文章类型ID") @RequestParam("id") Integer id){
+
+    public ResponseData<Integer> articleIfExistCommonByCategoryId(Integer id){
         ResponseData<Integer> responseData=new ResponseData<>();
         Category category=categoryService.selectCategoryById(id);
         if (category==null){
-            responseData.jsonFill(2,"无效的id",null);
+            responseData.jsonFill(2,"无效的类型id",null);
             return responseData;
         }
         if ("中心概况".equals(category.getName())||"法律地位".equals(category.getName())||
                 "授权证书".equals(category.getName())||"法律地位".equals(category.getName())||
                 "法律地位".equals(category.getName())||"地理位置".equals(category.getName())){
-            ResponseData<List<Article>> rd=articleService.selectArticleInfoByCategory(id);
-            if (rd.getObj()==null){
+            List<Article> articleList=articleService.selectArticleInfoByCategoryId(id);
+            if (articleList.size()==0){
                 responseData.jsonFill(1,null,0);
                 return responseData;
             }
-            List<Article> articleList=rd.getObj();
             if (articleList.size()==1){
                 responseData.jsonFill(1,null,1);
                 return responseData;
@@ -72,6 +84,17 @@ public class ManageArticleController {
         }
         responseData.jsonFill(1,null,2);
         return responseData;
+    }
+
+    @ApiOperation(value = "验证某一类型的文章是否存在",
+            notes = "返回0表示该类型文章只能有一篇，且目前篇数为0；" +
+                    "返回1表示已存在且只能存在一篇；" +
+                    "返回2表示可以添加多篇。" +
+                    "只能有一篇文章的类型有：中心概况、法律地位、授权证书、法律地位、法律地位、地理位置")
+    @RequestMapping(value = "articleIfExist", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<Integer> articleIfExist(@ApiParam("文章类型ID") @RequestParam("id") Integer id){
+        return articleIfExistCommonByCategoryId(id);
     }
 
     @ApiOperation(value = "插入文章", notes = "")
@@ -120,7 +143,7 @@ public class ManageArticleController {
     @ResponseBody
     public ResponseData<Boolean> updateArticle(
             @ApiParam("文章ID") @RequestParam(value = "id") Integer id,
-            @ApiParam("文章标题") @RequestParam(value = "title",required = false) String title,
+            @ApiParam("文章标题") @RequestParam(value = "title") String title,
             @ApiParam("来源") @RequestParam(value = "source",required = false) String source,
             @ApiParam("点击次数") @RequestParam(value = "click",required = false) Integer click,
             @ApiParam("字号") @RequestParam(value = "wordSize",required = false) String wordSize,
@@ -179,6 +202,26 @@ public class ManageArticleController {
         return responseData;
     }
 
+    @ApiOperation(value = "根据类型ID获得文章", notes = "")
+    @RequestMapping(value = "selectArticleByCategoryId", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<List<Article>> selectArticleByCategoryId(
+            @ApiParam("文章类型ID") @RequestParam("categoryId") Integer categoryId){
+        ResponseData<List<Article>> responseData=new ResponseData<>();
+
+        //验证该类型是否存在
+        Category category=categoryService.selectCategoryById(categoryId);
+        if (category==null){
+            responseData.jsonFill(2,"无效的类型id",null);
+            return responseData;
+        }
+        List<Article> articleList=articleService.selectArticleByCategoryId(categoryId);
+        System.err.println(articleList.size());
+        responseData.jsonFill(1,null,articleList);
+        return responseData;
+    }
+
+
 /*    @ApiOperation(value = "根据类型ID获得文章列表并分页显示", notes = "")
     @RequestMapping(value = "selectArticleByCategoryAndPage", method = {RequestMethod.GET})
     @ResponseBody
@@ -208,7 +251,20 @@ public class ManageArticleController {
     @ResponseBody
     public ResponseData<List<Article>> selectArticleInfoByCategoryId(
             @ApiParam("文章类型ID") @RequestParam(value = "categoryId",required = false) Integer categoryId) {
-        return articleService.selectArticleInfoByCategory(categoryId);
+        ResponseData<List<Article>> responseData=new ResponseData<>();
+
+        //验证该类型是否存在
+        if (categoryId!=null){
+            Category category=categoryService.selectCategoryById(categoryId);
+            if (category==null){
+                responseData.jsonFill(2,"无效的类型id",null);
+                return responseData;
+            }
+        }
+
+        List<Article> articleList=articleService.selectArticleInfoByCategoryId(categoryId);
+        responseData.jsonFill(1,null,articleList);
+        return responseData;
     }
 
     @ApiOperation(value = "更新文章标题", notes = "")

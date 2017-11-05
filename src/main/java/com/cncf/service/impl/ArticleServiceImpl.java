@@ -52,6 +52,11 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.selectAllArticle();
     }
 
+    @Override
+    public List<Article> selectArticleByCategoryId(Integer categoryId) {
+        return articleDao.selectArticleByCategoryId(categoryId);
+    }
+
 /*    public ResponseData<List<Article>> selectArticleInfoByCategoryAndPage(
             Integer categoryId, Integer page, Integer pageSize) {
         ResponseData<List<Article>> responseData = new ResponseData<>();
@@ -70,17 +75,8 @@ public class ArticleServiceImpl implements ArticleService {
         return responseData;
     }*/
 
-    public ResponseData<List<Article>> selectArticleInfoByCategory(Integer categoryId) {
-        ResponseData<List<Article>> responseData = new ResponseData<>();
-        List<Article> articleList = articleDao.selectArticleInfoByCategory(categoryId);
-        if (articleList.size()==0){
-            if (categoryId!=null) {
-                responseData.jsonFill(2, "无效的类型id", null);
-                return responseData;
-            }
-        }
-        responseData.jsonFill(1,null,articleList);
-        return responseData;
+    public List<Article> selectArticleInfoByCategoryId(Integer categoryId) {
+        return articleDao.selectArticleInfoByCategoryId(categoryId);
     }
 
     public boolean updateTitleById(int id, String title) {

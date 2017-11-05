@@ -103,6 +103,14 @@
         order by isTop desc , publishTime desc
     </select>
 
+    <select id="selectArticleByCategoryId" resultType="com.cncf.entity.Article">
+        select
+        <include refid="fields"></include>
+        from article
+        where categoryId = #{0}
+        order by isTop desc , publishTime desc
+    </select>
+
 <!--    <select id="selectArticleInfoByCategoryAndPage" resultType="com.cncf.entity.Article">
         select
         <include refid="infoFields"></include>
@@ -116,7 +124,7 @@
         </if>
     </select>-->
 
-    <select id="selectArticleInfoByCategory" resultType="com.cncf.entity.Article">
+    <select id="selectArticleInfoByCategoryId" resultType="com.cncf.entity.Article">
         select
         <include refid="infoFields"></include>
         from article

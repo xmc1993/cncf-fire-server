@@ -24,7 +24,9 @@ public interface ArticleService {
 
     //ResponseData<List<Article>> selectArticleInfoByCategoryAndPage(Integer categoryId, Integer page, Integer pageSize);
 
-    ResponseData<List<Article>> selectArticleInfoByCategory(Integer categoryId);
+    List<Article> selectArticleByCategoryId(Integer categoryId);
+
+    List<Article> selectArticleInfoByCategoryId(Integer categoryId);
 
     boolean updateTitleById(int id,String title);
 

@@ -1,6 +1,7 @@
 package com.cncf.dao;
 
 import com.cncf.entity.Article;
+import com.cncf.response.ResponseData;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,9 @@ public interface ArticleDao {
 
     //List<Article> selectArticleInfoByCategoryAndPage(@Param("categoryId") Integer categoryId, @Param("offset") int offset, @Param("limit") int limit);
 
-    List<Article> selectArticleInfoByCategory(@Param("categoryId") Integer categoryId);
+    List<Article> selectArticleByCategoryId(Integer categoryId);
+
+    List<Article> selectArticleInfoByCategoryId(@Param("categoryId") Integer categoryId);
 
     boolean updateTitleById(int id,String title);
 

@@ -39,7 +39,10 @@ public class UserArticleController {
     @ResponseBody
     public ResponseData<List<Article>> selectArticleInfoByCategoryId(
             @ApiParam("文章类型ID") @RequestParam("categoryId") Integer categoryId) {
-        return articleService.selectArticleInfoByCategory(categoryId);
+        ResponseData<List<Article>> responseData=new ResponseData<>();
+        List<Article> articleList=articleService.selectArticleInfoByCategoryId(categoryId);
+        responseData.jsonFill(1,null,articleList);
+        return responseData;
     }
 
 /*    @ApiOperation(value = "文件下载", notes = "文件下载模块")

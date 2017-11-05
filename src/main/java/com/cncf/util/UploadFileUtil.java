@@ -111,7 +111,9 @@ public final class UploadFileUtil {
 
 
     public static String getRealPathFromUrl(String url) {
-        if (StringUtil.isEmpty(url)) return null;
+        if (StringUtil.isEmpty(url)) {
+            return null;
+        }
         int index = url.indexOf(URL_BASE);
         String result = url.substring(index + URL_BASE.length());
         result = DIR_BASE + result;
