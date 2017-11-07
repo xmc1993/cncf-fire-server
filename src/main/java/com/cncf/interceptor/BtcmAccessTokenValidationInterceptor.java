@@ -56,12 +56,12 @@ public class BtcmAccessTokenValidationInterceptor extends HandlerInterceptorAdap
                 throw new LoginException("session invalid");
             } else {
                 Btcm btcm = (Btcm) ObjectAndByte.toObject(bytes);
+                btcm.setAccessToken(AccessToken);
                 if (btcm == null) {
                     response.setStatus(401);
                     throw new LoginException("session invalid");
                 } else {
-                    request.setAttribute(TokenConfig.DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME, btcm);
-                    //request.setAttribute("btcm",btcm);
+                    request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, btcm);
                     jedis.expire(AccessToken.getBytes(), 60 * 60 * 6);//缓存用户信息30天
                 }
             }
@@ -70,7 +70,9 @@ public class BtcmAccessTokenValidationInterceptor extends HandlerInterceptorAdap
             response.setStatus(401);
             throw new LoginException("login fail");
         }finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return true;
     }

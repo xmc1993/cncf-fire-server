@@ -188,7 +188,7 @@ public class ManageArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据ID获得文章", notes = "")
+    @ApiOperation(value = "根据ID获得文章全部信息", notes = "")
     @RequestMapping(value = "selectArticleById", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<Article> selectArticleById(@ApiParam("文章ID") @RequestParam("id") Integer id){
@@ -202,7 +202,7 @@ public class ManageArticleController {
         return responseData;
     }
 
-    @ApiOperation(value = "根据类型ID获得文章", notes = "")
+    @ApiOperation(value = "根据类型ID获得文章", notes = "该接口返回文章的全部内容，用于查询中心概括这类只有一篇的文章")
     @RequestMapping(value = "selectArticleByCategoryId", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List<Article>> selectArticleByCategoryId(
@@ -246,7 +246,7 @@ public class ManageArticleController {
         return articleService.selectArticleInfoByCategoryAndPage(categoryId,page,pageSize);
     }*/
 
-    @ApiOperation(value = "根据类型获得文章简要信息列表(不传类型id时查询所有文章简要信息)", notes = "")
+    @ApiOperation(value = "根据类型获得文章简要信息列表", notes = "不传类型id时查询所有文章简要信息")
     @RequestMapping(value = "selectArticleInfoByCategoryId", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List<Article>> selectArticleInfoByCategoryId(

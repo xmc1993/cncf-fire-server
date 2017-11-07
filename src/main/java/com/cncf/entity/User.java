@@ -20,7 +20,7 @@ public class User implements Serializable{
     private String email;//邮箱
     private String qq;//qq
     private String homepage;//主页
-    private String accessToken;//story token
+    private String accessToken;//token
     private String verifyCode;//验证码
     private Date expireTime;//验证码的过期事件
     private int identification = 0;//是否通过了手机验证

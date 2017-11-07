@@ -44,8 +44,8 @@ public class AccessTokenValidationInterceptor extends HandlerInterceptorAdapter 
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-
-        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);//"Fire-Access-Token"
+        //"Fire-Access-Token"
+        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
         Jedis jedis = null;
         try {
             jedis = JedisUtil.getJedis();
@@ -55,7 +55,7 @@ public class AccessTokenValidationInterceptor extends HandlerInterceptorAdapter 
                 throw new LoginException("登录失效");
             } else {
                 User user = (User) ObjectAndByte.toObject(bytes);
-//                user.setAccessToken(AccessToken);
+                user.setAccessToken(AccessToken);
                 if (user == null) {
                     response.setStatus(401);
                     throw new LoginException("登录失效");

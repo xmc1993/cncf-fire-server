@@ -27,10 +27,6 @@ public class TokenConfig {
    */
   public static final String DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME = "user";
 
-  public static final String DEFAULT_ADMINID_REQUEST_ATTRIBUTE_NAME="admin";
-
-  public static final String DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME="btcm";
-
   public static final String DEFAULT_USERID_REQUEST_ATTRIBUTE_POWERCODES = "powerCodes";
   /**
    * 默认的上传Token的HTTP请求头的名字
