@@ -1,7 +1,9 @@
 package com.cncf.service.impl;
 
-import com.cncf.dao.BtcDao;
+import com.cncf.dao.BtcMapper;
 import com.cncf.entity.Btc;
+import com.cncf.entity.BtcExample;
+import com.cncf.entity.BtcWithBLOBs;
 import com.cncf.service.BtcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,31 +16,39 @@ import java.util.List;
  */
 @Service
 public class BtcServiceImpl implements BtcService {
+    //@Autowired
+    //private BtcDao btcDao;
     @Autowired
-    private BtcDao btcDao;
+    private BtcMapper btcMapper;
 
     @Override
-    public boolean insertBtc(Btc btc) {
-        return btcDao.insertBtc(btc);
+    public int insertBtc(BtcWithBLOBs btcWithBLOBs) {
+        return btcMapper.insert(btcWithBLOBs);
     }
 
     @Override
     public List<Btc> selectAllBtc() {
-        return btcDao.selectAllBtc();
+        BtcExample btcExample=new BtcExample();
+        return btcMapper.selectByExample(btcExample);
     }
 
     @Override
-    public Btc selectBtcById(Integer id) {
-        return btcDao.selectBtcById(id);
+    public BtcWithBLOBs selectBtcById(Integer id) {
+        return btcMapper.selectByPrimaryKey(id);
+    }
+
+    @Override //空值也插入
+    public int updateByPrimaryKeyWithBLOBs(BtcWithBLOBs btcWithBLOBs) {
+        return btcMapper.updateByPrimaryKeyWithBLOBs(btcWithBLOBs);
     }
 
     @Override
-    public boolean updateBtc(Btc btc) {
-        return btcDao.updateBtc(btc);
+    public int updateByPrimaryKeySelective(BtcWithBLOBs btcWithBLOBs) {
+        return btcMapper.updateByPrimaryKeySelective(btcWithBLOBs);
     }
 
     @Override
-    public boolean deleteBtc(Integer id) {
-        return btcDao.deleteBtc(id);
+    public int deleteBtc(Integer id) {
+        return btcMapper.deleteByPrimaryKey(id);
     }
 }
