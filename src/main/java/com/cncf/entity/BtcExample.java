@@ -3,14 +3,14 @@ package com.cncf.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CmsExample {
+public class BtcExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public CmsExample() {
+    public BtcExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -164,203 +164,213 @@ public class CmsExample {
             return (Criteria) this;
         }
 
-        public Criteria andSnumberIsNull() {
-            addCriterion("snumber is null");
+        public Criteria andBtcNameIsNull() {
+            addCriterion("btc_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberIsNotNull() {
-            addCriterion("snumber is not null");
+        public Criteria andBtcNameIsNotNull() {
+            addCriterion("btc_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberEqualTo(String value) {
-            addCriterion("snumber =", value, "snumber");
+        public Criteria andBtcNameEqualTo(String value) {
+            addCriterion("btc_name =", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberNotEqualTo(String value) {
-            addCriterion("snumber <>", value, "snumber");
+        public Criteria andBtcNameNotEqualTo(String value) {
+            addCriterion("btc_name <>", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberGreaterThan(String value) {
-            addCriterion("snumber >", value, "snumber");
+        public Criteria andBtcNameGreaterThan(String value) {
+            addCriterion("btc_name >", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberGreaterThanOrEqualTo(String value) {
-            addCriterion("snumber >=", value, "snumber");
+        public Criteria andBtcNameGreaterThanOrEqualTo(String value) {
+            addCriterion("btc_name >=", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberLessThan(String value) {
-            addCriterion("snumber <", value, "snumber");
+        public Criteria andBtcNameLessThan(String value) {
+            addCriterion("btc_name <", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberLessThanOrEqualTo(String value) {
-            addCriterion("snumber <=", value, "snumber");
+        public Criteria andBtcNameLessThanOrEqualTo(String value) {
+            addCriterion("btc_name <=", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberLike(String value) {
-            addCriterion("snumber like", value, "snumber");
+        public Criteria andBtcNameLike(String value) {
+            addCriterion("btc_name like", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberNotLike(String value) {
-            addCriterion("snumber not like", value, "snumber");
+        public Criteria andBtcNameNotLike(String value) {
+            addCriterion("btc_name not like", value, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberIn(List<String> values) {
-            addCriterion("snumber in", values, "snumber");
+        public Criteria andBtcNameIn(List<String> values) {
+            addCriterion("btc_name in", values, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberNotIn(List<String> values) {
-            addCriterion("snumber not in", values, "snumber");
+        public Criteria andBtcNameNotIn(List<String> values) {
+            addCriterion("btc_name not in", values, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberBetween(String value1, String value2) {
-            addCriterion("snumber between", value1, value2, "snumber");
+        public Criteria andBtcNameBetween(String value1, String value2) {
+            addCriterion("btc_name between", value1, value2, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnumberNotBetween(String value1, String value2) {
-            addCriterion("snumber not between", value1, value2, "snumber");
+        public Criteria andBtcNameNotBetween(String value1, String value2) {
+            addCriterion("btc_name not between", value1, value2, "btcName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameIsNull() {
-            addCriterion("sname is null");
+        public Criteria andShortNameIsNull() {
+            addCriterion("short_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andSnameIsNotNull() {
-            addCriterion("sname is not null");
+        public Criteria andShortNameIsNotNull() {
+            addCriterion("short_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSnameEqualTo(String value) {
-            addCriterion("sname =", value, "sname");
+        public Criteria andShortNameEqualTo(String value) {
+            addCriterion("short_name =", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameNotEqualTo(String value) {
-            addCriterion("sname <>", value, "sname");
+        public Criteria andShortNameNotEqualTo(String value) {
+            addCriterion("short_name <>", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameGreaterThan(String value) {
-            addCriterion("sname >", value, "sname");
+        public Criteria andShortNameGreaterThan(String value) {
+            addCriterion("short_name >", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameGreaterThanOrEqualTo(String value) {
-            addCriterion("sname >=", value, "sname");
+        public Criteria andShortNameGreaterThanOrEqualTo(String value) {
+            addCriterion("short_name >=", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameLessThan(String value) {
-            addCriterion("sname <", value, "sname");
+        public Criteria andShortNameLessThan(String value) {
+            addCriterion("short_name <", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameLessThanOrEqualTo(String value) {
-            addCriterion("sname <=", value, "sname");
+        public Criteria andShortNameLessThanOrEqualTo(String value) {
+            addCriterion("short_name <=", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameLike(String value) {
-            addCriterion("sname like", value, "sname");
+        public Criteria andShortNameLike(String value) {
+            addCriterion("short_name like", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameNotLike(String value) {
-            addCriterion("sname not like", value, "sname");
+        public Criteria andShortNameNotLike(String value) {
+            addCriterion("short_name not like", value, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameIn(List<String> values) {
-            addCriterion("sname in", values, "sname");
+        public Criteria andShortNameIn(List<String> values) {
+            addCriterion("short_name in", values, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameNotIn(List<String> values) {
-            addCriterion("sname not in", values, "sname");
+        public Criteria andShortNameNotIn(List<String> values) {
+            addCriterion("short_name not in", values, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameBetween(String value1, String value2) {
-            addCriterion("sname between", value1, value2, "sname");
+        public Criteria andShortNameBetween(String value1, String value2) {
+            addCriterion("short_name between", value1, value2, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andSnameNotBetween(String value1, String value2) {
-            addCriterion("sname not between", value1, value2, "sname");
+        public Criteria andShortNameNotBetween(String value1, String value2) {
+            addCriterion("short_name not between", value1, value2, "shortName");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidIsNull() {
-            addCriterion("btcId is null");
+        public Criteria andSerialNumberIsNull() {
+            addCriterion("serial_number is null");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidIsNotNull() {
-            addCriterion("btcId is not null");
+        public Criteria andSerialNumberIsNotNull() {
+            addCriterion("serial_number is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidEqualTo(Integer value) {
-            addCriterion("btcId =", value, "btcid");
+        public Criteria andSerialNumberEqualTo(String value) {
+            addCriterion("serial_number =", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidNotEqualTo(Integer value) {
-            addCriterion("btcId <>", value, "btcid");
+        public Criteria andSerialNumberNotEqualTo(String value) {
+            addCriterion("serial_number <>", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidGreaterThan(Integer value) {
-            addCriterion("btcId >", value, "btcid");
+        public Criteria andSerialNumberGreaterThan(String value) {
+            addCriterion("serial_number >", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("btcId >=", value, "btcid");
+        public Criteria andSerialNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("serial_number >=", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidLessThan(Integer value) {
-            addCriterion("btcId <", value, "btcid");
+        public Criteria andSerialNumberLessThan(String value) {
+            addCriterion("serial_number <", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidLessThanOrEqualTo(Integer value) {
-            addCriterion("btcId <=", value, "btcid");
+        public Criteria andSerialNumberLessThanOrEqualTo(String value) {
+            addCriterion("serial_number <=", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidIn(List<Integer> values) {
-            addCriterion("btcId in", values, "btcid");
+        public Criteria andSerialNumberLike(String value) {
+            addCriterion("serial_number like", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidNotIn(List<Integer> values) {
-            addCriterion("btcId not in", values, "btcid");
+        public Criteria andSerialNumberNotLike(String value) {
+            addCriterion("serial_number not like", value, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidBetween(Integer value1, Integer value2) {
-            addCriterion("btcId between", value1, value2, "btcid");
+        public Criteria andSerialNumberIn(List<String> values) {
+            addCriterion("serial_number in", values, "serialNumber");
             return (Criteria) this;
         }
 
-        public Criteria andBtcidNotBetween(Integer value1, Integer value2) {
-            addCriterion("btcId not between", value1, value2, "btcid");
+        public Criteria andSerialNumberNotIn(List<String> values) {
+            addCriterion("serial_number not in", values, "serialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSerialNumberBetween(String value1, String value2) {
+            addCriterion("serial_number between", value1, value2, "serialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSerialNumberNotBetween(String value1, String value2) {
+            addCriterion("serial_number not between", value1, value2, "serialNumber");
             return (Criteria) this;
         }
     }

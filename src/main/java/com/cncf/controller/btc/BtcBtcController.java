@@ -1,6 +1,7 @@
 package com.cncf.controller.btc;
 
 import com.cncf.entity.Btc;
+import com.cncf.entity.BtcWithBLOBs;
 import com.cncf.response.ResponseData;
 import com.cncf.service.BtcService;
 import com.wordnik.swagger.annotations.Api;
@@ -29,30 +30,26 @@ public class BtcBtcController {
     @Autowired
     private BtcService btcService;
 
-    @ApiOperation(value = "获取所有的Btc(分委会)", notes = "")
-    @RequestMapping(value = "selectAllBtc", method = {RequestMethod.GET})
+    @ApiOperation(value = "获取所有的Btc(分委会)的简要信息", notes = "")
+    @RequestMapping(value = "selectAllBtcShortInfo", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List<Btc>> selectAllBtc(){
         List<Btc> btcList=btcService.selectAllBtc();
         ResponseData<List<Btc>> responseData=new ResponseData<>();
-        if (btcList.size()==0){
-            responseData.jsonFill(2,"无分委会信息",null);
-            return responseData;
-        }
         responseData.jsonFill(1,null,btcList);
         return responseData;
     }
 
-    @ApiOperation(value = "通过ID获取Btc(分委会)", notes = "")
+    @ApiOperation(value = "通过ID获取Btc(分委会)全部信息", notes = "")
     @RequestMapping(value = "selectBtcById", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<Btc> selectBtcById(@ApiParam("ID") @RequestParam("id") Integer id){
-        ResponseData<Btc> responseData=new ResponseData<>();
-        Btc btc=btcService.selectBtcById(id);
-        if (btc==null){
-            responseData.jsonFill(2,"无效的分委会id",null);
+    public ResponseData<BtcWithBLOBs> selectBtcById(@ApiParam("ID") @RequestParam("id") Integer id){
+        ResponseData<BtcWithBLOBs> responseData=new ResponseData<>();
+        BtcWithBLOBs btcWithBLOBs=btcService.selectBtcById(id);
+        if (btcWithBLOBs==null){
+            responseData.jsonFill(2,"无效的id",null);
         }
-        responseData.jsonFill(1,null,btc);
+        responseData.jsonFill(1,null,btcWithBLOBs);
         return responseData;
     }
 }

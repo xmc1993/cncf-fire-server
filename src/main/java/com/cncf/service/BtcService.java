@@ -1,7 +1,7 @@
 package com.cncf.service;
 
 import com.cncf.entity.Btc;
-import org.springframework.stereotype.Repository;
+import com.cncf.entity.BtcWithBLOBs;
 
 import java.util.List;
 
@@ -10,9 +10,10 @@ import java.util.List;
  * @date 2017/10/25 18:41
  */
 public interface BtcService {
-    boolean insertBtc(Btc btc);
+    int insertBtc(BtcWithBLOBs btcWithBLOBs);
     List<Btc> selectAllBtc();
-    Btc selectBtcById(Integer id);
-    boolean updateBtc(Btc btc);
-    boolean deleteBtc(Integer id);
+    BtcWithBLOBs selectBtcById(Integer id);
+    int updateByPrimaryKeyWithBLOBs(BtcWithBLOBs btcWithBLOBs);
+    int updateByPrimaryKeySelective(BtcWithBLOBs btcWithBLOBs);
+    int deleteBtc(Integer id);
 }
