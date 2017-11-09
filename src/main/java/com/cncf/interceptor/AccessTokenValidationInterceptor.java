@@ -44,28 +44,25 @@ public class AccessTokenValidationInterceptor extends HandlerInterceptorAdapter 
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-
-        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);//"Fire-Access-Token"
-        Jedis jedis = null;
+        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
+        Jedis jedis = JedisUtil.getJedis();
         try {
-            jedis = JedisUtil.getJedis();
             byte[] bytes = jedis.get(AccessToken.getBytes());
             if (bytes == null) {
                 response.setStatus(401);
                 throw new LoginException("登录失效");
             } else {
                 User user = (User) ObjectAndByte.toObject(bytes);
-//                user.setAccessToken(AccessToken);
+                user.setAccessToken(AccessToken);
                 if (user == null) {
                     response.setStatus(401);
                     throw new LoginException("登录失效");
                 } else {
                     request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, user);
-                    //刷新token的时间
-                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);//缓存用户信息30天
+                    //将这句迁移到了登录方法里，相当于网站的30天内自动登录。
+                    //jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);//缓存用户信息30天
                 }
             }
-
         } catch (Exception e) {
             response.setStatus(401);
             throw new LoginException("登录失效");

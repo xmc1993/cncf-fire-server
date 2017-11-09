@@ -179,7 +179,8 @@ public class UserUserController {
         try {
             jedis = JedisUtil.getJedis();
             jedis.set(user.getAccessToken().getBytes(), ObjectAndByte.toByteArray(user));
-            jedis.expire(user.getAccessToken().getBytes(), 60 * 60 * 1);//会话1小时失效
+            //刷新token，会话30天失效。相当于网站的30天内自动登录
+            jedis.expire(user.getAccessToken().getBytes(), 60 * 60 * 24 * 30);
         }catch (Exception e){
             responseData.jsonFill(2, "登录失败，服务器错误。", null);
             return responseData;

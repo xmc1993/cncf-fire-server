@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Util {
+
     public static String getMd5(String str) {
         byte[] buf = str.getBytes();
         MessageDigest md5;

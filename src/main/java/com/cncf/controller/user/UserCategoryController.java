@@ -1,5 +1,4 @@
-package com.cncf.controller.manage;
-
+package com.cncf.controller.user;
 
 import com.cncf.entity.Category;
 import com.cncf.response.ResponseData;
@@ -17,10 +16,10 @@ import java.util.List;
 /**
  * @author zj
  */
-@Api(value = "文章类型管理接口", description = "文章类型管理接口")
+@Api(value = "User", description = "用户端查看文章类型的接口")
 @Controller
-@RequestMapping("/manage/category")
-public class ManageCategoryController {
+@RequestMapping("/user/category")
+public class UserCategoryController {
 
     @Autowired
     private CategoryService categoryService;
@@ -31,7 +30,11 @@ public class ManageCategoryController {
     public ResponseData<List<Category>> selectAllCategory(){
         List<Category> categoryList=categoryService.selectAllCategory();
         ResponseData<List<Category>> responseData = new ResponseData<>();
-        responseData.jsonFill(1,null,categoryList);
+        if (categoryList.size()==0){
+            responseData.jsonFill(2,"文章类型列表为空",null);
+            return responseData;
+        }
+        responseData.jsonFill(1,"获取文章类型列表成功",categoryList);
         return responseData;
     }
 }

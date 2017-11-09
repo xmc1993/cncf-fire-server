@@ -1,6 +1,7 @@
 package com.cncf.interceptor;
 
 import com.cncf.entity.Admin;
+import com.cncf.service.AdminPowerService;
 import com.cncf.util.JedisUtil;
 import com.cncf.util.ObjectAndByte;
 import com.cncf.util.TokenConfig;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import redis.clients.jedis.Jedis;
+
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +28,13 @@ import java.util.List;
  * 验证成功后，会更新access token的最后访问时间， 并将用户标识写入到请求属性中，
  * 属性名为由应用参数"token.access-token.user-id-request-attribute-name"指定。</li>
  * </ul>
- *
  */
 public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(AdminAccessTokenValidationInterceptor.class);
 
-    //@Autowired
-    //private AdminPowerService adminPowerService;
+    @Autowired
+    private AdminPowerService adminPowerService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -46,7 +47,7 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String AccessToken = request.getHeader("Authorization");
+        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
         Jedis jedis = JedisUtil.getJedis();
         try {
             byte[] bytes = jedis.get(AccessToken.getBytes());
@@ -59,45 +60,47 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
                     response.setStatus(401);
                     throw new LoginException("session invalid");
                 } else {
-                    request.setAttribute(TokenConfig.DEFAULT_ADMINID_REQUEST_ATTRIBUTE_NAME, admin);
+                    request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, admin);
+                    //测试Admin admintest = (Admin) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
+                    //System.err.println(admintest);
 
+                    //从数据库或jedis中取出权限码存入request
+                    setPowerCodes(request, admin);
 
-                    //设置权限码
-                    //setPowerCodes(request, admin);
-                    //刷新token的时间
-
-
-                    //有新的访问时session重新计时。缓存用户信息24小时
-                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24);
+                    //这里不应和普通用户一样30将这句转移到登录方法中以实现多少天内自动登录，因为管理员账号要做得更加安全。
+                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);
                 }
             }
 
         } catch (Exception e) {
             response.setStatus(401);
             throw new LoginException("login fail");
-        }finally {
-            jedis.close();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return true;
     }
 
     /**
-     * 在request中设置权限码
+     * 从数据库或jedis中取出权限码存入request
+     *
      * @param request
      * @param admin
      */
-/*    private void setPowerCodes(HttpServletRequest request, Admin admin){
-        String key = "PowerCodes-" + admin.getId();
+    private void setPowerCodes(HttpServletRequest request, Admin admin) {
+        String key = "PowerCodes-" + admin.getAdminId();
         Jedis jedis = JedisUtil.getJedis();
         byte[] bytes = jedis.get(key.getBytes());
         List<Integer> powerCodeList;
         if (bytes == null) {
-            powerCodeList = adminPowerService.getAdminPowerCodeListByAdminId(admin.getId());
+            powerCodeList = adminPowerService.getAdminPowerCodeListByAdminId(admin.getAdminId());
             jedis.set(key.getBytes(), ObjectAndByte.toByteArray(powerCodeList));
-        }else {
+        } else {
             powerCodeList = (List<Integer>) ObjectAndByte.toObject(bytes);
         }
         request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_POWERCODES, powerCodeList);
         jedis.close();
-    }*/
+    }
 }

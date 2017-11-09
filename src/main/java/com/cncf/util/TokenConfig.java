@@ -17,7 +17,7 @@ public class TokenConfig {
   /**
    * 默认的访问Token的HTTP请求头的名字
    */
-  public static final String DEFAULT_ACCESS_TOKEN_HEADER_NAME = "Fire-Access-Token";
+  public static final String DEFAULT_ACCESS_TOKEN_HEADER_NAME = "Authorization";
   /**
    * 默认的访问token的有效期，默认为15天
    */
@@ -26,10 +26,6 @@ public class TokenConfig {
    * 在校验身份通过后，会设置请求属性，记录用户id。该属性定义了默认的请求属性名
    */
   public static final String DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME = "user";
-
-  public static final String DEFAULT_ADMINID_REQUEST_ATTRIBUTE_NAME="admin";
-
-  public static final String DEFAULT_BTCMID_REQUEST_ATTRIBUTE_NAME="btcm";
 
   public static final String DEFAULT_USERID_REQUEST_ATTRIBUTE_POWERCODES = "powerCodes";
   /**
