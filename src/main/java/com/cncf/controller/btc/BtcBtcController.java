@@ -48,6 +48,7 @@ public class BtcBtcController {
         BtcWithBLOBs btcWithBLOBs=btcService.selectBtcById(id);
         if (btcWithBLOBs==null){
             responseData.jsonFill(2,"无效的id",null);
+            return responseData;
         }
         responseData.jsonFill(1,null,btcWithBLOBs);
         return responseData;
