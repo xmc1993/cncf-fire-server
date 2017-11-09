@@ -1,12 +1,10 @@
 package com.cncf.controller.manage;
 
 import com.cncf.entity.Admin;
-import com.cncf.entity.Message;
-import com.cncf.entity.MessageSet;
+import com.cncf.entity.LeaveMessage;
+import com.cncf.entity.LeaveMessageWithBLOBs;
 import com.cncf.response.ResponseData;
-import com.cncf.service.MessageService;
-import com.cncf.service.MessageSetService;
-import com.cncf.util.TokenConfig;
+import com.cncf.service.LeaveMessageService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.apache.commons.logging.Log;
@@ -28,81 +26,69 @@ public class ManageLeaveMessageController {
 
     private static final Log logger = LogFactory.getLog(ManageLeaveMessageController.class);
     @Autowired
-    private MessageSetService messageSetService;
-    @Autowired
-    private MessageService messageService;
+    private LeaveMessageService leaveMessageService;
 
-    @ApiOperation(value = "审核一个留言集", notes = "valid=1表示通过审核，valid=0表示待审核，valid=-1表示审核不通过")
-    @RequestMapping(value = "updateMessageSetValid", method = {RequestMethod.GET})
+    @ApiOperation(value = "审核留言", notes = "pass=0表示待审核，pass=1表示通过审核，pass=2表示审核不通过")
+    @RequestMapping(value = "verifyLeaveMessage", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData updateMessageSetValid(@ApiParam("留言集ID") @RequestParam("id") int id,
-                                              @ApiParam("是否通过审核") @RequestParam("valid") int valid){
-        ResponseData<MessageSet> responseData = new ResponseData<>();
-        boolean result=messageSetService.updateMessageSetValid(id,valid);
-        if (!result){
-            responseData.jsonFill(2, "更新valid字段失败", null);
+    public ResponseData<Boolean> verifyLeaveMessage(@ApiParam("留言ID") @RequestParam("id") Integer id,
+                                              @ApiParam("是否通过审核") @RequestParam("pass") byte pass){
+        ResponseData<Boolean> responseData = new ResponseData<>();
+        int result=leaveMessageService.verifyLeaveMessage(id,pass);
+        if (result==0){
+            responseData.jsonFill(2, "更新pass字段失败", false);
             return responseData;
         }
-        responseData.jsonFill(1,"更新valid字段成功",null);
+        responseData.jsonFill(1,null,true);
         return responseData;
     }
 
-    @ApiOperation(value = "分页查询留言集", notes = "")
-    @RequestMapping(value = "selectAllMessageSet", method = {RequestMethod.GET})
+    @ApiOperation(value = "通过ID查询留言", notes = "")
+    @RequestMapping(value = "selectLeaveMessageById/{id}", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List<MessageSet>> selectAllMessageSet(
+    public ResponseData<LeaveMessage> selectLeaveMessageById(@ApiParam("留言ID") @PathVariable Integer id){
+        ResponseData<LeaveMessage> responseData=new ResponseData<>();
+        LeaveMessage leaveMessage=leaveMessageService.selectLeaveMessageById(id);
+        if (leaveMessage==null){
+            responseData.jsonFill(2,"无效的id",null);
+            return responseData;
+        }
+        responseData.jsonFill(1,null,leaveMessage);
+        return responseData;
+    }
+
+    @ApiOperation(value = "分页查询留言", notes = "")
+    @RequestMapping(value = "selectAllLeaveMessageByPage", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<List<LeaveMessage>> selectAllLeaveMessageByPage(
             @ApiParam("PAGE") @RequestParam("page") int page,
             @ApiParam("SIZE") @RequestParam("pageSize") int pageSize){
-        ResponseData<List<MessageSet>> responseData = new ResponseData<>();
-        List<MessageSet> messageSetList=(List<MessageSet>)messageSetService.selectAllMessageSet(page,pageSize);
-        responseData.jsonFill(1, null, messageSetList);
-        responseData.setCount(messageSetList.size());
+        ResponseData<List<LeaveMessage>> responseData = new ResponseData<>();
+        List<LeaveMessage> leaveMessageList=(List<LeaveMessage>)leaveMessageService.selectAllLeaveMessageByPage(page,pageSize);
+        responseData.jsonFill(1, null, leaveMessageList);
+        responseData.setCount(leaveMessageList.size());
         return responseData;
     }
 
-    /*----------------上面是留言集的操作，下面是对留言集中每条留言的操作-----------*/
-    @ApiOperation(value = "添加一条留言或回复", notes = "")
-    @RequestMapping(value = "insertMessage", method = {RequestMethod.POST})
+    @ApiOperation(value = "回复留言", notes = "该接口内部设置通过审核，而不用单独设置通过审核")
+    @RequestMapping(value = "reply", method = {RequestMethod.POST})
     @ResponseBody
-    public ResponseData<Message> insertMessage(
-            @ApiParam("留言集ID") @RequestParam("setId") Integer setId,
-            @ApiParam("该条留言的内容") @RequestParam("content") String content,HttpServletRequest request){
-        ResponseData<Message> responseData = new ResponseData<>();
-        Message message=new Message();
-        message.setSetId(setId);
-        Admin admin=(Admin) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
-        message.setAuthorId(admin.getAdminId());
-        message.setCreateTime(new Date());
-        message.setContent(content);
-        message.setType(2);
-        boolean result=messageService.insertMessage(message);
-        if (!result){
-            responseData.jsonFill(2, "留言失败", null);
+    public ResponseData<Boolean> reply(
+            @ApiParam("留言ID") @RequestParam("id") Integer id,
+            @ApiParam("回复的内容") @RequestParam("reply") String reply,HttpServletRequest request){
+        ResponseData<Boolean> responseData = new ResponseData<>();
+        LeaveMessageWithBLOBs leaveMessageWithBLOBs=new LeaveMessageWithBLOBs();
+        leaveMessageWithBLOBs.setId(id);
+        leaveMessageWithBLOBs.setReply(reply);
+        leaveMessageWithBLOBs.setReplyTime(new Date());
+        Byte pass=1; leaveMessageWithBLOBs.setPass(pass);
+        int res=leaveMessageService.updateLeaveMessage(leaveMessageWithBLOBs);
+        if (res==0){
+            responseData.jsonFill(2, "留言失败", false);
             return responseData;
         }
-        responseData.jsonFill(1,"留言成功",message);
+        responseData.jsonFill(1,null,true);
         return responseData;
     }
 
-    @ApiOperation(value = "审核一条留言", notes = "valid=1表示通过审核，valid=0表示待审核，valid=-1表示审核不通过")
-    @RequestMapping(value = "updateMessageValid", method = {RequestMethod.GET})
-    @ResponseBody
-    public ResponseData<Boolean> updateMessageValid(@ApiParam("本条留言的ID") @RequestParam("id") int id,
-                                                    @ApiParam("是否通过审核") @RequestParam("valid") int valid){
-        ResponseData<Boolean> responseData=new ResponseData<>();
-        boolean result=messageService.updateMessageValid(id,valid);
-        if (!result){
-            responseData.jsonFill(2,"更新valid字段失败",result);
-            return responseData;
-        }
-        responseData.jsonFill(1,"更新valid字段成功",result);
-        return responseData;
-    }
-
-    @ApiOperation(value = "通过留言集ID查询其下所有留言", notes = "")
-    @RequestMapping(value = "selectMessageBySetId", method = {RequestMethod.GET})
-    @ResponseBody
-    public Message selectMessageBySetId(@ApiParam("留言集ID") @RequestParam("setId") int setId){
-        return messageService.selectMessageBySetId(setId);
-    }
 }

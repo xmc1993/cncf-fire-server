@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import redis.clients.jedis.Jedis;
+
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +47,7 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String AccessToken = request.getHeader("Authorization");
+        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
         Jedis jedis = JedisUtil.getJedis();
         try {
             byte[] bytes = jedis.get(AccessToken.getBytes());
@@ -66,15 +67,15 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
                     //从数据库或jedis中取出权限码存入request
                     setPowerCodes(request, admin);
 
-                    //有新的访问时session重新计时。缓存用户信息24小时
-                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24);
+                    //这里不应和普通用户一样30将这句转移到登录方法中以实现多少天内自动登录，因为管理员账号要做得更加安全。
+                    jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);
                 }
             }
 
         } catch (Exception e) {
             response.setStatus(401);
             throw new LoginException("login fail");
-        }finally {
+        } finally {
             if (jedis != null) {
                 jedis.close();
             }
@@ -84,10 +85,11 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
 
     /**
      * 从数据库或jedis中取出权限码存入request
+     *
      * @param request
      * @param admin
      */
-    private void setPowerCodes(HttpServletRequest request, Admin admin){
+    private void setPowerCodes(HttpServletRequest request, Admin admin) {
         String key = "PowerCodes-" + admin.getAdminId();
         Jedis jedis = JedisUtil.getJedis();
         byte[] bytes = jedis.get(key.getBytes());
@@ -95,7 +97,7 @@ public class AdminAccessTokenValidationInterceptor extends HandlerInterceptorAda
         if (bytes == null) {
             powerCodeList = adminPowerService.getAdminPowerCodeListByAdminId(admin.getAdminId());
             jedis.set(key.getBytes(), ObjectAndByte.toByteArray(powerCodeList));
-        }else {
+        } else {
             powerCodeList = (List<Integer>) ObjectAndByte.toObject(bytes);
         }
         request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_POWERCODES, powerCodeList);

@@ -31,11 +31,7 @@ public class ManageCategoryController {
     public ResponseData<List<Category>> selectAllCategory(){
         List<Category> categoryList=categoryService.selectAllCategory();
         ResponseData<List<Category>> responseData = new ResponseData<>();
-        if (categoryList.size()==0){
-            responseData.jsonFill(2,"文章类型列表为空",null);
-            return responseData;
-        }
-        responseData.jsonFill(1,"获取文章类型列表成功",categoryList);
+        responseData.jsonFill(1,null,categoryList);
         return responseData;
     }
 }

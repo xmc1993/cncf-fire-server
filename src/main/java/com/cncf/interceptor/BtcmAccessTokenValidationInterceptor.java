@@ -47,7 +47,7 @@ public class BtcmAccessTokenValidationInterceptor extends HandlerInterceptorAdap
 
     private boolean checkLogin(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String AccessToken = request.getHeader("Authorization");
+        String AccessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
         Jedis jedis = JedisUtil.getJedis();
         try {
             byte[] bytes = jedis.get(AccessToken.getBytes());
