@@ -30,6 +30,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/user/updateProfile"/>
             <mvc:mapping path="/user/leaveMessage/**"/>
+            <mvc:mapping path="/user/leaveMessage/getCaptcha"/>
             <bean class="com.cncf.interceptor.AccessTokenValidationInterceptor"/>
         </mvc:interceptor>
 

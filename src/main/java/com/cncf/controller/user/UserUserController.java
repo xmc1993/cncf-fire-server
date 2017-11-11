@@ -8,6 +8,7 @@ import com.cncf.util.*;
 import com.cncf.vo.LoginVo;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -157,9 +158,9 @@ public class UserUserController {
     @ApiOperation(value = "登录", notes = "登录")
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResponseData<LoginVo> register(@ApiParam("手机号") @RequestParam("mobile") String mobile,
-                                          @ApiParam("密码") @RequestParam("password") String password,
-                                          HttpServletRequest request, HttpServletResponse response) {
+    public ResponseData<LoginVo> login(@ApiParam("手机号") @RequestParam("mobile") String mobile,
+                                       @ApiParam("密码") @RequestParam("password") String password,
+                                       HttpServletRequest request, HttpServletResponse response) {
         ResponseData<LoginVo> responseData = new ResponseData();
         User user = userService.getUserByMobile(mobile);
         if (user == null) {
@@ -187,10 +188,42 @@ public class UserUserController {
                 jedis.close();
             }
         }
+        UserBase userBase = new UserBase();
         LoginVo loginVo = new LoginVo();
         loginVo.setId(user.getId());
         loginVo.setAccessToken(user.getAccessToken());
+        BeanUtils.copyProperties(user, userBase);
+        loginVo.setUserBase(userBase);
         responseData.jsonFill(1, null, loginVo);
+        return responseData;
+    }
+
+    @ApiOperation(value = "登出", notes = "登出")
+    @RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResponseData<Boolean> login(
+            HttpServletRequest request, HttpServletResponse response) {
+        ResponseData<Boolean> responseData = new ResponseData();
+        String accessToken = request.getHeader(TokenConfig.DEFAULT_ACCESS_TOKEN_HEADER_NAME);
+        if (accessToken == null) {
+            responseData.jsonFill(2, "用户未登录", null);
+            return responseData;
+        }
+        //登录信息写入缓存
+        Jedis jedis = null;
+        try {
+            jedis = JedisUtil.getJedis();
+            jedis.del(accessToken.getBytes());
+            //刷新token，会话30天失效。相当于网站的30天内自动登录
+        } catch (Exception e) {
+            responseData.jsonFill(2, "登出失败，服务器错误", null);
+            return responseData;
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        responseData.jsonFill(1, null, true);
         return responseData;
     }
 
