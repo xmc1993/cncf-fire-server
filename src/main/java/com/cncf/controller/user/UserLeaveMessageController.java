@@ -6,6 +6,7 @@ import com.cncf.entity.LeaveMessageWithBLOBs;
 import com.cncf.entity.User;
 import com.cncf.response.ResponseData;
 import com.cncf.service.LeaveMessageService;
+import com.cncf.util.HttpUtilsZj;
 import com.cncf.util.TokenConfig;
 
 import com.google.code.kaptcha.Constants;
@@ -26,8 +27,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Date;
@@ -64,7 +67,22 @@ public class UserLeaveMessageController {
         // create the text for the image
         String capText = captchaProducer.createText();
         // store the text in the session
-        request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        HttpSession session=request.getSession();
+
+        session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+
+
+        //创建 Cookie 存放 Session 的标识号
+        String sessionId=session.getId();
+        //Cookie cookie=new Cookie("JSESSIONID",sessionId);
+
+        //cookie.setMaxAge(60 * 30);
+        //cookie.setPath("/ROOT");
+        //response.addCookie(cookie);
+        response.setHeader("Set-Cookie","JSESSIONID="+sessionId);
+
+        new HttpUtilsZj().iteratorResponse(response);
+
         // create the image with the text
         BufferedImage bi = captchaProducer.createImage(capText);
         ServletOutputStream out = response.getOutputStream();
@@ -84,11 +102,18 @@ public class UserLeaveMessageController {
             @ApiParam("留言主题") @RequestParam("theme") String theme,
             @ApiParam("留言内容") @RequestParam("content") String content,
             @ApiParam("验证码") @RequestParam("captcha") String captcha,
-            HttpServletRequest request) {
+            HttpServletRequest request,HttpServletResponse response) {
+
+        new HttpUtilsZj().iteratorRequest(request);
+
 
         //添加验证码验证
         ResponseData<Boolean> responseData = new ResponseData<>();
-        String randomString = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+
+        HttpSession session=request.getSession();
+
+
+        String randomString = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
 
         //下面3个if的验证顺序要先验证非空，否则如果为空，equals方法会报出异常
         if (randomString == null){
