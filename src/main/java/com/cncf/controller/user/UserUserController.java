@@ -4,12 +4,7 @@ import com.cncf.entity.User;
 import com.cncf.entity.UserBase;
 import com.cncf.response.ResponseData;
 import com.cncf.service.UserService;
-import com.cncf.util.FileUtil;
-import com.cncf.util.JedisUtil;
-import com.cncf.util.ObjectAndByte;
-import com.cncf.util.TokenConfig;
-import com.cncf.util.UserUtil;
-import com.cncf.util.Util;
+import com.cncf.util.*;
 import com.cncf.vo.LoginVo;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -21,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
-import java.util.Date;
-
-import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/user/user")
@@ -98,8 +91,6 @@ public class UserUserController {
             @ApiParam("真实姓名") @RequestParam(value = "realName", required = false) String realName,
             @ApiParam("性别") @RequestParam(value = "sex", required = false) String sex,
             @ApiParam("公司") @RequestParam(value = "company", required = false) String company,
-            @ApiParam("省份") @RequestParam(value = "province", required = false) String province,
-            @ApiParam("城市") @RequestParam(value = "city", required = false) String city,
             @ApiParam("详细地址") @RequestParam(value = "detailAddress", required = false) String detailAddress,
             @ApiParam("邮箱") @RequestParam(value = "email", required = false) String email,
             @ApiParam("QQ") @RequestParam(value = "qq", required = false) String qq,
@@ -118,10 +109,6 @@ public class UserUserController {
             user.setSex(sex);
         if (company!=null)
             user.setCompany(company);
-        if (province!=nickname)
-            user.setProvince(province);
-        if (city!=null)
-            user.setCity(city);
         if (detailAddress!=null)
             user.setDetailAddress(detailAddress);
         if (email!=null)
