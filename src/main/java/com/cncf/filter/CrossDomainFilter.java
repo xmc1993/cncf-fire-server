@@ -54,7 +54,7 @@ public class CrossDomainFilter implements Filter {
           && "OPTIONS".equalsIgnoreCase(request.getMethod())) {
         response.addHeader("Access-Control-Allow-Methods", "GET, POST");
         response.addHeader("Access-Control-Allow-Headers",
-            "X-Requested-With, Origin, Content-Type, Cookie, X-Access-Token");
+            "Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With");
       }
       // response.addCookie(new Cookie("test-random-time", System.currentTimeMillis() + ""));
       filterChain.doFilter(request, response);
