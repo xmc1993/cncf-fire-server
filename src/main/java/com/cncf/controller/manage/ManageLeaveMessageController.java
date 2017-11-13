@@ -57,14 +57,14 @@ public class ManageLeaveMessageController {
         return responseData;
     }
 
-    @ApiOperation(value = "分页查询留言", notes = "")
+    @ApiOperation(value = "分页查询留言", notes = "不提供page和pageSize就不分页")
     @RequestMapping(value = "selectAllLeaveMessageByPage", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List<LeaveMessage>> selectAllLeaveMessageByPage(
-            @ApiParam("PAGE") @RequestParam("page") int page,
-            @ApiParam("SIZE") @RequestParam("pageSize") int pageSize){
+            @ApiParam("PAGE") @RequestParam(value = "page",required = false) Integer page,
+            @ApiParam("SIZE") @RequestParam(value = "pageSize",required = false) Integer pageSize){
         ResponseData<List<LeaveMessage>> responseData = new ResponseData<>();
-        List<LeaveMessage> leaveMessageList=(List<LeaveMessage>)leaveMessageService.selectAllLeaveMessageByPage(page,pageSize);
+        List<LeaveMessage> leaveMessageList=leaveMessageService.selectAllLeaveMessageByPage(page,pageSize);
         responseData.jsonFill(1, null, leaveMessageList);
         responseData.setCount(leaveMessageList.size());
         return responseData;

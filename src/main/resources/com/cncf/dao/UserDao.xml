@@ -20,7 +20,8 @@
 		identification,
 		valid,
 		createTime,
-		updateTime
+		updateTime,
+		captcha
 	</sql>
 	
 	<sql id="baseFields">
@@ -35,6 +36,7 @@
 		email,
 		qq,
 		homepage,
+		captcha
 	</sql>
 
 	<insert id="saveUser" parameterType="com.cncf.entity.User" useGeneratedKeys="true">

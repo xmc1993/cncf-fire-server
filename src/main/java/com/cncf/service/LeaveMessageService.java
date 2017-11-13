@@ -17,7 +17,7 @@ public interface LeaveMessageService {
      */
     int verifyLeaveMessage(Integer id,byte pass);
     LeaveMessage selectLeaveMessageById(Integer id);
-    List<LeaveMessage> selectAllLeaveMessageByPage(int page,int pageSize);
+    List<LeaveMessage> selectAllLeaveMessageByPage(Integer page,Integer pageSize);
     int insertLeaveMessage(LeaveMessageWithBLOBs leaveMessageWithBLOBs);
     int updateLeaveMessage(LeaveMessageWithBLOBs leaveMessageWithBLOBs);
 }

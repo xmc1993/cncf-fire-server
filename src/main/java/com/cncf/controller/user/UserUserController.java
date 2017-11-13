@@ -329,7 +329,6 @@ public class UserUserController {
         return responseData;
     }
 
-
     @ApiOperation(value = "修改头像", notes = "需要登录")
     @RequestMapping(value = "/updateHeadimgUrl", method = {RequestMethod.POST})
     @ResponseBody

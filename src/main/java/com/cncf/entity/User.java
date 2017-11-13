@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class User implements Serializable{
+    private static final long serialVersionUID = -5108898185184628269L;
     private Integer id;
     private String nickname = "游客";//用户名
     private String realName;//用户名
@@ -25,4 +26,5 @@ public class User implements Serializable{
     private Integer valid = 1;//用于软删除
     private Date createTime;
     private Date updateTime;
+    private String captcha;
 }

@@ -54,11 +54,11 @@ public class AccessTokenValidationInterceptor extends HandlerInterceptorAdapter 
                 throw new LoginException("登录失效");
             } else {
                 User user = (User) ObjectAndByte.toObject(bytes);
-                user.setAccessToken(AccessToken);
                 if (user == null) {
                     response.setStatus(401);
                     throw new LoginException("登录失效");
                 } else {
+                    user.setAccessToken(AccessToken);
                     request.setAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME, user);
                     //将这句迁移到了登录方法里，相当于网站的30天内自动登录。
                     //jedis.expire(AccessToken.getBytes(), 60 * 60 * 24 * 30);//缓存用户信息30天

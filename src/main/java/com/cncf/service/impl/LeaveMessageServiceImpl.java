@@ -30,7 +30,10 @@ public class LeaveMessageServiceImpl implements LeaveMessageService {
     }
 
     @Override
-    public List<LeaveMessage> selectAllLeaveMessageByPage(int page, int pageSize) {
+    public List<LeaveMessage> selectAllLeaveMessageByPage(Integer page, Integer pageSize) {
+        if (page==null||pageSize==null){
+            return leaveMessageMapper.selectAllLeaveMessage();
+        }
         int offset = page*pageSize;
         int limit = pageSize;
         return leaveMessageMapper.selectAllLeaveMessageByPage(offset,limit);

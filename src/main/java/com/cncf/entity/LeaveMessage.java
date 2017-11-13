@@ -12,6 +12,8 @@ public class LeaveMessage {
 
     private Integer userId;
 
+    private String realName;
+
     private String theme;
 
     private Date createTime;
