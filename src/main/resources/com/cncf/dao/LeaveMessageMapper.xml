@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cncf.entity.LeaveMessage" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="real_name" property="realName" jdbcType="CHAR" />
     <result column="theme" property="theme" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
@@ -73,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, theme, create_time, reply_time, pass, valid
+    id, user_id, real_name, theme, create_time, reply_time, pass, valid
   </sql>
   <sql id="Blob_Column_List" >
     content, reply
@@ -117,12 +118,22 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectAllLeaveMessageByPage" resultType="com.cncf.entity.LeaveMessage">
+  <select id="selectAllLeaveMessage" resultMap="ResultMapWithBLOBs">
     SELECT
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     FROM leave_message
+    order by create_time desc
+  </select>
+
+  <select id="selectAllLeaveMessageByPage" resultMap="ResultMapWithBLOBs">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM leave_message
+    order by create_time desc
     limit #{0},#{1}
   </select>
 
@@ -137,11 +148,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cncf.entity.LeaveMessageWithBLOBs" >
-    insert into leave_message (id, user_id, theme, 
+    insert into leave_message (id, user_id, real_name, theme,
       create_time, reply_time, pass, 
       valid, content, reply
       )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{realName,jdbcType=CHAR}, #{theme,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{replyTime,jdbcType=TIMESTAMP}, #{pass,jdbcType=TINYINT}, 
       #{valid,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}, #{reply,jdbcType=LONGVARCHAR}
       )
@@ -154,6 +165,9 @@
       </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="realName != null" >
+        real_name,
       </if>
       <if test="theme != null" >
         theme,
@@ -183,6 +197,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=CHAR},
       </if>
       <if test="theme != null" >
         #{theme,jdbcType=VARCHAR},
@@ -222,6 +239,9 @@
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
+      <if test="record.realName != null" >
+        real_name = #{record.realName,jdbcType=CHAR},
+      </if>
       <if test="record.theme != null" >
         theme = #{record.theme,jdbcType=VARCHAR},
       </if>
@@ -252,6 +272,7 @@
     update leave_message
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
+      real_name = #{record.realName,jdbcType=CHAR},
       theme = #{record.theme,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
@@ -267,6 +288,7 @@
     update leave_message
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
+      real_name = #{record.realName,jdbcType=CHAR},
       theme = #{record.theme,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
@@ -281,6 +303,9 @@
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=CHAR},
       </if>
       <if test="theme != null" >
         theme = #{theme,jdbcType=VARCHAR},
@@ -309,6 +334,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cncf.entity.LeaveMessageWithBLOBs" >
     update leave_message
     set user_id = #{userId,jdbcType=INTEGER},
+      real_name = #{realName,jdbcType=CHAR},
       theme = #{theme,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       reply_time = #{replyTime,jdbcType=TIMESTAMP},
@@ -321,6 +347,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cncf.entity.LeaveMessage" >
     update leave_message
     set user_id = #{userId,jdbcType=INTEGER},
+      real_name = #{realName,jdbcType=CHAR},
       theme = #{theme,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       reply_time = #{replyTime,jdbcType=TIMESTAMP},

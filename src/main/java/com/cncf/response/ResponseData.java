@@ -6,13 +6,15 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
+/**
+ * @author zj
+ */
 @Api(value="返回数据类")
 public class ResponseData<T> implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8960296554212928922L;
+	private static final long serialVersionUID = -316648851413623847L;
+	//private static final long serialVersionUID = 8960296554212928922L;
+
 	@ApiModelProperty(value="返回状态(1=正常，2=错误，3=未登录)")
 	private int status;
 	@ApiModelProperty(value="返回类型")
@@ -62,6 +64,8 @@ public class ResponseData<T> implements Serializable {
 		this.errorMes = errorMes;
 	}
 
+
+
 	public void jsonFill(int status, String errorMsg, T obj) {
 		this.status = status;
 		this.errorMes = errorMsg;
@@ -75,4 +79,5 @@ public class ResponseData<T> implements Serializable {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
+
 }

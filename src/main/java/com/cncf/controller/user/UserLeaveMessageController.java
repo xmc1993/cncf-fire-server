@@ -6,6 +6,9 @@ import com.cncf.entity.LeaveMessageWithBLOBs;
 import com.cncf.entity.User;
 import com.cncf.response.ResponseData;
 import com.cncf.service.LeaveMessageService;
+import com.cncf.util.HttpUtilsZj;
+import com.cncf.util.JedisUtil;
+import com.cncf.util.ObjectAndByte;
 import com.cncf.util.TokenConfig;
 
 import com.google.code.kaptcha.Constants;
@@ -22,12 +25,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import javax.imageio.ImageIO;
+import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Date;
@@ -63,8 +70,38 @@ public class UserLeaveMessageController {
         response.setContentType("image/jpeg");
         // create the text for the image
         String capText = captchaProducer.createText();
+
         // store the text in the session
-        request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        //HttpSession session = request.getSession();
+        //session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        //创建 Cookie 存放 Session 的标识号
+        //String sessionId=session.getId();
+        //Cookie cookie=new Cookie("JSESSIONID",sessionId);
+
+        //cookie.setMaxAge(60 * 30);
+        //cookie.setPath("/ROOT");
+        //response.addCookie(cookie);
+        //response.setHeader("Set-Cookie","JSESSIONID="+sessionId);
+
+        User user = (User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
+
+        user.setCaptcha(capText);
+
+        Jedis jedis = null;
+        try {
+            jedis = JedisUtil.getJedis();
+            jedis.set(user.getAccessToken().getBytes(), ObjectAndByte.toByteArray(user));
+
+        } catch (Exception e) {
+            throw new RuntimeException("获取验证码失败，服务器错误。");
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+
+        new HttpUtilsZj().iteratorResponse(response);
+
         // create the image with the text
         BufferedImage bi = captchaProducer.createImage(capText);
         ServletOutputStream out = response.getOutputStream();
@@ -84,46 +121,56 @@ public class UserLeaveMessageController {
             @ApiParam("留言主题") @RequestParam("theme") String theme,
             @ApiParam("留言内容") @RequestParam("content") String content,
             @ApiParam("验证码") @RequestParam("captcha") String captcha,
-            HttpServletRequest request) {
+            HttpServletRequest request, HttpServletResponse response) {
+
+        new HttpUtilsZj().iteratorRequest(request);
+
 
         //添加验证码验证
         ResponseData<Boolean> responseData = new ResponseData<>();
-        String randomString = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+
+        //HttpSession session=request.getSession();
+        //String randomString = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+
+        User user = (User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
+        String randomString = user.getCaptcha();
+
 
         //下面3个if的验证顺序要先验证非空，否则如果为空，equals方法会报出异常
-        if (randomString == null){
-            responseData.jsonFill(2,"验证码失效，请刷新验证码",false);
+        if (randomString == null) {
+            responseData.jsonFill(2, "验证码失效，请刷新验证码", false);
             return responseData;
         }
-        if (captcha==null){
-            responseData.jsonFill(2,"参数captcha不可为空",false);
+        if (captcha == null) {
+            responseData.jsonFill(2, "参数captcha不可为空", false);
             return responseData;
         }
         if (!randomString.equalsIgnoreCase(captcha)) {
             responseData.jsonFill(2, "验证码不正确", false);
             return responseData;
         }
-        User user = (User) request.getAttribute(TokenConfig.DEFAULT_USERID_REQUEST_ATTRIBUTE_NAME);
-        LeaveMessageWithBLOBs leaveMessageWithBLOBs=new LeaveMessageWithBLOBs();
+
+        LeaveMessageWithBLOBs leaveMessageWithBLOBs = new LeaveMessageWithBLOBs();
         leaveMessageWithBLOBs.setUserId(user.getId());
+        leaveMessageWithBLOBs.setRealName(user.getRealName());
         leaveMessageWithBLOBs.setTheme(theme);
         leaveMessageWithBLOBs.setContent(content);
         leaveMessageWithBLOBs.setCreateTime(new Date());
         int res = leaveMessageService.insertLeaveMessage(leaveMessageWithBLOBs);
-        if (res==0){
-            responseData.jsonFill(2,"添加留言失败",false);
+        if (res == 0) {
+            responseData.jsonFill(2, "添加留言失败", false);
             return responseData;
         }
-        responseData.jsonFill(1,null,true);
+        responseData.jsonFill(1, null, true);
         return responseData;
     }
 
-    @ApiOperation(value = "分页查询留言", notes = "")
+    @ApiOperation(value = "分页查询留言", notes = "不提供page和pageSize就不分页")
     @RequestMapping(value = "selectAllLeaveMessageByPage", method = {RequestMethod.GET})
     @ResponseBody
     public ResponseData<List<LeaveMessage>> selectAllLeaveMessageByPage(
-            @ApiParam("PAGE") @RequestParam("page") int page,
-            @ApiParam("SIZE") @RequestParam("pageSize") int pageSize){
+            @ApiParam("PAGE") @RequestParam(value = "page",required = false) Integer page,
+            @ApiParam("SIZE") @RequestParam(value = "pageSize",required = false) Integer pageSize){
         ResponseData<List<LeaveMessage>> responseData = new ResponseData<>();
         List<LeaveMessage> leaveMessageList=leaveMessageService.selectAllLeaveMessageByPage(page,pageSize);
         responseData.jsonFill(1, null, leaveMessageList);

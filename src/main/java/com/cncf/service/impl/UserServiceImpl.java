@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         if (emptyFlag) {
             res = userDao.saveUser(tempUser);
         } else {
-            res = userDao.updateUser(tempUser);
+            res = userDao.updateVerifyCode(tempUser.getId(), tempUser.getVerifyCode());
         }
         if (!res) {
             return null;

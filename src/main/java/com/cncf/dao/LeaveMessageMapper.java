@@ -37,5 +37,7 @@ public interface LeaveMessageMapper {
 
     int updateByPrimaryKey(LeaveMessage record);
 
-    List<LeaveMessage> selectAllLeaveMessageByPage(int offset,int limit);
+    List<LeaveMessage> selectAllLeaveMessage();
+
+    List<LeaveMessage> selectAllLeaveMessageByPage(int offset, int limit);
 }

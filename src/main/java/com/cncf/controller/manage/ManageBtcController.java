@@ -70,6 +70,7 @@ public class ManageBtcController {
         BtcWithBLOBs btcWithBLOBs=btcService.selectBtcById(id);
         if (btcWithBLOBs==null){
             responseData.jsonFill(2,"无效的id",null);
+            return responseData;
         }
         responseData.jsonFill(1,null,btcWithBLOBs);
         return responseData;
@@ -80,7 +81,7 @@ public class ManageBtcController {
     @RequestMapping(value = "updateByPrimaryKeyWithBLOBs", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Boolean> updateByPrimaryKeyWithBLOBs(
-            @ApiParam("可否将null值更新到数据库，true可以，false不可以") @RequestParam("selective") int selective,
+            @ApiParam("可否将null值更新到数据库，0可以，1不可以") @RequestParam("selective") int selective,
             @ApiParam("分委会ID") @RequestParam("id") Integer id,
             @ApiParam("分委会名") @RequestParam(value="btcName",required = false) String btcName,
             @ApiParam("分委会简称") @RequestParam(value = "shortName",required = false) String shortName,
@@ -112,8 +113,6 @@ public class ManageBtcController {
         responseData.jsonFill(1,null,true);
         return responseData;
     }
-
-    
 
     @ApiOperation(value = "删除分委会", notes = "")
     @RequestMapping(value = "deleteBtc/{id}", method = {RequestMethod.DELETE})

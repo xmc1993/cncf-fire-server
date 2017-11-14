@@ -10,8 +10,6 @@
 		mobile,
 		password,
 		company,
-		province,
-		city,
 		detailAddress,
 		email,
 		qq,
@@ -22,7 +20,8 @@
 		identification,
 		valid,
 		createTime,
-		updateTime
+		updateTime,
+		captcha
 	</sql>
 	
 	<sql id="baseFields">
@@ -33,12 +32,11 @@
 		headImgUrl,
 		mobile,
 		company,
-		province,
-		city,
 		detailAddress,
 		email,
 		qq,
 		homepage,
+		captcha
 	</sql>
 
 	<insert id="saveUser" parameterType="com.cncf.entity.User" useGeneratedKeys="true">
@@ -53,8 +51,6 @@
 		#{mobile},
 		#{password},
 		#{company},
-		#{province},
-		#{city},
 		#{detailAddress},
 		#{email},
 		#{qq},
@@ -76,8 +72,6 @@
 		realName=#{realName},
 		sex=#{sex},
 		company=#{company},
-		province=#{province},
-		city=#{city},
 		detailAddress=#{detailAddress},
 		email=#{email},
 		qq=#{qq},
