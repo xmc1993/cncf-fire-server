@@ -21,7 +21,7 @@ import java.util.List;
 
 @Api(value = "Admin", description = "管理接口")
 @Controller()
-@RequestMapping("/manage")
+@RequestMapping("/manage/powerCode")
 public class ManagePowerCodeController {
     private static final Logger logger = LoggerFactory.getLogger(ManagePowerCodeController.class);
     @Autowired
@@ -29,12 +29,15 @@ public class ManagePowerCodeController {
 
     @RequiredPermissions({1,15})
     @ApiOperation(value = "新增权限码项", notes = "")
-    @RequestMapping(value = "/powerCodes", method = {RequestMethod.POST})
+    @RequestMapping(value = "/addPowerCode", method = {RequestMethod.POST})
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public PowerCode publishPowerCode(
-            @ApiParam("权限码项") @RequestBody PowerCode powerCode,
-            HttpServletRequest request, HttpServletResponse response) {
+            @ApiParam("权限码名称") @RequestParam(value = "name") String name,
+            @ApiParam("权限描述") @RequestParam(value = "description",required = false) String description) {
+        PowerCode powerCode=new PowerCode();
+        powerCode.setName(name);
+        powerCode.setDescription(description);
         powerCode.setCreateTime(new Date());
         powerCode.setUpdateTime(new Date());
         powerCodeService.savePowerCode(powerCode);
@@ -42,14 +45,17 @@ public class ManagePowerCodeController {
     }
 
     @RequiredPermissions({3,15})
-    @ApiOperation(value = "更新权限码项", notes = "")
-    @RequestMapping(value = "/powerCodes/{id}", method = {RequestMethod.PUT})
+    @ApiOperation(value = "更新权限码项", notes = "更新失败则返回null，成功则返回权限码对象。传null值置空相应字段")
+    @RequestMapping(value = "/updatePowerCodes", method = {RequestMethod.POST})
     @ResponseBody
     public PowerCode updatePowerCode(
-            @ApiParam("ID") @PathVariable int id,
-            @ApiParam("") @RequestBody PowerCode powerCode,
-            HttpServletRequest request, HttpServletResponse response) {
+            @ApiParam("ID") @RequestParam("id") int id,
+            @ApiParam("权限名称") @RequestParam(value = "name",required = false) String name,
+            @ApiParam("权限描述") @RequestParam(value = "description",required = false) String description) {
+        PowerCode powerCode=new PowerCode();
         powerCode.setId(id);
+        powerCode.setName(name);
+        powerCode.setDescription(description);
         powerCode.setUpdateTime(new Date());
         return powerCodeService.updatePowerCode(powerCode) ? powerCode : null;
 
@@ -57,25 +63,28 @@ public class ManagePowerCodeController {
 
     @RequiredPermissions({2,15})
     @ApiOperation(value = "删除权限码项", notes = "")
-    @RequestMapping(value = "/powerCodes/{id}", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/deletePowerCodes/{id}", method = {RequestMethod.DELETE})
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePowerCode(
+    public ResponseData<Boolean> deletePowerCode(
             @ApiParam("ID") @PathVariable int id,
             HttpServletRequest request, HttpServletResponse response) {
         ResponseData<Boolean> responseData = new ResponseData<>();
         boolean success = powerCodeService.deletePowerCode(id);
         if (!success) {
-            throw new RuntimeException("删除失败");
+            responseData.jsonFill(2,"删除失败",false);
+            return responseData;
         }
+        responseData.jsonFill(1,null,true);
+        return responseData;
     }
 
 
     @RequiredPermissions({4,15})
     @ApiOperation(value = "根据ID获得权限码项", notes = "")
-    @RequestMapping(value = "/powerCodes/{id}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getPowerCodesById/{id}", method = {RequestMethod.GET})
     @ResponseBody
-    public PowerCode getStoryById(
+    public PowerCode getPowerCodesById(
             @ApiParam("ID") @PathVariable int id,
             HttpServletRequest request, HttpServletResponse response) {
         PowerCode powerCode = powerCodeService.getPowerCodeById(id);
@@ -87,10 +96,10 @@ public class ManagePowerCodeController {
     }
 
     @RequiredPermissions({4,15})
-    @ApiOperation(value = "分页获得权限码", notes = "")
-    @RequestMapping(value = "/getPowerCodeListByPage", method = {RequestMethod.GET})
+    @ApiOperation(value = "获得权限码", notes = "")
+    @RequestMapping(value = "/getPowerCodeList", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List<PowerCode>> getPowerCodeListByPage(
+    public ResponseData<List<PowerCode>> getPowerCodeList(
             @ApiParam("页") @RequestParam int page,
             @ApiParam("页大小") @RequestParam int pageSize,
             HttpServletRequest request, HttpServletResponse response) {

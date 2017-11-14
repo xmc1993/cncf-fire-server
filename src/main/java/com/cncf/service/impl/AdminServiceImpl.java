@@ -14,14 +14,17 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
 
+    @Override
     public Admin getAdminByName(String adminName) {
         return adminDao.getAdminByName(adminName);
     }
 
+    @Override
     public boolean saveAdmin(Admin admin) {
         return adminDao.saveAdmin(admin);
     }
 
+    @Override
     public boolean deleteAdmin(Integer adminId) {
         return adminDao.deleteAdmin(adminId);
     }
@@ -29,5 +32,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public boolean updateAccessToken(Admin admin) {
         return adminDao.updateAccessToken(admin);
+    }
+
+    @Override
+    public List<Admin> selectAllAdmin() {
+        return adminDao.selectAllAdmin();
     }
 }

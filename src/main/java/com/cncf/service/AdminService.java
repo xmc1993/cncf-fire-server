@@ -12,4 +12,6 @@ public interface AdminService {
     boolean deleteAdmin(Integer adminId);
 
     boolean updateAccessToken(Admin admin);
+
+    List<Admin> selectAllAdmin();
 }

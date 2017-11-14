@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author zj
@@ -110,4 +111,29 @@ public class ManageAdminController {
             return responseData;
         }
     }
+
+    @ApiOperation(value = "获取所有的后台用户", notes = "")
+    @RequestMapping(value = "selectAllAdmin", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<List<Admin>> selectAllAdmin(){
+        List<Admin> AdminList=adminService.selectAllAdmin();
+        ResponseData<List<Admin>> responseData = new ResponseData<>();
+        responseData.jsonFill(1,null,AdminList);
+        return responseData;
+    }
+
+    @ApiOperation(value = "删除后台用户", notes = "")
+    @RequestMapping(value = "deleteAdmin/{id}", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResponseData<Boolean> deleteAdmin(@ApiParam("后台用户ID") @PathVariable Integer id){
+        ResponseData<Boolean> responseData=new ResponseData<>();
+        boolean res=adminService.deleteAdmin(id);
+        if (!res){
+            responseData.jsonFill(2,"删除失败",false);
+            return responseData;
+        }
+        responseData.jsonFill(1,"删除成功",true);
+        return responseData;
+    }
+
 }

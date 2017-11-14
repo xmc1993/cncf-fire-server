@@ -48,4 +48,14 @@
         WHERE adminId = #{adminId}
     </update>
 
+    <select id="selectAllAdmin" resultType="com.cncf.entity.Admin">
+        SELECT
+        <include refid="fields"></include>
+        FROM admin
+    </select>
+
+    <delete id="deleteAdmin" parameterType="java.lang.Integer" >
+        delete from admin WHERE adminId=#{adminId}
+    </delete>
+
 </mapper>

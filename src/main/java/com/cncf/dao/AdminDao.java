@@ -13,4 +13,6 @@ public interface AdminDao {
     boolean deleteAdmin(Integer adminId);
 
     boolean updateAccessToken(Admin admin);
+
+    List<Admin> selectAllAdmin();
 }
