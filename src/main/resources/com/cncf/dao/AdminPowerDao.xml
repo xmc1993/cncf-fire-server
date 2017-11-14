@@ -25,12 +25,12 @@
         )
     </insert>
 
-    <delete id="deleteAdminPower">
+    <delete id="deleteAdminPowerById">
         DELETE FROM admin_power
         WHERE id = #{0}
     </delete>
 
-    <delete id="deleteAdminPowerWithPrimaryKey">
+    <delete id="deleteAdminPower">
         DELETE FROM admin_power
         WHERE adminId = #{0} and codeId = #{1}
     </delete>
@@ -49,11 +49,4 @@
         WHERE id = #{0}
     </select>
 
-	 <select id="getAdminPowerListByAdminId" resultType="com.cncf.entity.AdminPower">
-        select
-        <include refid="fields"></include>
-        from admin_power
-        where adminId = #{0}
-        limit #{1},#{2}
-    </select>
 </mapper>

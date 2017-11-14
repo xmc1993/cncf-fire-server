@@ -38,15 +38,13 @@ public class PowerCodeServiceImpl implements PowerCodeService {
         return powerCodeDao.getPowerCodeById(id);
     }
 
-
     @Override
-    public List<PowerCode> getPowerCodeListByPage(int page, int pageSize) {
-        int offset = page*pageSize;
-        int limit = pageSize;
-        return powerCodeDao.getPowerCodeListByPage(offset, limit);
+    public List<PowerCode> getPowerCodeList() {
+        return powerCodeDao.getPowerCodeList();
     }
 
-	@Override
+
+    @Override
 	public Integer getPowerCodeCount() {
 		return powerCodeDao.getPowerCodeCount();
 	}

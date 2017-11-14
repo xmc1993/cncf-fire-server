@@ -4,6 +4,9 @@ import com.cncf.entity.PowerCode;
 
 import java.util.List;
 
+/**
+ * @author zj
+ */
 public interface PowerCodeService {
 
     PowerCode savePowerCode(PowerCode powerCode);
@@ -14,7 +17,7 @@ public interface PowerCodeService {
 
     PowerCode getPowerCodeById(int id);
 
-    List<PowerCode> getPowerCodeListByPage(int page, int pageSize);
+    List<PowerCode> getPowerCodeList();
     
     Integer getPowerCodeCount();
 

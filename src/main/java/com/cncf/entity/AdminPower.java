@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author zj
+ */
 @Data
 public class AdminPower {
     private Integer id;

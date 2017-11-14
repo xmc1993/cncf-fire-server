@@ -7,16 +7,19 @@ public interface AdminPowerService {
 
     AdminPower saveAdminPower(AdminPower adminPower);
 
-    boolean deleteAdminPower(int id);
+    boolean deleteAdminPowerById(int id);
 
-    boolean deleteAdminPowerWithPrimaryKey(int adminId, int code);
+    boolean deleteAdminPower(int adminId, int code);
 
     AdminPower getAdminPowerById(int id);
 
-    List<AdminPower> getAdminPowerListByAdminId(int id);
+    List<AdminPower> getAdminPowerListAdminId(int id);
 
+    /**
+     * @param id
+     * @return
+     * 该方法在AdminAccessTokenValidationInterceptor用到
+     */
     List<Integer> getAdminPowerCodeListByAdminId(int id);
-    
-    List<AdminPower> getAdminPowerListByAdminId(int id, int page, int pageSize);
 
 }

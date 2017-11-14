@@ -27,18 +27,18 @@ public class AdminPowerServiceImpl implements AdminPowerService {
     }
 
     @Override
-    public boolean deleteAdminPower(int id) {
+    public boolean deleteAdminPowerById(int id) {
         AdminPower adminPower = adminPowerDao.getAdminPowerById(id);
         if (adminPower != null) {
             clearCache(adminPower.getAdminId());
         }
-        return adminPowerDao.deleteAdminPower(id);
+        return adminPowerDao.deleteAdminPowerById(id);
     }
 
     @Override
-    public boolean deleteAdminPowerWithPrimaryKey(int adminId, int code) {
+    public boolean deleteAdminPower(int adminId, int code) {
         clearCache(adminId);
-        return adminPowerDao.deleteAdminPowerWithPrimaryKey(adminId, code);
+        return adminPowerDao.deleteAdminPower(adminId, code);
     }
 
     @Override
@@ -47,13 +47,13 @@ public class AdminPowerServiceImpl implements AdminPowerService {
     }
 
     @Override
-    public List<AdminPower> getAdminPowerListByAdminId(int id) {
+    public List<AdminPower> getAdminPowerListAdminId(int id) {
         return adminPowerDao.getAdminPowerListAdminId(id);
     }
 
     @Override
     public List<Integer> getAdminPowerCodeListByAdminId(int id) {
-        List<AdminPower> list = getAdminPowerListByAdminId(id);
+        List<AdminPower> list = getAdminPowerListAdminId(id);
         List<Integer> res = new ArrayList<>();
         for (AdminPower adminPower : list) {
             res.add(adminPower.getCodeId());
@@ -79,10 +79,4 @@ public class AdminPowerServiceImpl implements AdminPowerService {
 
     }
 
-    @Override
-    public List<AdminPower> getAdminPowerListByAdminId(int id,int page,int pageSize) {
-        int offset = page*pageSize;
-        int limit = pageSize;
-        return adminPowerDao.getAdminPowerListByAdminId(id,offset, limit);
-    }
 }

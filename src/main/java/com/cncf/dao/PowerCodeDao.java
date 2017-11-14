@@ -16,7 +16,7 @@ public interface PowerCodeDao {
 
     PowerCode getPowerCodeById(int id);
 
-    List<PowerCode> getPowerCodeListByPage(int offset, int limit);
+    List<PowerCode> getPowerCodeList();
 
     int getPowerCodeCount();
 }

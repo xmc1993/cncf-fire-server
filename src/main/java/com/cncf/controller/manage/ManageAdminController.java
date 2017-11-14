@@ -123,7 +123,7 @@ public class ManageAdminController {
     }
 
     @ApiOperation(value = "删除后台用户", notes = "")
-    @RequestMapping(value = "deleteAdmin/{id}", method = {RequestMethod.GET})
+    @RequestMapping(value = "deleteAdmin/{id}", method = {RequestMethod.DELETE})
     @ResponseBody
     public ResponseData<Boolean> deleteAdmin(@ApiParam("后台用户ID") @PathVariable Integer id){
         ResponseData<Boolean> responseData=new ResponseData<>();

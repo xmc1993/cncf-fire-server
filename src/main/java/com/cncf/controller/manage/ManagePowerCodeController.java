@@ -99,12 +99,9 @@ public class ManagePowerCodeController {
     @ApiOperation(value = "获得权限码", notes = "")
     @RequestMapping(value = "/getPowerCodeList", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List<PowerCode>> getPowerCodeList(
-            @ApiParam("页") @RequestParam int page,
-            @ApiParam("页大小") @RequestParam int pageSize,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ResponseData<List<PowerCode>> getPowerCodeList() {
         ResponseData<List<PowerCode>> responseData = new ResponseData<>();
-        List<PowerCode> powerCodeList = powerCodeService.getPowerCodeListByPage(page, pageSize);
+        List<PowerCode> powerCodeList = powerCodeService.getPowerCodeList();
         responseData.jsonFill(1, null, powerCodeList);
         responseData.setCount(powerCodeService.getPowerCodeCount());
         return responseData;
