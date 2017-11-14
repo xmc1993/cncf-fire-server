@@ -52,7 +52,7 @@ public class CrossDomainFilter implements Filter {
        */
       if (request.getHeader("Access-Control-Request-Method") != null
           && "OPTIONS".equalsIgnoreCase(request.getMethod())) {
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
         response.addHeader("Access-Control-Allow-Headers",
             "Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With");
       }
