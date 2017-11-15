@@ -97,6 +97,8 @@
                 <property name="maxIdle" value="50"/>
                 <property name="minIdle" value="2"/>
                 <property name="logAbandoned" value="false"/>
+                <property name="removeAbandoned" value="true"/>
+                <property name="removeAbandonedTimeout" value="60"/>
                 <property name="jdbcInterceptors" value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"/>
             </bean>
         </property>
