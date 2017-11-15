@@ -78,22 +78,27 @@ public class ManageAdminPowerController {
         return responseData;
     }
 
-/*    @RequiredPermissions({2,15})
+    @RequiredPermissions({2,15})
     @ApiOperation(value = "删除后台用户权限项", notes = "根据后台用户id及其权限码id删除该用户的权限项")
     @RequestMapping(value = "/deleteAdminPower", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Boolean> deleteAdminPower(
-            @ApiParam("后台用户id") @RequestParam Integer adminId,
-            @ApiParam("权限codeId") @RequestParam Integer codeId) {
+            @ApiParam("后台用户的id") @RequestParam("adminId") Integer adminId,
+            @ApiParam("权限码串") @RequestParam("codeIds") String codeIds) {
         ResponseData<Boolean> responseData = new ResponseData<>();
-        boolean success = adminPowerService.deleteAdminPower(adminId, codeId);
-        if (!success) {
-            responseData.jsonFill(2,"删除失败，该项可能已被删除",false);
-            return responseData;
+
+        String[] codeIdsInArray= codeIds.split(",");
+        for (int i = 0; i < codeIdsInArray.length; i++) {
+            Integer codeId=Integer.parseInt(codeIdsInArray[i]);
+            boolean success = adminPowerService.deleteAdminPower(adminId, codeId);
+            if (!success) {
+                responseData.jsonFill(2,"删除失败，权限"+codeId+"可能已被删除或不存在！",false);
+                return responseData;
+            }
         }
         responseData.jsonFill(1,null,true);
         return responseData;
-    }*/
+    }
 
     @RequiredPermissions({4,15})
     @ApiOperation(value = "根据ID获得后台用户权限项", notes = "参数为管理员权限项的ID即adminPower的id")
