@@ -36,6 +36,11 @@ public class AdminPowerServiceImpl implements AdminPowerService {
     }
 
     @Override
+    public boolean deleteAllPowerByAdminId() {
+        return adminPowerDao.deleteAllPowerByAdminId();
+    }
+
+    @Override
     public boolean deleteAdminPower(int adminId, int code) {
         clearCache(adminId);
         return adminPowerDao.deleteAdminPower(adminId, code);

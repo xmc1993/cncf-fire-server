@@ -12,6 +12,8 @@ public interface AdminPowerDao {
 
     boolean deleteAdminPowerById(int id);
 
+    boolean deleteAllPowerByAdminId();
+
     AdminPower getAdminPowerById(int id);
 
     List<AdminPower> getAdminPowerListAdminId(int id);

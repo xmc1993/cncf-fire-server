@@ -35,14 +35,15 @@ public class ManageAdminPowerController {
     private AdminPowerService adminPowerService;
 
     @RequiredPermissions({4,15})
-    @ApiOperation(value = "新增后台用户权限项", notes = "参数codeIds是形如1，2，3的字符串格式")
+    @ApiOperation(value = "新增后台用户权限项", notes = "参数codeIds是形如1，2，3的字符串格式。" +
+            "重复添加的权限码不包含在返回结果中。")
     @RequestMapping(value = "/addAdminPowers", method = {RequestMethod.POST})
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public List<AdminPower> publishAdminPower(
+    public List<AdminPower> addAdminPowers(
             @ApiParam("后台用户的id") @RequestParam("adminId") Integer adminId,
             @ApiParam("权限码串") @RequestParam("codeIds") String codeIds) {
-
+        List<Integer> existPowerCodeList= adminPowerService.getAdminPowerCodeListByAdminId(adminId);
 
         String[] codeIdsInArray= codeIds.split(",");
         List<AdminPower> adminPowerList=new ArrayList<>();
@@ -51,6 +52,9 @@ public class ManageAdminPowerController {
             AdminPower adminPower=new AdminPower();
             adminPower.setAdminId(adminId);
             Integer codeId=Integer.parseInt(codeIdsInArray[i]);
+            if (existPowerCodeList.contains(codeId)){
+                continue;
+            }
             adminPower.setCodeId(codeId);
             adminPower.setCreateTime(new Date());
             adminPower.setUpdateTime(new Date());
@@ -58,8 +62,6 @@ public class ManageAdminPowerController {
             adminPowerService.saveAdminPower(adminPower);
             adminPowerList.add(adminPower);
         }
-
-
         return adminPowerList;
     }
 
@@ -79,20 +81,30 @@ public class ManageAdminPowerController {
     }
 
     @RequiredPermissions({2,15})
-    @ApiOperation(value = "删除后台用户权限项", notes = "根据后台用户id及其权限码id删除该用户的权限项")
+    @ApiOperation(value = "删除后台用户权限项", notes = "根据后台用户id及其权限码id删除该用户的权限项。" +
+            "如果codeIds为空则清空该后台用户的所有权限")
     @RequestMapping(value = "/deleteAdminPower", method = {RequestMethod.POST})
     @ResponseBody
     public ResponseData<Boolean> deleteAdminPower(
             @ApiParam("后台用户的id") @RequestParam("adminId") Integer adminId,
-            @ApiParam("权限码串") @RequestParam("codeIds") String codeIds) {
+            @ApiParam("权限码串") @RequestParam(value = "codeIds",required = false) String codeIds) {
         ResponseData<Boolean> responseData = new ResponseData<>();
-
+        //如果codeIds为空则清空该后台用户的所有权限
+        if(codeIds==null){
+            boolean res=adminPowerService.deleteAllPowerByAdminId();
+            if (!res){
+                responseData.jsonFill(2,"无效的后台用户id",false);
+                return responseData;
+            }
+            responseData.jsonFill(1,null,true);
+            return responseData;
+        }
         String[] codeIdsInArray= codeIds.split(",");
         for (int i = 0; i < codeIdsInArray.length; i++) {
             Integer codeId=Integer.parseInt(codeIdsInArray[i]);
             boolean success = adminPowerService.deleteAdminPower(adminId, codeId);
             if (!success) {
-                responseData.jsonFill(2,"删除失败，权限"+codeId+"可能已被删除或不存在！",false);
+                responseData.jsonFill(2,"删除失败，无效的用户id或该用户不具有权限"+codeId,false);
                 return responseData;
             }
         }

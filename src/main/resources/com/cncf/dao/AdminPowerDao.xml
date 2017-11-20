@@ -30,6 +30,11 @@
         WHERE id = #{0}
     </delete>
 
+    <delete id="deleteAllPowerByAdminId">
+        DELETE FROM admin_power
+        WHERE adminId = #{0}
+    </delete>
+
     <delete id="deleteAdminPower">
         DELETE FROM admin_power
         WHERE adminId = #{0} and codeId = #{1}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ReportInfoMapper {
-    List<ReportInfo> selectAllReportInfoByPage(int offset,int limit);
+    List<ReportInfoWithBLOBs> selectAllReportInfoWithBLOBsByPage(int offset, int limit);
 
     int countByExample(ReportInfoExample example);
 

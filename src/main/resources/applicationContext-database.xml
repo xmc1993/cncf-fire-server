@@ -70,10 +70,9 @@
         </property>
     </bean>-->
 
-    <!--这三行有啥用-->
-<!--    <task:annotation-driven />
+    <task:annotation-driven />
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <context:property-placeholder location="classpath:datasource.properties"/>-->
+    <context:property-placeholder location="classpath:datasource.properties"/>
 
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
           destroy-method="close">
@@ -135,7 +134,7 @@
           p:dataSource-ref="dataSource"/>
 
     <!-- 配置通知 -->
-<!--    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="publish" propagation="REQUIRED"/>
@@ -148,6 +147,11 @@
             <tx:method name="find*" propagation="SUPPORTS"/>
             <tx:method name="*" propagation="SUPPORTS"/>
         </tx:attributes>
-    </tx:advice>-->
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.cncf.service..*Impl.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
+    </aop:config>
 
 </beans>

@@ -111,7 +111,8 @@ public class ManageArticleController {
             @ApiParam("附件URL") @RequestParam(value = "attachUrl",required = false) String attachUrl,
             @ApiParam("附件原名") @RequestParam(value = "attachName",required = false) String attachName,
             @ApiParam("是否置顶（1置顶，0不置顶）") @RequestParam(value = "isTop",required = false) Integer isTop,
-            @ApiParam("是否标红（1标红，0不标红）") @RequestParam(value = "isRed",required = false) Integer isRed) {
+            @ApiParam("是否标红（1标红，0不标红）") @RequestParam(value = "isRed",required = false) Integer isRed,
+            @ApiParam("是否推荐（1推荐，0不推荐）") @RequestParam(value = "isRecommend",required = false) Integer isRecommend) {
 
         Article article=new Article();
         article.setTitle(title);
@@ -127,6 +128,7 @@ public class ManageArticleController {
         article.setAttachName(attachName);
         article.setIsTop(isTop);
         article.setIsRed(isRed);
+        article.setIsRecommend(isRecommend);
 
         ResponseData<Article> responseData = new ResponseData<>();
         boolean result = articleService.insertArticle(article);
@@ -154,7 +156,8 @@ public class ManageArticleController {
             @ApiParam("附件URL") @RequestParam(value = "attachUrl",required = false) String attachUrl,
             @ApiParam("附件原名") @RequestParam(value = "attachName",required = false) String attachName,
             @ApiParam("是否置顶（1置顶，0不置顶）") @RequestParam(value = "isTop",required = false) Integer isTop,
-            @ApiParam("是否标红（1标红，0不标红）") @RequestParam(value = "isRed",required = false) Integer isRed
+            @ApiParam("是否标红（1标红，0不标红）") @RequestParam(value = "isRed",required = false) Integer isRed,
+            @ApiParam("是否推荐（1推荐，0不推荐）") @RequestParam(value = "isRecommend",required = false) Integer isRecommend
     ) {
         ResponseData<Boolean> responseData=new ResponseData<>();
 
@@ -163,7 +166,7 @@ public class ManageArticleController {
         article.setCategoryId(categoryId); article.setContent(content);
         article.setImgUrl(imgUrl); article.setImgName(imgName);
         article.setAttachUrl(attachUrl); article.setAttachName(attachName);
-        article.setIsTop(isTop); article.setIsRed(isRed);
+        article.setIsTop(isTop); article.setIsRed(isRed); article.setIsRecommend(isRecommend);
 
         boolean result = articleService.updateArticle(article);
         if (!result) {

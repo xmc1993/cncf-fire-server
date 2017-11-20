@@ -1,6 +1,7 @@
 package com.cncf.service;
 
 import com.cncf.entity.ReportFileInfo;
+import com.cncf.response.ResponseData;
 
 import java.util.List;
 
@@ -9,6 +10,6 @@ import java.util.List;
  */
 
 public interface ReportFileInfoService {
-    ReportFileInfo selectReportFileInfoById(String id);
-    List<ReportFileInfo> selectAllReportFileInfoByPage(int page,int pageSize);
+    ResponseData<ReportFileInfo> selectReportFileInfoById(String id);
+    ResponseData<List<ReportFileInfo>> selectAllReportFileInfoByPage(int page,int pageSize);
 }

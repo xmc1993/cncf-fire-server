@@ -17,7 +17,8 @@
         attachUrl,
         attachName,
         isTop,
-        isRed
+        isRed,
+        isRecommend
     </sql>
     <sql id="infoFields">
         articleId,
@@ -26,7 +27,8 @@
         source,
         categoryId,
         isTop,
-        isRed
+        isRed,
+        isRecommend
     </sql>
 
     <resultMap id="article" type="com.cncf.entity.Article">
@@ -44,6 +46,7 @@
         <id column="attachName" property="attachName"/>
         <id column="isTop" property="isTop"/>
         <id column="isRed" property="isRed"/>
+        <id column="isRecommend" property="isRecommend"/>
     </resultMap>
 
     <delete id="deleteById">
@@ -71,7 +74,8 @@
         #{attachUrl},
         #{attachName},
         #{isTop},
-        #{isRed}
+        #{isRed},
+        #{isRecommend}
         )
     </insert>
 
@@ -111,18 +115,18 @@
         order by isTop desc , publishTime desc
     </select>
 
-<!--    <select id="selectArticleInfoByCategoryAndPage" resultType="com.cncf.entity.Article">
-        select
-        <include refid="infoFields"></include>
-        from article
-        <if test="categoryId!=null and categoryId!=''">
-            where categoryId = #{categoryId}
-        </if>
-        order by isTop desc , publishTime desc
-        <if test="offset!=0 and limit!=0">
-            limit #{offset},#{limit}
-        </if>
-    </select>-->
+    <!--    <select id="selectArticleInfoByCategoryAndPage" resultType="com.cncf.entity.Article">
+            select
+            <include refid="infoFields"></include>
+            from article
+            <if test="categoryId!=null and categoryId!=''">
+                where categoryId = #{categoryId}
+            </if>
+            order by isTop desc , publishTime desc
+            <if test="offset!=0 and limit!=0">
+                limit #{offset},#{limit}
+            </if>
+        </select>-->
 
     <select id="selectArticleInfoByCategoryId" resultType="com.cncf.entity.Article">
         select
@@ -163,6 +167,7 @@
             attachName = #{attachName},
             isTop = #{isTop},
             isRed = #{isRed},
+            isRecommend=#{isRecommend}
         </set>
         WHERE articleId=#{articleId}
     </update>

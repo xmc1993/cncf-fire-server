@@ -9,6 +9,8 @@ public interface AdminPowerService {
 
     boolean deleteAdminPowerById(int id);
 
+    boolean deleteAllPowerByAdminId();
+
     boolean deleteAdminPower(int adminId, int code);
 
     AdminPower getAdminPowerById(int id);

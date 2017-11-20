@@ -1,6 +1,7 @@
 package com.cncf.controller.user;
 
 import com.cncf.entity.ReportInfo;
+import com.cncf.entity.ReportInfoWithBLOBs;
 import com.cncf.response.ResponseData;
 import com.cncf.service.ReportInfoService;
 import com.wordnik.swagger.annotations.Api;
@@ -22,31 +23,20 @@ public class UserReportInfoController {
     @Autowired
     private ReportInfoService reportInfoService;
 
-    @ApiOperation(value = "通过id获取报告信息", notes = "")
+    @ApiOperation(value = "通过id获取报告信息", notes = "全部字段")
     @RequestMapping(value = "selectReportInfoById/{id}", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<ReportInfo> selectReportInfoById(@ApiParam("id") @PathVariable String id){
-        ResponseData<ReportInfo> responseData=new ResponseData<>();
-        ReportInfo reportInfo=reportInfoService.selectReportInfoById(id);
-        if (reportInfo==null){
-            responseData.jsonFill(2,"无效的id",null);
-            return responseData;
-        }
-        responseData.jsonFill(1,null,reportInfo);
-        return responseData;
+    public ResponseData<ReportInfoWithBLOBs> selectReportInfoById(String id){
+        return reportInfoService.selectReportInfoWithBLOBsById(id);
     }
 
-    @ApiOperation(value = "分页查询所有报告信息", notes = "")
+    @ApiOperation(value = "分页查询所有报告信息", notes = "简要信息")
     @RequestMapping(value = "selectAllReportInfoByPage", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<List<ReportInfo>> selectAllReportInfoByPage(
+    public ResponseData<List<ReportInfoWithBLOBs>> selectAllReportInfoByPage(
             @ApiParam("page") @RequestParam("page") int page,
             @ApiParam("pageSize") @RequestParam("pageSize") int pageSize){
-        ResponseData<List<ReportInfo>> responseData=new ResponseData<>();
-        List<ReportInfo> reportInfoList=reportInfoService.selectAllReportInfoByPage(page,pageSize);
-        responseData.jsonFill(1,null,reportInfoList);
-        responseData.setCount(reportInfoList.size());
-        return responseData;
+        return reportInfoService.selectAllReportInfoWithBLOBsByPage(page,pageSize);
     }
 
 }

@@ -24,5 +24,5 @@ public class Article {
     private String attachName;
     private Integer isTop;
     private Integer isRed;
-
+    private Integer isRecommend;
 }

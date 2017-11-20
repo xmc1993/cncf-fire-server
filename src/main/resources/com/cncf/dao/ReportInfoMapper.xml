@@ -816,7 +816,7 @@
   </update>
 
 
-  <select id="selectAllReportInfoByPage" resultType="com.cncf.entity.ReportInfo">
+  <select id="selectAllReportInfoWithBLOBsByPage" resultType="com.cncf.entity.ReportInfo">
     SELECT
     <include refid="Base_Column_List" />
     ,
