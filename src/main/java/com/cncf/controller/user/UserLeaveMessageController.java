@@ -99,7 +99,7 @@ public class UserLeaveMessageController {
                 jedis.close();
             }
         }
-
+        //遍历响应体信息
         new HttpUtilsZj().iteratorResponse(response);
 
         // create the image with the text

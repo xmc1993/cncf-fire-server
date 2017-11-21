@@ -10,6 +10,8 @@
 		mobile,
 		password,
 		company,
+		province,
+		city,
 		detailAddress,
 		email,
 		qq,
@@ -24,7 +26,7 @@
 		captcha
 	</sql>
 	
-	<sql id="baseFields">
+<!--	<sql id="baseFields">
 		id,
 		nickname,
 		realName,
@@ -37,7 +39,7 @@
 		qq,
 		homepage,
 		captcha
-	</sql>
+	</sql>-->
 
 	<insert id="saveUser" parameterType="com.cncf.entity.User" useGeneratedKeys="true">
 		insert into user (
@@ -63,6 +65,146 @@
 		#{createTime},
 		#{updateTime}
 		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.cncf.entity.User" >
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+				id,
+			</if>
+			<if test="nickname != null" >
+				nickname,
+			</if>
+			<if test="realName != null" >
+				realName,
+			</if>
+			<if test="sex != null" >
+				sex,
+			</if>
+			<if test="headImgUrl != null" >
+				headImgUrl,
+			</if>
+			<if test="mobile != null" >
+				mobile,
+			</if>
+			<if test="password != null" >
+				password,
+			</if>
+			<if test="company != null" >
+				company,
+			</if>
+			<if test="city != null" >
+				city,
+			</if>
+			<if test="email != null" >
+				email,
+			</if>
+			<if test="qq != null" >
+				qq,
+			</if>
+			<if test="homepage != null" >
+				homepage,
+			</if>
+			<if test="accessToken != null" >
+				accessToken,
+			</if>
+			<if test="verifyCode != null" >
+				verifyCode,
+			</if>
+			<if test="expireTime != null" >
+				expireTime,
+			</if>
+			<if test="identification != null" >
+				identification,
+			</if>
+			<if test="valid != null" >
+				valid,
+			</if>
+			<if test="createTime != null" >
+				createTime,
+			</if>
+			<if test="updateTime != null" >
+				updateTime,
+			</if>
+			<if test="province != null" >
+				province,
+			</if>
+			<if test="detailAddress != null" >
+				detailAddress,
+			</if>
+			<if test="captcha != null" >
+				captcha,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="nickname != null" >
+				#{nickname,jdbcType=CHAR},
+			</if>
+			<if test="realName != null" >
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null" >
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="headImgUrl != null" >
+				#{headImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null" >
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null" >
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null" >
+				#{company,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null" >
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null" >
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null" >
+				#{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="homepage != null" >
+				#{homepage,jdbcType=VARCHAR},
+			</if>
+			<if test="accessToken != null" >
+				#{accessToken,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyCode != null" >
+				#{verifyCode,jdbcType=VARCHAR},
+			</if>
+			<if test="expireTime != null" >
+				#{expireTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="identification != null" >
+				#{identification,jdbcType=TINYINT},
+			</if>
+			<if test="valid != null" >
+				#{valid,jdbcType=TINYINT},
+			</if>
+			<if test="createTime != null" >
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null" >
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="province != null" >
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="detailAddress != null" >
+				#{detailAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="captcha != null" >
+				#{captcha,jdbcType=CHAR},
+			</if>
+		</trim>
 	</insert>
 
 	<update id="updateUser" parameterType="com.cncf.entity.User">
@@ -91,7 +233,6 @@
 		id=#{0}
 	</update>
 
-
 	<select id="getUserListByPage" resultType="com.cncf.entity.User">
 		SELECT
 		<include refid="fields"></include>
@@ -103,13 +244,6 @@
 	<select id="getUserById" resultType="com.cncf.entity.User">
 		select
 		<include refid="fields"></include>
-		from user
-		where id = #{0}
-	</select>
-
-	<select id="getUserBaseById" resultType="com.cncf.entity.UserBase">
-		select
-		<include refid="baseFields"></include>
 		from user
 		where id = #{0}
 	</select>
@@ -128,17 +262,6 @@
 		where nickname = #{0}
 	</select>
 
-	<select id="getUserBaseListByUserIdList" resultType="com.cncf.entity.UserBase">
-		select
-		<include refid="baseFields"></include>
-		from user
-		where id in
-		<foreach collection="idList" item="id" index="index" open="("
-			separator="," close=")">
-			#{id}
-		</foreach>
-	</select>
-
 	<select id="getNewestId" resultType="java.lang.Integer">
 		select max(id) from user
 	</select>
@@ -151,12 +274,37 @@
 		select id from user
 	</select>
 
+	<delete id="deleteUser">
+		DELETE FROM user WHERE id = #{0}
+	</delete>
+
+	<!--没用到
+		<select id="getUserBaseById" resultType="com.cncf.entity.UserBase">
+		select
+		<include refid="baseFields"></include>
+		from user
+		where id = #{0}
+	</select>
+
+	<select id="getUserBaseListByUserIdList" resultType="com.cncf.entity.UserBase">
+		select
+		<include refid="baseFields"></include>
+		from user
+		where id in
+		<foreach collection="idList" item="id" index="index" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</select>-->
+
+<!--没用到
 	<select id="getUserCount" resultType="java.lang.Integer">
 		select
 		count(id)
 		from user
 		where valid = 1
 	</select>
+
 
 	<update id="deleteUserById">
 		update user
@@ -172,10 +320,6 @@
 		valid=1
 		where
 		id=#{0}
-	</update>
-	
-	<delete id="deleteUser">
-		DELETE FROM user WHERE id = #{0}
-	</delete>
+	</update>-->
 
 </mapper>

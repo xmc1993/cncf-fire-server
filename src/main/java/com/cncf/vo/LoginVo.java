@@ -1,5 +1,6 @@
 package com.cncf.vo;
 
+import com.cncf.entity.User;
 import com.cncf.entity.UserBase;
 import lombok.Data;
 
@@ -13,5 +14,5 @@ public class LoginVo {
     private Integer id;
     private String accessToken;
     private List<Integer> codeIds;
-    private UserBase userBase;
+    private User user;
 }

@@ -24,7 +24,7 @@ public interface UserService {
      */
     boolean checkVerifyCode(User user, String verifyCode);
 
-    UserBase getUserBaseById(int userId);
+    //UserBase getUserBaseById(int userId);
 
     boolean updateUser(User user);
 

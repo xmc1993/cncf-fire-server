@@ -17,8 +17,9 @@ public class HttpUtils {
         for (String signal : IEBrowserSignals) {
             //控制器Mock单元测试时不经过浏览器，所以userAgent为空,如果不判断会报空指针异常
             if (userAgent!=null){
-                if (userAgent.contains(signal))
+                if (userAgent.contains(signal)) {
                     return true;
+                }
             }
         }
         return false;
@@ -48,8 +49,9 @@ public class HttpUtils {
         System.out.println("遍历cookies:");
         for (Cookie cookie:cookies){
             System.out.println(cookie.getName()+"="+cookie.getValue());
-            if (cookie.getName().equals(cookieName))
-                value=cookie.getValue();
+            if (cookie.getName().equals(cookieName)) {
+                value = cookie.getValue();
+            }
         }
         return value;
     }

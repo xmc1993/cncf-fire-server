@@ -1,7 +1,6 @@
 package com.cncf.controller.user;
 
 import com.cncf.entity.User;
-import com.cncf.entity.UserBase;
 import com.cncf.response.ResponseData;
 import com.cncf.service.UserService;
 import com.cncf.util.*;
@@ -113,22 +112,30 @@ public class UserUserController {
         // 请求来到这里从存入request中的user中取userId来用
         User user = UserUtil.getSessionUser(request);
         user = userService.getUserById(user.getId());
-        if (nickname != null)
+        if (nickname != null) {
             user.setNickname(nickname);
-        if (realName != null)
+        }
+        if (realName != null) {
             user.setRealName(realName);
-        if (sex != null)
+        }
+        if (sex != null) {
             user.setSex(sex);
-        if (company != null)
+        }
+        if (company != null) {
             user.setCompany(company);
-        if (detailAddress != null)
+        }
+        if (detailAddress != null) {
             user.setDetailAddress(detailAddress);
-        if (email != null)
+        }
+        if (email != null) {
             user.setEmail(email);
-        if (qq != null)
+        }
+        if (qq != null) {
             user.setQq(qq);
-        if (homepage != null)
+        }
+        if (homepage != null) {
             user.setHomepage(homepage);
+        }
         boolean res = userService.updateUser(user);
         if (!res) {
             responseData.jsonFill(2, "更新失败", null);
@@ -141,11 +148,11 @@ public class UserUserController {
     @ApiOperation(value = "根据ID获得信息", notes = "")
     @RequestMapping(value = "/getProfileByUserId", method = {RequestMethod.GET})
     @ResponseBody
-    public ResponseData<UserBase> getProfileByUserId(
+    public ResponseData<User> getProfileByUserId(
             @ApiParam("用户ID") @RequestParam("userId") Integer userId
     ) {
-        ResponseData<UserBase> responseData = new ResponseData();
-        UserBase user = userService.getUserBaseById(userId);
+        ResponseData<User> responseData = new ResponseData();
+        User user = userService.getUserById(userId);
         if (user == null) {
             responseData.jsonFill(2, "用户不存在", null);
             return responseData;
@@ -188,12 +195,12 @@ public class UserUserController {
                 jedis.close();
             }
         }
-        UserBase userBase = new UserBase();
+        User userVo = new User();
         LoginVo loginVo = new LoginVo();
         loginVo.setId(user.getId());
         loginVo.setAccessToken(user.getAccessToken());
-        BeanUtils.copyProperties(user, userBase);
-        loginVo.setUserBase(userBase);
+        BeanUtils.copyProperties(user, userVo);
+        loginVo.setUser(userVo);
         responseData.jsonFill(1, null, loginVo);
         return responseData;
     }

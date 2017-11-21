@@ -40,11 +40,15 @@ public class UserServiceImpl implements UserService {
             logger.info("send code:" + verifyCode + " to " + user.getMobile() + "\n");
             return null;
         }
+/*      方法开头就已经验证过userIndb是否为空了，能执行到这一步说明userIndb一定为空
         boolean emptyFlag = userIndb == null ? true : false;
         User tempUser = userIndb;
         if (tempUser == null) {
             tempUser = new User();
-        }
+        }*/
+
+        User tempUser=new User();
+
         tempUser.setMobile(user.getMobile());
         tempUser.setCreateTime(new Date());
         tempUser.setUpdateTime(new Date());
@@ -55,6 +59,7 @@ public class UserServiceImpl implements UserService {
         Date date = new Date(now);
         tempUser.setExpireTime(date);
 
+/*      方法开头已经验证过userIndb是否为空了，能执行到这一步说明userIndb一定为空
         boolean res;
         if (emptyFlag) {
             res = userDao.saveUser(tempUser);
@@ -62,6 +67,11 @@ public class UserServiceImpl implements UserService {
             res = userDao.updateVerifyCode(tempUser.getId(), tempUser.getVerifyCode());
         }
         if (!res) {
+            return null;
+        }*/
+
+        int result = userDao.insertSelective(tempUser);
+        if (result==0){
             return null;
         }
         return verifyCode;
@@ -75,8 +85,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkVerifyCode(User user, String verifyCode) {
         //排除无效的情况
-        if (user == null || StringUtil.isEmpty(verifyCode) || user.getVerifyCode() == null || user.getExpireTime() == null)
+        if (user == null || StringUtil.isEmpty(verifyCode) || user.getVerifyCode() == null || user.getExpireTime() == null) {
             return false;
+        }
         Date now = new Date();
         //仅仅当验证码相同且验证码没有过期才通过验证
         if (user.getVerifyCode().equals(verifyCode) && now.compareTo(user.getExpireTime()) < 0) {
@@ -87,10 +98,10 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    @Override
+/*    @Override
     public UserBase getUserBaseById(int userId) {
         return userDao.getUserBaseById(userId);
-    }
+    }*/
 
     @Override
     public boolean updateUser(User user) {

@@ -14,6 +14,8 @@ public interface UserDao {
 
 	boolean saveUser(User user);
 
+	int insertSelective(User user);
+
 	boolean updateUser(User user);
 
 	boolean deleteUser(int id);

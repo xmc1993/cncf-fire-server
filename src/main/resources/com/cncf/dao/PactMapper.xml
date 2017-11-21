@@ -1,0 +1,1622 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cncf.dao.PactMapper" >
+  <resultMap id="BaseResultMap" type="com.cncf.entity.Pact" >
+    <id column="pact_id" property="pactId" jdbcType="VARCHAR" />
+    <result column="rid" property="rid" jdbcType="CHAR" />
+    <result column="pact_year_number" property="pactYearNumber" jdbcType="CHAR" />
+    <result column="pact_from" property="pactFrom" jdbcType="VARCHAR" />
+    <result column="pact_check_type" property="pactCheckType" jdbcType="CHAR" />
+    <result column="standard_flag" property="standardFlag" jdbcType="CHAR" />
+    <result column="apply_level" property="applyLevel" jdbcType="VARCHAR" />
+    <result column="product_type_id" property="productTypeId" jdbcType="CHAR" />
+    <result column="product_id" property="productId" jdbcType="CHAR" />
+    <result column="product_alias" property="productAlias" jdbcType="VARCHAR" />
+    <result column="test_cycle" property="testCycle" jdbcType="VARCHAR" />
+    <result column="ext_test_cycle" property="extTestCycle" jdbcType="INTEGER" />
+    <result column="ext_test_cycle_info" property="extTestCycleInfo" jdbcType="VARCHAR" />
+    <result column="label" property="label" jdbcType="VARCHAR" />
+    <result column="check_product_type" property="checkProductType" jdbcType="VARCHAR" />
+    <result column="consign_customer_id" property="consignCustomerId" jdbcType="CHAR" />
+    <result column="consign_customer_name" property="consignCustomerName" jdbcType="VARCHAR" />
+    <result column="product_customer_id" property="productCustomerId" jdbcType="CHAR" />
+    <result column="product_customer_flag" property="productCustomerFlag" jdbcType="INTEGER" />
+    <result column="product_customer_name" property="productCustomerName" jdbcType="VARCHAR" />
+    <result column="product_customer_legal_person" property="productCustomerLegalPerson" jdbcType="VARCHAR" />
+    <result column="check_customer_id" property="checkCustomerId" jdbcType="CHAR" />
+    <result column="check_customer_name" property="checkCustomerName" jdbcType="VARCHAR" />
+    <result column="check_customer_address" property="checkCustomerAddress" jdbcType="VARCHAR" />
+    <result column="check_customer_postalcode" property="checkCustomerPostalcode" jdbcType="VARCHAR" />
+    <result column="check_customer_tel" property="checkCustomerTel" jdbcType="VARCHAR" />
+    <result column="check_customer_fax" property="checkCustomerFax" jdbcType="VARCHAR" />
+    <result column="link_man1" property="linkMan1" jdbcType="VARCHAR" />
+    <result column="link_phone1" property="linkPhone1" jdbcType="VARCHAR" />
+    <result column="link_memo1" property="linkMemo1" jdbcType="VARCHAR" />
+    <result column="sample_address" property="sampleAddress" jdbcType="VARCHAR" />
+    <result column="sample_base_number" property="sampleBaseNumber" jdbcType="VARCHAR" />
+    <result column="sample_employee" property="sampleEmployee" jdbcType="VARCHAR" />
+    <result column="locale_check_flag" property="localeCheckFlag" jdbcType="CHAR" />
+    <result column="check_in_flag" property="checkInFlag" jdbcType="CHAR" />
+    <result column="sample_server" property="sampleServer" jdbcType="VARCHAR" />
+    <result column="sample_number" property="sampleNumber" jdbcType="VARCHAR" />
+    <result column="manufacture_date" property="manufactureDate" jdbcType="TIMESTAMP" />
+    <result column="sample_date" property="sampleDate" jdbcType="TIMESTAMP" />
+    <result column="sample_arrive_date" property="sampleArriveDate" jdbcType="TIMESTAMP" />
+    <result column="provide_data" property="provideData" jdbcType="VARCHAR" />
+    <result column="provide_other_data" property="provideOtherData" jdbcType="VARCHAR" />
+    <result column="draw_type" property="drawType" jdbcType="VARCHAR" />
+    <result column="sample_dispose_type" property="sampleDisposeType" jdbcType="VARCHAR" />
+    <result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+    <result column="postalcode" property="postalcode" jdbcType="VARCHAR" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="consignee_tel" property="consigneeTel" jdbcType="VARCHAR" />
+    <result column="criterion_id" property="criterionId" jdbcType="VARCHAR" />
+    <result column="criterion_code" property="criterionCode" jdbcType="VARCHAR" />
+    <result column="criterion_memo" property="criterionMemo" jdbcType="VARCHAR" />
+    <result column="charge_type" property="chargeType" jdbcType="VARCHAR" />
+    <result column="check_item_standard_account" property="checkItemStandardAccount" jdbcType="DECIMAL" />
+    <result column="check_item_account" property="checkItemAccount" jdbcType="DECIMAL" />
+    <result column="dpt_test_money_info" property="dptTestMoneyInfo" jdbcType="VARCHAR" />
+    <result column="check_item_account_memo" property="checkItemAccountMemo" jdbcType="VARCHAR" />
+    <result column="other_standard_account" property="otherStandardAccount" jdbcType="DECIMAL" />
+    <result column="other_account" property="otherAccount" jdbcType="DECIMAL" />
+    <result column="dpt_other_money_info" property="dptOtherMoneyInfo" jdbcType="VARCHAR" />
+    <result column="other_account_memo" property="otherAccountMemo" jdbcType="VARCHAR" />
+    <result column="ext_account" property="extAccount" jdbcType="DECIMAL" />
+    <result column="ext_account_memo" property="extAccountMemo" jdbcType="VARCHAR" />
+    <result column="account_flag" property="accountFlag" jdbcType="CHAR" />
+    <result column="check_department_id" property="checkDepartmentId" jdbcType="CHAR" />
+    <result column="link_dpt_id" property="linkDptId" jdbcType="VARCHAR" />
+    <result column="pact_status" property="pactStatus" jdbcType="VARCHAR" />
+    <result column="pact_flow_status" property="pactFlowStatus" jdbcType="VARCHAR" />
+    <result column="charge_flag" property="chargeFlag" jdbcType="VARCHAR" />
+    <result column="sample_flag" property="sampleFlag" jdbcType="VARCHAR" />
+    <result column="sample_status" property="sampleStatus" jdbcType="VARCHAR" />
+    <result column="pact_applyer" property="pactApplyer" jdbcType="VARCHAR" />
+    <result column="pact_creater" property="pactCreater" jdbcType="VARCHAR" />
+    <result column="pact_date" property="pactDate" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_flag" property="updateFlag" jdbcType="CHAR" />
+    <result column="ccc_flag" property="cccFlag" jdbcType="INTEGER" />
+    <result column="msg_flag" property="msgFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cncf.entity.PactWithBLOBs" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+    <result column="criterion_name" property="criterionName" jdbcType="LONGVARCHAR" />
+    <result column="sample_counts" property="sampleCounts" jdbcType="LONGVARCHAR" />
+    <result column="update_content" property="updateContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pact_id, rid, pact_year_number, pact_from, pact_check_type, standard_flag, apply_level, 
+    product_type_id, product_id, product_alias, test_cycle, ext_test_cycle, ext_test_cycle_info, 
+    label, check_product_type, consign_customer_id, consign_customer_name, product_customer_id, 
+    product_customer_flag, product_customer_name, product_customer_legal_person, check_customer_id, 
+    check_customer_name, check_customer_address, check_customer_postalcode, check_customer_tel, 
+    check_customer_fax, link_man1, link_phone1, link_memo1, sample_address, sample_base_number, 
+    sample_employee, locale_check_flag, check_in_flag, sample_server, sample_number, 
+    manufacture_date, sample_date, sample_arrive_date, provide_data, provide_other_data, 
+    draw_type, sample_dispose_type, mail_address, postalcode, consignee, consignee_tel, 
+    criterion_id, criterion_code, criterion_memo, charge_type, check_item_standard_account, 
+    check_item_account, dpt_test_money_info, check_item_account_memo, other_standard_account, 
+    other_account, dpt_other_money_info, other_account_memo, ext_account, ext_account_memo, 
+    account_flag, check_department_id, link_dpt_id, pact_status, pact_flow_status, charge_flag, 
+    sample_flag, sample_status, pact_applyer, pact_creater, pact_date, creater, create_time, 
+    update_flag, ccc_flag, msg_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo, criterion_name, sample_counts, update_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cncf.entity.PactExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cncf.entity.PactExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pact
+    where pact_id = #{pactId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pact
+    where pact_id = #{pactId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cncf.entity.PactExample" >
+    delete from pact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cncf.entity.PactWithBLOBs" >
+    insert into pact (pact_id, rid, pact_year_number, 
+      pact_from, pact_check_type, standard_flag, 
+      apply_level, product_type_id, product_id, 
+      product_alias, test_cycle, ext_test_cycle, 
+      ext_test_cycle_info, label, check_product_type, 
+      consign_customer_id, consign_customer_name, product_customer_id, 
+      product_customer_flag, product_customer_name, 
+      product_customer_legal_person, check_customer_id, 
+      check_customer_name, check_customer_address, 
+      check_customer_postalcode, check_customer_tel, 
+      check_customer_fax, link_man1, link_phone1, 
+      link_memo1, sample_address, sample_base_number, 
+      sample_employee, locale_check_flag, check_in_flag, 
+      sample_server, sample_number, manufacture_date, 
+      sample_date, sample_arrive_date, provide_data, 
+      provide_other_data, draw_type, sample_dispose_type, 
+      mail_address, postalcode, consignee, 
+      consignee_tel, criterion_id, criterion_code, 
+      criterion_memo, charge_type, check_item_standard_account, 
+      check_item_account, dpt_test_money_info, check_item_account_memo, 
+      other_standard_account, other_account, dpt_other_money_info, 
+      other_account_memo, ext_account, ext_account_memo, 
+      account_flag, check_department_id, link_dpt_id, 
+      pact_status, pact_flow_status, charge_flag, 
+      sample_flag, sample_status, pact_applyer, 
+      pact_creater, pact_date, creater, 
+      create_time, update_flag, ccc_flag, 
+      msg_flag, memo, criterion_name, 
+      sample_counts, update_content)
+    values (#{pactId,jdbcType=VARCHAR}, #{rid,jdbcType=CHAR}, #{pactYearNumber,jdbcType=CHAR}, 
+      #{pactFrom,jdbcType=VARCHAR}, #{pactCheckType,jdbcType=CHAR}, #{standardFlag,jdbcType=CHAR}, 
+      #{applyLevel,jdbcType=VARCHAR}, #{productTypeId,jdbcType=CHAR}, #{productId,jdbcType=CHAR}, 
+      #{productAlias,jdbcType=VARCHAR}, #{testCycle,jdbcType=VARCHAR}, #{extTestCycle,jdbcType=INTEGER}, 
+      #{extTestCycleInfo,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{checkProductType,jdbcType=VARCHAR}, 
+      #{consignCustomerId,jdbcType=CHAR}, #{consignCustomerName,jdbcType=VARCHAR}, #{productCustomerId,jdbcType=CHAR}, 
+      #{productCustomerFlag,jdbcType=INTEGER}, #{productCustomerName,jdbcType=VARCHAR}, 
+      #{productCustomerLegalPerson,jdbcType=VARCHAR}, #{checkCustomerId,jdbcType=CHAR}, 
+      #{checkCustomerName,jdbcType=VARCHAR}, #{checkCustomerAddress,jdbcType=VARCHAR}, 
+      #{checkCustomerPostalcode,jdbcType=VARCHAR}, #{checkCustomerTel,jdbcType=VARCHAR}, 
+      #{checkCustomerFax,jdbcType=VARCHAR}, #{linkMan1,jdbcType=VARCHAR}, #{linkPhone1,jdbcType=VARCHAR}, 
+      #{linkMemo1,jdbcType=VARCHAR}, #{sampleAddress,jdbcType=VARCHAR}, #{sampleBaseNumber,jdbcType=VARCHAR}, 
+      #{sampleEmployee,jdbcType=VARCHAR}, #{localeCheckFlag,jdbcType=CHAR}, #{checkInFlag,jdbcType=CHAR}, 
+      #{sampleServer,jdbcType=VARCHAR}, #{sampleNumber,jdbcType=VARCHAR}, #{manufactureDate,jdbcType=TIMESTAMP}, 
+      #{sampleDate,jdbcType=TIMESTAMP}, #{sampleArriveDate,jdbcType=TIMESTAMP}, #{provideData,jdbcType=VARCHAR}, 
+      #{provideOtherData,jdbcType=VARCHAR}, #{drawType,jdbcType=VARCHAR}, #{sampleDisposeType,jdbcType=VARCHAR}, 
+      #{mailAddress,jdbcType=VARCHAR}, #{postalcode,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, 
+      #{consigneeTel,jdbcType=VARCHAR}, #{criterionId,jdbcType=VARCHAR}, #{criterionCode,jdbcType=VARCHAR}, 
+      #{criterionMemo,jdbcType=VARCHAR}, #{chargeType,jdbcType=VARCHAR}, #{checkItemStandardAccount,jdbcType=DECIMAL}, 
+      #{checkItemAccount,jdbcType=DECIMAL}, #{dptTestMoneyInfo,jdbcType=VARCHAR}, #{checkItemAccountMemo,jdbcType=VARCHAR}, 
+      #{otherStandardAccount,jdbcType=DECIMAL}, #{otherAccount,jdbcType=DECIMAL}, #{dptOtherMoneyInfo,jdbcType=VARCHAR}, 
+      #{otherAccountMemo,jdbcType=VARCHAR}, #{extAccount,jdbcType=DECIMAL}, #{extAccountMemo,jdbcType=VARCHAR}, 
+      #{accountFlag,jdbcType=CHAR}, #{checkDepartmentId,jdbcType=CHAR}, #{linkDptId,jdbcType=VARCHAR}, 
+      #{pactStatus,jdbcType=VARCHAR}, #{pactFlowStatus,jdbcType=VARCHAR}, #{chargeFlag,jdbcType=VARCHAR}, 
+      #{sampleFlag,jdbcType=VARCHAR}, #{sampleStatus,jdbcType=VARCHAR}, #{pactApplyer,jdbcType=VARCHAR}, 
+      #{pactCreater,jdbcType=VARCHAR}, #{pactDate,jdbcType=TIMESTAMP}, #{creater,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateFlag,jdbcType=CHAR}, #{cccFlag,jdbcType=INTEGER}, 
+      #{msgFlag,jdbcType=INTEGER}, #{memo,jdbcType=LONGVARCHAR}, #{criterionName,jdbcType=LONGVARCHAR}, 
+      #{sampleCounts,jdbcType=LONGVARCHAR}, #{updateContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cncf.entity.PactWithBLOBs" >
+    insert into pact
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pactId != null" >
+        pact_id,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="pactYearNumber != null" >
+        pact_year_number,
+      </if>
+      <if test="pactFrom != null" >
+        pact_from,
+      </if>
+      <if test="pactCheckType != null" >
+        pact_check_type,
+      </if>
+      <if test="standardFlag != null" >
+        standard_flag,
+      </if>
+      <if test="applyLevel != null" >
+        apply_level,
+      </if>
+      <if test="productTypeId != null" >
+        product_type_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productAlias != null" >
+        product_alias,
+      </if>
+      <if test="testCycle != null" >
+        test_cycle,
+      </if>
+      <if test="extTestCycle != null" >
+        ext_test_cycle,
+      </if>
+      <if test="extTestCycleInfo != null" >
+        ext_test_cycle_info,
+      </if>
+      <if test="label != null" >
+        label,
+      </if>
+      <if test="checkProductType != null" >
+        check_product_type,
+      </if>
+      <if test="consignCustomerId != null" >
+        consign_customer_id,
+      </if>
+      <if test="consignCustomerName != null" >
+        consign_customer_name,
+      </if>
+      <if test="productCustomerId != null" >
+        product_customer_id,
+      </if>
+      <if test="productCustomerFlag != null" >
+        product_customer_flag,
+      </if>
+      <if test="productCustomerName != null" >
+        product_customer_name,
+      </if>
+      <if test="productCustomerLegalPerson != null" >
+        product_customer_legal_person,
+      </if>
+      <if test="checkCustomerId != null" >
+        check_customer_id,
+      </if>
+      <if test="checkCustomerName != null" >
+        check_customer_name,
+      </if>
+      <if test="checkCustomerAddress != null" >
+        check_customer_address,
+      </if>
+      <if test="checkCustomerPostalcode != null" >
+        check_customer_postalcode,
+      </if>
+      <if test="checkCustomerTel != null" >
+        check_customer_tel,
+      </if>
+      <if test="checkCustomerFax != null" >
+        check_customer_fax,
+      </if>
+      <if test="linkMan1 != null" >
+        link_man1,
+      </if>
+      <if test="linkPhone1 != null" >
+        link_phone1,
+      </if>
+      <if test="linkMemo1 != null" >
+        link_memo1,
+      </if>
+      <if test="sampleAddress != null" >
+        sample_address,
+      </if>
+      <if test="sampleBaseNumber != null" >
+        sample_base_number,
+      </if>
+      <if test="sampleEmployee != null" >
+        sample_employee,
+      </if>
+      <if test="localeCheckFlag != null" >
+        locale_check_flag,
+      </if>
+      <if test="checkInFlag != null" >
+        check_in_flag,
+      </if>
+      <if test="sampleServer != null" >
+        sample_server,
+      </if>
+      <if test="sampleNumber != null" >
+        sample_number,
+      </if>
+      <if test="manufactureDate != null" >
+        manufacture_date,
+      </if>
+      <if test="sampleDate != null" >
+        sample_date,
+      </if>
+      <if test="sampleArriveDate != null" >
+        sample_arrive_date,
+      </if>
+      <if test="provideData != null" >
+        provide_data,
+      </if>
+      <if test="provideOtherData != null" >
+        provide_other_data,
+      </if>
+      <if test="drawType != null" >
+        draw_type,
+      </if>
+      <if test="sampleDisposeType != null" >
+        sample_dispose_type,
+      </if>
+      <if test="mailAddress != null" >
+        mail_address,
+      </if>
+      <if test="postalcode != null" >
+        postalcode,
+      </if>
+      <if test="consignee != null" >
+        consignee,
+      </if>
+      <if test="consigneeTel != null" >
+        consignee_tel,
+      </if>
+      <if test="criterionId != null" >
+        criterion_id,
+      </if>
+      <if test="criterionCode != null" >
+        criterion_code,
+      </if>
+      <if test="criterionMemo != null" >
+        criterion_memo,
+      </if>
+      <if test="chargeType != null" >
+        charge_type,
+      </if>
+      <if test="checkItemStandardAccount != null" >
+        check_item_standard_account,
+      </if>
+      <if test="checkItemAccount != null" >
+        check_item_account,
+      </if>
+      <if test="dptTestMoneyInfo != null" >
+        dpt_test_money_info,
+      </if>
+      <if test="checkItemAccountMemo != null" >
+        check_item_account_memo,
+      </if>
+      <if test="otherStandardAccount != null" >
+        other_standard_account,
+      </if>
+      <if test="otherAccount != null" >
+        other_account,
+      </if>
+      <if test="dptOtherMoneyInfo != null" >
+        dpt_other_money_info,
+      </if>
+      <if test="otherAccountMemo != null" >
+        other_account_memo,
+      </if>
+      <if test="extAccount != null" >
+        ext_account,
+      </if>
+      <if test="extAccountMemo != null" >
+        ext_account_memo,
+      </if>
+      <if test="accountFlag != null" >
+        account_flag,
+      </if>
+      <if test="checkDepartmentId != null" >
+        check_department_id,
+      </if>
+      <if test="linkDptId != null" >
+        link_dpt_id,
+      </if>
+      <if test="pactStatus != null" >
+        pact_status,
+      </if>
+      <if test="pactFlowStatus != null" >
+        pact_flow_status,
+      </if>
+      <if test="chargeFlag != null" >
+        charge_flag,
+      </if>
+      <if test="sampleFlag != null" >
+        sample_flag,
+      </if>
+      <if test="sampleStatus != null" >
+        sample_status,
+      </if>
+      <if test="pactApplyer != null" >
+        pact_applyer,
+      </if>
+      <if test="pactCreater != null" >
+        pact_creater,
+      </if>
+      <if test="pactDate != null" >
+        pact_date,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateFlag != null" >
+        update_flag,
+      </if>
+      <if test="cccFlag != null" >
+        ccc_flag,
+      </if>
+      <if test="msgFlag != null" >
+        msg_flag,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="criterionName != null" >
+        criterion_name,
+      </if>
+      <if test="sampleCounts != null" >
+        sample_counts,
+      </if>
+      <if test="updateContent != null" >
+        update_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pactId != null" >
+        #{pactId,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=CHAR},
+      </if>
+      <if test="pactYearNumber != null" >
+        #{pactYearNumber,jdbcType=CHAR},
+      </if>
+      <if test="pactFrom != null" >
+        #{pactFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="pactCheckType != null" >
+        #{pactCheckType,jdbcType=CHAR},
+      </if>
+      <if test="standardFlag != null" >
+        #{standardFlag,jdbcType=CHAR},
+      </if>
+      <if test="applyLevel != null" >
+        #{applyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="productTypeId != null" >
+        #{productTypeId,jdbcType=CHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=CHAR},
+      </if>
+      <if test="productAlias != null" >
+        #{productAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="testCycle != null" >
+        #{testCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="extTestCycle != null" >
+        #{extTestCycle,jdbcType=INTEGER},
+      </if>
+      <if test="extTestCycleInfo != null" >
+        #{extTestCycleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="checkProductType != null" >
+        #{checkProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="consignCustomerId != null" >
+        #{consignCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="consignCustomerName != null" >
+        #{consignCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCustomerId != null" >
+        #{productCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="productCustomerFlag != null" >
+        #{productCustomerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="productCustomerName != null" >
+        #{productCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCustomerLegalPerson != null" >
+        #{productCustomerLegalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerId != null" >
+        #{checkCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="checkCustomerName != null" >
+        #{checkCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerAddress != null" >
+        #{checkCustomerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerPostalcode != null" >
+        #{checkCustomerPostalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerTel != null" >
+        #{checkCustomerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerFax != null" >
+        #{checkCustomerFax,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan1 != null" >
+        #{linkMan1,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone1 != null" >
+        #{linkPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMemo1 != null" >
+        #{linkMemo1,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleAddress != null" >
+        #{sampleAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleBaseNumber != null" >
+        #{sampleBaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleEmployee != null" >
+        #{sampleEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="localeCheckFlag != null" >
+        #{localeCheckFlag,jdbcType=CHAR},
+      </if>
+      <if test="checkInFlag != null" >
+        #{checkInFlag,jdbcType=CHAR},
+      </if>
+      <if test="sampleServer != null" >
+        #{sampleServer,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleNumber != null" >
+        #{sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureDate != null" >
+        #{manufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampleDate != null" >
+        #{sampleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampleArriveDate != null" >
+        #{sampleArriveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provideData != null" >
+        #{provideData,jdbcType=VARCHAR},
+      </if>
+      <if test="provideOtherData != null" >
+        #{provideOtherData,jdbcType=VARCHAR},
+      </if>
+      <if test="drawType != null" >
+        #{drawType,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleDisposeType != null" >
+        #{sampleDisposeType,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddress != null" >
+        #{mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null" >
+        #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null" >
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTel != null" >
+        #{consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="criterionId != null" >
+        #{criterionId,jdbcType=VARCHAR},
+      </if>
+      <if test="criterionCode != null" >
+        #{criterionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="criterionMemo != null" >
+        #{criterionMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null" >
+        #{chargeType,jdbcType=VARCHAR},
+      </if>
+      <if test="checkItemStandardAccount != null" >
+        #{checkItemStandardAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkItemAccount != null" >
+        #{checkItemAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="dptTestMoneyInfo != null" >
+        #{dptTestMoneyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkItemAccountMemo != null" >
+        #{checkItemAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStandardAccount != null" >
+        #{otherStandardAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="otherAccount != null" >
+        #{otherAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="dptOtherMoneyInfo != null" >
+        #{dptOtherMoneyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAccountMemo != null" >
+        #{otherAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="extAccount != null" >
+        #{extAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="extAccountMemo != null" >
+        #{extAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="accountFlag != null" >
+        #{accountFlag,jdbcType=CHAR},
+      </if>
+      <if test="checkDepartmentId != null" >
+        #{checkDepartmentId,jdbcType=CHAR},
+      </if>
+      <if test="linkDptId != null" >
+        #{linkDptId,jdbcType=VARCHAR},
+      </if>
+      <if test="pactStatus != null" >
+        #{pactStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pactFlowStatus != null" >
+        #{pactFlowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeFlag != null" >
+        #{chargeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleFlag != null" >
+        #{sampleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleStatus != null" >
+        #{sampleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pactApplyer != null" >
+        #{pactApplyer,jdbcType=VARCHAR},
+      </if>
+      <if test="pactCreater != null" >
+        #{pactCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="pactDate != null" >
+        #{pactDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateFlag != null" >
+        #{updateFlag,jdbcType=CHAR},
+      </if>
+      <if test="cccFlag != null" >
+        #{cccFlag,jdbcType=INTEGER},
+      </if>
+      <if test="msgFlag != null" >
+        #{msgFlag,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="criterionName != null" >
+        #{criterionName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sampleCounts != null" >
+        #{sampleCounts,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="updateContent != null" >
+        #{updateContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cncf.entity.PactExample" resultType="java.lang.Integer" >
+    select count(*) from pact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pact
+    <set >
+      <if test="record.pactId != null" >
+        pact_id = #{record.pactId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rid != null" >
+        rid = #{record.rid,jdbcType=CHAR},
+      </if>
+      <if test="record.pactYearNumber != null" >
+        pact_year_number = #{record.pactYearNumber,jdbcType=CHAR},
+      </if>
+      <if test="record.pactFrom != null" >
+        pact_from = #{record.pactFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pactCheckType != null" >
+        pact_check_type = #{record.pactCheckType,jdbcType=CHAR},
+      </if>
+      <if test="record.standardFlag != null" >
+        standard_flag = #{record.standardFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.applyLevel != null" >
+        apply_level = #{record.applyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productTypeId != null" >
+        product_type_id = #{record.productTypeId,jdbcType=CHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=CHAR},
+      </if>
+      <if test="record.productAlias != null" >
+        product_alias = #{record.productAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testCycle != null" >
+        test_cycle = #{record.testCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extTestCycle != null" >
+        ext_test_cycle = #{record.extTestCycle,jdbcType=INTEGER},
+      </if>
+      <if test="record.extTestCycleInfo != null" >
+        ext_test_cycle_info = #{record.extTestCycleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.label != null" >
+        label = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkProductType != null" >
+        check_product_type = #{record.checkProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignCustomerId != null" >
+        consign_customer_id = #{record.consignCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="record.consignCustomerName != null" >
+        consign_customer_name = #{record.consignCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCustomerId != null" >
+        product_customer_id = #{record.productCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="record.productCustomerFlag != null" >
+        product_customer_flag = #{record.productCustomerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.productCustomerName != null" >
+        product_customer_name = #{record.productCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCustomerLegalPerson != null" >
+        product_customer_legal_person = #{record.productCustomerLegalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkCustomerId != null" >
+        check_customer_id = #{record.checkCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="record.checkCustomerName != null" >
+        check_customer_name = #{record.checkCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkCustomerAddress != null" >
+        check_customer_address = #{record.checkCustomerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkCustomerPostalcode != null" >
+        check_customer_postalcode = #{record.checkCustomerPostalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkCustomerTel != null" >
+        check_customer_tel = #{record.checkCustomerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkCustomerFax != null" >
+        check_customer_fax = #{record.checkCustomerFax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkMan1 != null" >
+        link_man1 = #{record.linkMan1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkPhone1 != null" >
+        link_phone1 = #{record.linkPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkMemo1 != null" >
+        link_memo1 = #{record.linkMemo1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleAddress != null" >
+        sample_address = #{record.sampleAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleBaseNumber != null" >
+        sample_base_number = #{record.sampleBaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleEmployee != null" >
+        sample_employee = #{record.sampleEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localeCheckFlag != null" >
+        locale_check_flag = #{record.localeCheckFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.checkInFlag != null" >
+        check_in_flag = #{record.checkInFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.sampleServer != null" >
+        sample_server = #{record.sampleServer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleNumber != null" >
+        sample_number = #{record.sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufactureDate != null" >
+        manufacture_date = #{record.manufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sampleDate != null" >
+        sample_date = #{record.sampleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sampleArriveDate != null" >
+        sample_arrive_date = #{record.sampleArriveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.provideData != null" >
+        provide_data = #{record.provideData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provideOtherData != null" >
+        provide_other_data = #{record.provideOtherData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawType != null" >
+        draw_type = #{record.drawType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleDisposeType != null" >
+        sample_dispose_type = #{record.sampleDisposeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailAddress != null" >
+        mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalcode != null" >
+        postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignee != null" >
+        consignee = #{record.consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consigneeTel != null" >
+        consignee_tel = #{record.consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.criterionId != null" >
+        criterion_id = #{record.criterionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.criterionCode != null" >
+        criterion_code = #{record.criterionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.criterionMemo != null" >
+        criterion_memo = #{record.criterionMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeType != null" >
+        charge_type = #{record.chargeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkItemStandardAccount != null" >
+        check_item_standard_account = #{record.checkItemStandardAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.checkItemAccount != null" >
+        check_item_account = #{record.checkItemAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dptTestMoneyInfo != null" >
+        dpt_test_money_info = #{record.dptTestMoneyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkItemAccountMemo != null" >
+        check_item_account_memo = #{record.checkItemAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherStandardAccount != null" >
+        other_standard_account = #{record.otherStandardAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.otherAccount != null" >
+        other_account = #{record.otherAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dptOtherMoneyInfo != null" >
+        dpt_other_money_info = #{record.dptOtherMoneyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherAccountMemo != null" >
+        other_account_memo = #{record.otherAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extAccount != null" >
+        ext_account = #{record.extAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.extAccountMemo != null" >
+        ext_account_memo = #{record.extAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountFlag != null" >
+        account_flag = #{record.accountFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.checkDepartmentId != null" >
+        check_department_id = #{record.checkDepartmentId,jdbcType=CHAR},
+      </if>
+      <if test="record.linkDptId != null" >
+        link_dpt_id = #{record.linkDptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pactStatus != null" >
+        pact_status = #{record.pactStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pactFlowStatus != null" >
+        pact_flow_status = #{record.pactFlowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeFlag != null" >
+        charge_flag = #{record.chargeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleFlag != null" >
+        sample_flag = #{record.sampleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleStatus != null" >
+        sample_status = #{record.sampleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pactApplyer != null" >
+        pact_applyer = #{record.pactApplyer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pactCreater != null" >
+        pact_creater = #{record.pactCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pactDate != null" >
+        pact_date = #{record.pactDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        creater = #{record.creater,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateFlag != null" >
+        update_flag = #{record.updateFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.cccFlag != null" >
+        ccc_flag = #{record.cccFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgFlag != null" >
+        msg_flag = #{record.msgFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.criterionName != null" >
+        criterion_name = #{record.criterionName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.sampleCounts != null" >
+        sample_counts = #{record.sampleCounts,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.updateContent != null" >
+        update_content = #{record.updateContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update pact
+    set pact_id = #{record.pactId,jdbcType=VARCHAR},
+      rid = #{record.rid,jdbcType=CHAR},
+      pact_year_number = #{record.pactYearNumber,jdbcType=CHAR},
+      pact_from = #{record.pactFrom,jdbcType=VARCHAR},
+      pact_check_type = #{record.pactCheckType,jdbcType=CHAR},
+      standard_flag = #{record.standardFlag,jdbcType=CHAR},
+      apply_level = #{record.applyLevel,jdbcType=VARCHAR},
+      product_type_id = #{record.productTypeId,jdbcType=CHAR},
+      product_id = #{record.productId,jdbcType=CHAR},
+      product_alias = #{record.productAlias,jdbcType=VARCHAR},
+      test_cycle = #{record.testCycle,jdbcType=VARCHAR},
+      ext_test_cycle = #{record.extTestCycle,jdbcType=INTEGER},
+      ext_test_cycle_info = #{record.extTestCycleInfo,jdbcType=VARCHAR},
+      label = #{record.label,jdbcType=VARCHAR},
+      check_product_type = #{record.checkProductType,jdbcType=VARCHAR},
+      consign_customer_id = #{record.consignCustomerId,jdbcType=CHAR},
+      consign_customer_name = #{record.consignCustomerName,jdbcType=VARCHAR},
+      product_customer_id = #{record.productCustomerId,jdbcType=CHAR},
+      product_customer_flag = #{record.productCustomerFlag,jdbcType=INTEGER},
+      product_customer_name = #{record.productCustomerName,jdbcType=VARCHAR},
+      product_customer_legal_person = #{record.productCustomerLegalPerson,jdbcType=VARCHAR},
+      check_customer_id = #{record.checkCustomerId,jdbcType=CHAR},
+      check_customer_name = #{record.checkCustomerName,jdbcType=VARCHAR},
+      check_customer_address = #{record.checkCustomerAddress,jdbcType=VARCHAR},
+      check_customer_postalcode = #{record.checkCustomerPostalcode,jdbcType=VARCHAR},
+      check_customer_tel = #{record.checkCustomerTel,jdbcType=VARCHAR},
+      check_customer_fax = #{record.checkCustomerFax,jdbcType=VARCHAR},
+      link_man1 = #{record.linkMan1,jdbcType=VARCHAR},
+      link_phone1 = #{record.linkPhone1,jdbcType=VARCHAR},
+      link_memo1 = #{record.linkMemo1,jdbcType=VARCHAR},
+      sample_address = #{record.sampleAddress,jdbcType=VARCHAR},
+      sample_base_number = #{record.sampleBaseNumber,jdbcType=VARCHAR},
+      sample_employee = #{record.sampleEmployee,jdbcType=VARCHAR},
+      locale_check_flag = #{record.localeCheckFlag,jdbcType=CHAR},
+      check_in_flag = #{record.checkInFlag,jdbcType=CHAR},
+      sample_server = #{record.sampleServer,jdbcType=VARCHAR},
+      sample_number = #{record.sampleNumber,jdbcType=VARCHAR},
+      manufacture_date = #{record.manufactureDate,jdbcType=TIMESTAMP},
+      sample_date = #{record.sampleDate,jdbcType=TIMESTAMP},
+      sample_arrive_date = #{record.sampleArriveDate,jdbcType=TIMESTAMP},
+      provide_data = #{record.provideData,jdbcType=VARCHAR},
+      provide_other_data = #{record.provideOtherData,jdbcType=VARCHAR},
+      draw_type = #{record.drawType,jdbcType=VARCHAR},
+      sample_dispose_type = #{record.sampleDisposeType,jdbcType=VARCHAR},
+      mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+      postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      consignee = #{record.consignee,jdbcType=VARCHAR},
+      consignee_tel = #{record.consigneeTel,jdbcType=VARCHAR},
+      criterion_id = #{record.criterionId,jdbcType=VARCHAR},
+      criterion_code = #{record.criterionCode,jdbcType=VARCHAR},
+      criterion_memo = #{record.criterionMemo,jdbcType=VARCHAR},
+      charge_type = #{record.chargeType,jdbcType=VARCHAR},
+      check_item_standard_account = #{record.checkItemStandardAccount,jdbcType=DECIMAL},
+      check_item_account = #{record.checkItemAccount,jdbcType=DECIMAL},
+      dpt_test_money_info = #{record.dptTestMoneyInfo,jdbcType=VARCHAR},
+      check_item_account_memo = #{record.checkItemAccountMemo,jdbcType=VARCHAR},
+      other_standard_account = #{record.otherStandardAccount,jdbcType=DECIMAL},
+      other_account = #{record.otherAccount,jdbcType=DECIMAL},
+      dpt_other_money_info = #{record.dptOtherMoneyInfo,jdbcType=VARCHAR},
+      other_account_memo = #{record.otherAccountMemo,jdbcType=VARCHAR},
+      ext_account = #{record.extAccount,jdbcType=DECIMAL},
+      ext_account_memo = #{record.extAccountMemo,jdbcType=VARCHAR},
+      account_flag = #{record.accountFlag,jdbcType=CHAR},
+      check_department_id = #{record.checkDepartmentId,jdbcType=CHAR},
+      link_dpt_id = #{record.linkDptId,jdbcType=VARCHAR},
+      pact_status = #{record.pactStatus,jdbcType=VARCHAR},
+      pact_flow_status = #{record.pactFlowStatus,jdbcType=VARCHAR},
+      charge_flag = #{record.chargeFlag,jdbcType=VARCHAR},
+      sample_flag = #{record.sampleFlag,jdbcType=VARCHAR},
+      sample_status = #{record.sampleStatus,jdbcType=VARCHAR},
+      pact_applyer = #{record.pactApplyer,jdbcType=VARCHAR},
+      pact_creater = #{record.pactCreater,jdbcType=VARCHAR},
+      pact_date = #{record.pactDate,jdbcType=TIMESTAMP},
+      creater = #{record.creater,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_flag = #{record.updateFlag,jdbcType=CHAR},
+      ccc_flag = #{record.cccFlag,jdbcType=INTEGER},
+      msg_flag = #{record.msgFlag,jdbcType=INTEGER},
+      memo = #{record.memo,jdbcType=LONGVARCHAR},
+      criterion_name = #{record.criterionName,jdbcType=LONGVARCHAR},
+      sample_counts = #{record.sampleCounts,jdbcType=LONGVARCHAR},
+      update_content = #{record.updateContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pact
+    set pact_id = #{record.pactId,jdbcType=VARCHAR},
+      rid = #{record.rid,jdbcType=CHAR},
+      pact_year_number = #{record.pactYearNumber,jdbcType=CHAR},
+      pact_from = #{record.pactFrom,jdbcType=VARCHAR},
+      pact_check_type = #{record.pactCheckType,jdbcType=CHAR},
+      standard_flag = #{record.standardFlag,jdbcType=CHAR},
+      apply_level = #{record.applyLevel,jdbcType=VARCHAR},
+      product_type_id = #{record.productTypeId,jdbcType=CHAR},
+      product_id = #{record.productId,jdbcType=CHAR},
+      product_alias = #{record.productAlias,jdbcType=VARCHAR},
+      test_cycle = #{record.testCycle,jdbcType=VARCHAR},
+      ext_test_cycle = #{record.extTestCycle,jdbcType=INTEGER},
+      ext_test_cycle_info = #{record.extTestCycleInfo,jdbcType=VARCHAR},
+      label = #{record.label,jdbcType=VARCHAR},
+      check_product_type = #{record.checkProductType,jdbcType=VARCHAR},
+      consign_customer_id = #{record.consignCustomerId,jdbcType=CHAR},
+      consign_customer_name = #{record.consignCustomerName,jdbcType=VARCHAR},
+      product_customer_id = #{record.productCustomerId,jdbcType=CHAR},
+      product_customer_flag = #{record.productCustomerFlag,jdbcType=INTEGER},
+      product_customer_name = #{record.productCustomerName,jdbcType=VARCHAR},
+      product_customer_legal_person = #{record.productCustomerLegalPerson,jdbcType=VARCHAR},
+      check_customer_id = #{record.checkCustomerId,jdbcType=CHAR},
+      check_customer_name = #{record.checkCustomerName,jdbcType=VARCHAR},
+      check_customer_address = #{record.checkCustomerAddress,jdbcType=VARCHAR},
+      check_customer_postalcode = #{record.checkCustomerPostalcode,jdbcType=VARCHAR},
+      check_customer_tel = #{record.checkCustomerTel,jdbcType=VARCHAR},
+      check_customer_fax = #{record.checkCustomerFax,jdbcType=VARCHAR},
+      link_man1 = #{record.linkMan1,jdbcType=VARCHAR},
+      link_phone1 = #{record.linkPhone1,jdbcType=VARCHAR},
+      link_memo1 = #{record.linkMemo1,jdbcType=VARCHAR},
+      sample_address = #{record.sampleAddress,jdbcType=VARCHAR},
+      sample_base_number = #{record.sampleBaseNumber,jdbcType=VARCHAR},
+      sample_employee = #{record.sampleEmployee,jdbcType=VARCHAR},
+      locale_check_flag = #{record.localeCheckFlag,jdbcType=CHAR},
+      check_in_flag = #{record.checkInFlag,jdbcType=CHAR},
+      sample_server = #{record.sampleServer,jdbcType=VARCHAR},
+      sample_number = #{record.sampleNumber,jdbcType=VARCHAR},
+      manufacture_date = #{record.manufactureDate,jdbcType=TIMESTAMP},
+      sample_date = #{record.sampleDate,jdbcType=TIMESTAMP},
+      sample_arrive_date = #{record.sampleArriveDate,jdbcType=TIMESTAMP},
+      provide_data = #{record.provideData,jdbcType=VARCHAR},
+      provide_other_data = #{record.provideOtherData,jdbcType=VARCHAR},
+      draw_type = #{record.drawType,jdbcType=VARCHAR},
+      sample_dispose_type = #{record.sampleDisposeType,jdbcType=VARCHAR},
+      mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+      postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      consignee = #{record.consignee,jdbcType=VARCHAR},
+      consignee_tel = #{record.consigneeTel,jdbcType=VARCHAR},
+      criterion_id = #{record.criterionId,jdbcType=VARCHAR},
+      criterion_code = #{record.criterionCode,jdbcType=VARCHAR},
+      criterion_memo = #{record.criterionMemo,jdbcType=VARCHAR},
+      charge_type = #{record.chargeType,jdbcType=VARCHAR},
+      check_item_standard_account = #{record.checkItemStandardAccount,jdbcType=DECIMAL},
+      check_item_account = #{record.checkItemAccount,jdbcType=DECIMAL},
+      dpt_test_money_info = #{record.dptTestMoneyInfo,jdbcType=VARCHAR},
+      check_item_account_memo = #{record.checkItemAccountMemo,jdbcType=VARCHAR},
+      other_standard_account = #{record.otherStandardAccount,jdbcType=DECIMAL},
+      other_account = #{record.otherAccount,jdbcType=DECIMAL},
+      dpt_other_money_info = #{record.dptOtherMoneyInfo,jdbcType=VARCHAR},
+      other_account_memo = #{record.otherAccountMemo,jdbcType=VARCHAR},
+      ext_account = #{record.extAccount,jdbcType=DECIMAL},
+      ext_account_memo = #{record.extAccountMemo,jdbcType=VARCHAR},
+      account_flag = #{record.accountFlag,jdbcType=CHAR},
+      check_department_id = #{record.checkDepartmentId,jdbcType=CHAR},
+      link_dpt_id = #{record.linkDptId,jdbcType=VARCHAR},
+      pact_status = #{record.pactStatus,jdbcType=VARCHAR},
+      pact_flow_status = #{record.pactFlowStatus,jdbcType=VARCHAR},
+      charge_flag = #{record.chargeFlag,jdbcType=VARCHAR},
+      sample_flag = #{record.sampleFlag,jdbcType=VARCHAR},
+      sample_status = #{record.sampleStatus,jdbcType=VARCHAR},
+      pact_applyer = #{record.pactApplyer,jdbcType=VARCHAR},
+      pact_creater = #{record.pactCreater,jdbcType=VARCHAR},
+      pact_date = #{record.pactDate,jdbcType=TIMESTAMP},
+      creater = #{record.creater,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_flag = #{record.updateFlag,jdbcType=CHAR},
+      ccc_flag = #{record.cccFlag,jdbcType=INTEGER},
+      msg_flag = #{record.msgFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cncf.entity.PactWithBLOBs" >
+    update pact
+    <set >
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=CHAR},
+      </if>
+      <if test="pactYearNumber != null" >
+        pact_year_number = #{pactYearNumber,jdbcType=CHAR},
+      </if>
+      <if test="pactFrom != null" >
+        pact_from = #{pactFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="pactCheckType != null" >
+        pact_check_type = #{pactCheckType,jdbcType=CHAR},
+      </if>
+      <if test="standardFlag != null" >
+        standard_flag = #{standardFlag,jdbcType=CHAR},
+      </if>
+      <if test="applyLevel != null" >
+        apply_level = #{applyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="productTypeId != null" >
+        product_type_id = #{productTypeId,jdbcType=CHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=CHAR},
+      </if>
+      <if test="productAlias != null" >
+        product_alias = #{productAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="testCycle != null" >
+        test_cycle = #{testCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="extTestCycle != null" >
+        ext_test_cycle = #{extTestCycle,jdbcType=INTEGER},
+      </if>
+      <if test="extTestCycleInfo != null" >
+        ext_test_cycle_info = #{extTestCycleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="checkProductType != null" >
+        check_product_type = #{checkProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="consignCustomerId != null" >
+        consign_customer_id = #{consignCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="consignCustomerName != null" >
+        consign_customer_name = #{consignCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCustomerId != null" >
+        product_customer_id = #{productCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="productCustomerFlag != null" >
+        product_customer_flag = #{productCustomerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="productCustomerName != null" >
+        product_customer_name = #{productCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCustomerLegalPerson != null" >
+        product_customer_legal_person = #{productCustomerLegalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerId != null" >
+        check_customer_id = #{checkCustomerId,jdbcType=CHAR},
+      </if>
+      <if test="checkCustomerName != null" >
+        check_customer_name = #{checkCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerAddress != null" >
+        check_customer_address = #{checkCustomerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerPostalcode != null" >
+        check_customer_postalcode = #{checkCustomerPostalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerTel != null" >
+        check_customer_tel = #{checkCustomerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCustomerFax != null" >
+        check_customer_fax = #{checkCustomerFax,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan1 != null" >
+        link_man1 = #{linkMan1,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone1 != null" >
+        link_phone1 = #{linkPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMemo1 != null" >
+        link_memo1 = #{linkMemo1,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleAddress != null" >
+        sample_address = #{sampleAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleBaseNumber != null" >
+        sample_base_number = #{sampleBaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleEmployee != null" >
+        sample_employee = #{sampleEmployee,jdbcType=VARCHAR},
+      </if>
+      <if test="localeCheckFlag != null" >
+        locale_check_flag = #{localeCheckFlag,jdbcType=CHAR},
+      </if>
+      <if test="checkInFlag != null" >
+        check_in_flag = #{checkInFlag,jdbcType=CHAR},
+      </if>
+      <if test="sampleServer != null" >
+        sample_server = #{sampleServer,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleNumber != null" >
+        sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureDate != null" >
+        manufacture_date = #{manufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampleDate != null" >
+        sample_date = #{sampleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampleArriveDate != null" >
+        sample_arrive_date = #{sampleArriveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provideData != null" >
+        provide_data = #{provideData,jdbcType=VARCHAR},
+      </if>
+      <if test="provideOtherData != null" >
+        provide_other_data = #{provideOtherData,jdbcType=VARCHAR},
+      </if>
+      <if test="drawType != null" >
+        draw_type = #{drawType,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleDisposeType != null" >
+        sample_dispose_type = #{sampleDisposeType,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddress != null" >
+        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null" >
+        postalcode = #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null" >
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTel != null" >
+        consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="criterionId != null" >
+        criterion_id = #{criterionId,jdbcType=VARCHAR},
+      </if>
+      <if test="criterionCode != null" >
+        criterion_code = #{criterionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="criterionMemo != null" >
+        criterion_memo = #{criterionMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null" >
+        charge_type = #{chargeType,jdbcType=VARCHAR},
+      </if>
+      <if test="checkItemStandardAccount != null" >
+        check_item_standard_account = #{checkItemStandardAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkItemAccount != null" >
+        check_item_account = #{checkItemAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="dptTestMoneyInfo != null" >
+        dpt_test_money_info = #{dptTestMoneyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkItemAccountMemo != null" >
+        check_item_account_memo = #{checkItemAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStandardAccount != null" >
+        other_standard_account = #{otherStandardAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="otherAccount != null" >
+        other_account = #{otherAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="dptOtherMoneyInfo != null" >
+        dpt_other_money_info = #{dptOtherMoneyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAccountMemo != null" >
+        other_account_memo = #{otherAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="extAccount != null" >
+        ext_account = #{extAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="extAccountMemo != null" >
+        ext_account_memo = #{extAccountMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="accountFlag != null" >
+        account_flag = #{accountFlag,jdbcType=CHAR},
+      </if>
+      <if test="checkDepartmentId != null" >
+        check_department_id = #{checkDepartmentId,jdbcType=CHAR},
+      </if>
+      <if test="linkDptId != null" >
+        link_dpt_id = #{linkDptId,jdbcType=VARCHAR},
+      </if>
+      <if test="pactStatus != null" >
+        pact_status = #{pactStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pactFlowStatus != null" >
+        pact_flow_status = #{pactFlowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeFlag != null" >
+        charge_flag = #{chargeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleFlag != null" >
+        sample_flag = #{sampleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleStatus != null" >
+        sample_status = #{sampleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pactApplyer != null" >
+        pact_applyer = #{pactApplyer,jdbcType=VARCHAR},
+      </if>
+      <if test="pactCreater != null" >
+        pact_creater = #{pactCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="pactDate != null" >
+        pact_date = #{pactDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateFlag != null" >
+        update_flag = #{updateFlag,jdbcType=CHAR},
+      </if>
+      <if test="cccFlag != null" >
+        ccc_flag = #{cccFlag,jdbcType=INTEGER},
+      </if>
+      <if test="msgFlag != null" >
+        msg_flag = #{msgFlag,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="criterionName != null" >
+        criterion_name = #{criterionName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sampleCounts != null" >
+        sample_counts = #{sampleCounts,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="updateContent != null" >
+        update_content = #{updateContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pact_id = #{pactId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cncf.entity.PactWithBLOBs" >
+    update pact
+    set rid = #{rid,jdbcType=CHAR},
+      pact_year_number = #{pactYearNumber,jdbcType=CHAR},
+      pact_from = #{pactFrom,jdbcType=VARCHAR},
+      pact_check_type = #{pactCheckType,jdbcType=CHAR},
+      standard_flag = #{standardFlag,jdbcType=CHAR},
+      apply_level = #{applyLevel,jdbcType=VARCHAR},
+      product_type_id = #{productTypeId,jdbcType=CHAR},
+      product_id = #{productId,jdbcType=CHAR},
+      product_alias = #{productAlias,jdbcType=VARCHAR},
+      test_cycle = #{testCycle,jdbcType=VARCHAR},
+      ext_test_cycle = #{extTestCycle,jdbcType=INTEGER},
+      ext_test_cycle_info = #{extTestCycleInfo,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      check_product_type = #{checkProductType,jdbcType=VARCHAR},
+      consign_customer_id = #{consignCustomerId,jdbcType=CHAR},
+      consign_customer_name = #{consignCustomerName,jdbcType=VARCHAR},
+      product_customer_id = #{productCustomerId,jdbcType=CHAR},
+      product_customer_flag = #{productCustomerFlag,jdbcType=INTEGER},
+      product_customer_name = #{productCustomerName,jdbcType=VARCHAR},
+      product_customer_legal_person = #{productCustomerLegalPerson,jdbcType=VARCHAR},
+      check_customer_id = #{checkCustomerId,jdbcType=CHAR},
+      check_customer_name = #{checkCustomerName,jdbcType=VARCHAR},
+      check_customer_address = #{checkCustomerAddress,jdbcType=VARCHAR},
+      check_customer_postalcode = #{checkCustomerPostalcode,jdbcType=VARCHAR},
+      check_customer_tel = #{checkCustomerTel,jdbcType=VARCHAR},
+      check_customer_fax = #{checkCustomerFax,jdbcType=VARCHAR},
+      link_man1 = #{linkMan1,jdbcType=VARCHAR},
+      link_phone1 = #{linkPhone1,jdbcType=VARCHAR},
+      link_memo1 = #{linkMemo1,jdbcType=VARCHAR},
+      sample_address = #{sampleAddress,jdbcType=VARCHAR},
+      sample_base_number = #{sampleBaseNumber,jdbcType=VARCHAR},
+      sample_employee = #{sampleEmployee,jdbcType=VARCHAR},
+      locale_check_flag = #{localeCheckFlag,jdbcType=CHAR},
+      check_in_flag = #{checkInFlag,jdbcType=CHAR},
+      sample_server = #{sampleServer,jdbcType=VARCHAR},
+      sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      manufacture_date = #{manufactureDate,jdbcType=TIMESTAMP},
+      sample_date = #{sampleDate,jdbcType=TIMESTAMP},
+      sample_arrive_date = #{sampleArriveDate,jdbcType=TIMESTAMP},
+      provide_data = #{provideData,jdbcType=VARCHAR},
+      provide_other_data = #{provideOtherData,jdbcType=VARCHAR},
+      draw_type = #{drawType,jdbcType=VARCHAR},
+      sample_dispose_type = #{sampleDisposeType,jdbcType=VARCHAR},
+      mail_address = #{mailAddress,jdbcType=VARCHAR},
+      postalcode = #{postalcode,jdbcType=VARCHAR},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      criterion_id = #{criterionId,jdbcType=VARCHAR},
+      criterion_code = #{criterionCode,jdbcType=VARCHAR},
+      criterion_memo = #{criterionMemo,jdbcType=VARCHAR},
+      charge_type = #{chargeType,jdbcType=VARCHAR},
+      check_item_standard_account = #{checkItemStandardAccount,jdbcType=DECIMAL},
+      check_item_account = #{checkItemAccount,jdbcType=DECIMAL},
+      dpt_test_money_info = #{dptTestMoneyInfo,jdbcType=VARCHAR},
+      check_item_account_memo = #{checkItemAccountMemo,jdbcType=VARCHAR},
+      other_standard_account = #{otherStandardAccount,jdbcType=DECIMAL},
+      other_account = #{otherAccount,jdbcType=DECIMAL},
+      dpt_other_money_info = #{dptOtherMoneyInfo,jdbcType=VARCHAR},
+      other_account_memo = #{otherAccountMemo,jdbcType=VARCHAR},
+      ext_account = #{extAccount,jdbcType=DECIMAL},
+      ext_account_memo = #{extAccountMemo,jdbcType=VARCHAR},
+      account_flag = #{accountFlag,jdbcType=CHAR},
+      check_department_id = #{checkDepartmentId,jdbcType=CHAR},
+      link_dpt_id = #{linkDptId,jdbcType=VARCHAR},
+      pact_status = #{pactStatus,jdbcType=VARCHAR},
+      pact_flow_status = #{pactFlowStatus,jdbcType=VARCHAR},
+      charge_flag = #{chargeFlag,jdbcType=VARCHAR},
+      sample_flag = #{sampleFlag,jdbcType=VARCHAR},
+      sample_status = #{sampleStatus,jdbcType=VARCHAR},
+      pact_applyer = #{pactApplyer,jdbcType=VARCHAR},
+      pact_creater = #{pactCreater,jdbcType=VARCHAR},
+      pact_date = #{pactDate,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_flag = #{updateFlag,jdbcType=CHAR},
+      ccc_flag = #{cccFlag,jdbcType=INTEGER},
+      msg_flag = #{msgFlag,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=LONGVARCHAR},
+      criterion_name = #{criterionName,jdbcType=LONGVARCHAR},
+      sample_counts = #{sampleCounts,jdbcType=LONGVARCHAR},
+      update_content = #{updateContent,jdbcType=LONGVARCHAR}
+    where pact_id = #{pactId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cncf.entity.Pact" >
+    update pact
+    set rid = #{rid,jdbcType=CHAR},
+      pact_year_number = #{pactYearNumber,jdbcType=CHAR},
+      pact_from = #{pactFrom,jdbcType=VARCHAR},
+      pact_check_type = #{pactCheckType,jdbcType=CHAR},
+      standard_flag = #{standardFlag,jdbcType=CHAR},
+      apply_level = #{applyLevel,jdbcType=VARCHAR},
+      product_type_id = #{productTypeId,jdbcType=CHAR},
+      product_id = #{productId,jdbcType=CHAR},
+      product_alias = #{productAlias,jdbcType=VARCHAR},
+      test_cycle = #{testCycle,jdbcType=VARCHAR},
+      ext_test_cycle = #{extTestCycle,jdbcType=INTEGER},
+      ext_test_cycle_info = #{extTestCycleInfo,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      check_product_type = #{checkProductType,jdbcType=VARCHAR},
+      consign_customer_id = #{consignCustomerId,jdbcType=CHAR},
+      consign_customer_name = #{consignCustomerName,jdbcType=VARCHAR},
+      product_customer_id = #{productCustomerId,jdbcType=CHAR},
+      product_customer_flag = #{productCustomerFlag,jdbcType=INTEGER},
+      product_customer_name = #{productCustomerName,jdbcType=VARCHAR},
+      product_customer_legal_person = #{productCustomerLegalPerson,jdbcType=VARCHAR},
+      check_customer_id = #{checkCustomerId,jdbcType=CHAR},
+      check_customer_name = #{checkCustomerName,jdbcType=VARCHAR},
+      check_customer_address = #{checkCustomerAddress,jdbcType=VARCHAR},
+      check_customer_postalcode = #{checkCustomerPostalcode,jdbcType=VARCHAR},
+      check_customer_tel = #{checkCustomerTel,jdbcType=VARCHAR},
+      check_customer_fax = #{checkCustomerFax,jdbcType=VARCHAR},
+      link_man1 = #{linkMan1,jdbcType=VARCHAR},
+      link_phone1 = #{linkPhone1,jdbcType=VARCHAR},
+      link_memo1 = #{linkMemo1,jdbcType=VARCHAR},
+      sample_address = #{sampleAddress,jdbcType=VARCHAR},
+      sample_base_number = #{sampleBaseNumber,jdbcType=VARCHAR},
+      sample_employee = #{sampleEmployee,jdbcType=VARCHAR},
+      locale_check_flag = #{localeCheckFlag,jdbcType=CHAR},
+      check_in_flag = #{checkInFlag,jdbcType=CHAR},
+      sample_server = #{sampleServer,jdbcType=VARCHAR},
+      sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      manufacture_date = #{manufactureDate,jdbcType=TIMESTAMP},
+      sample_date = #{sampleDate,jdbcType=TIMESTAMP},
+      sample_arrive_date = #{sampleArriveDate,jdbcType=TIMESTAMP},
+      provide_data = #{provideData,jdbcType=VARCHAR},
+      provide_other_data = #{provideOtherData,jdbcType=VARCHAR},
+      draw_type = #{drawType,jdbcType=VARCHAR},
+      sample_dispose_type = #{sampleDisposeType,jdbcType=VARCHAR},
+      mail_address = #{mailAddress,jdbcType=VARCHAR},
+      postalcode = #{postalcode,jdbcType=VARCHAR},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      criterion_id = #{criterionId,jdbcType=VARCHAR},
+      criterion_code = #{criterionCode,jdbcType=VARCHAR},
+      criterion_memo = #{criterionMemo,jdbcType=VARCHAR},
+      charge_type = #{chargeType,jdbcType=VARCHAR},
+      check_item_standard_account = #{checkItemStandardAccount,jdbcType=DECIMAL},
+      check_item_account = #{checkItemAccount,jdbcType=DECIMAL},
+      dpt_test_money_info = #{dptTestMoneyInfo,jdbcType=VARCHAR},
+      check_item_account_memo = #{checkItemAccountMemo,jdbcType=VARCHAR},
+      other_standard_account = #{otherStandardAccount,jdbcType=DECIMAL},
+      other_account = #{otherAccount,jdbcType=DECIMAL},
+      dpt_other_money_info = #{dptOtherMoneyInfo,jdbcType=VARCHAR},
+      other_account_memo = #{otherAccountMemo,jdbcType=VARCHAR},
+      ext_account = #{extAccount,jdbcType=DECIMAL},
+      ext_account_memo = #{extAccountMemo,jdbcType=VARCHAR},
+      account_flag = #{accountFlag,jdbcType=CHAR},
+      check_department_id = #{checkDepartmentId,jdbcType=CHAR},
+      link_dpt_id = #{linkDptId,jdbcType=VARCHAR},
+      pact_status = #{pactStatus,jdbcType=VARCHAR},
+      pact_flow_status = #{pactFlowStatus,jdbcType=VARCHAR},
+      charge_flag = #{chargeFlag,jdbcType=VARCHAR},
+      sample_flag = #{sampleFlag,jdbcType=VARCHAR},
+      sample_status = #{sampleStatus,jdbcType=VARCHAR},
+      pact_applyer = #{pactApplyer,jdbcType=VARCHAR},
+      pact_creater = #{pactCreater,jdbcType=VARCHAR},
+      pact_date = #{pactDate,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_flag = #{updateFlag,jdbcType=CHAR},
+      ccc_flag = #{cccFlag,jdbcType=INTEGER},
+      msg_flag = #{msgFlag,jdbcType=INTEGER}
+    where pact_id = #{pactId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -34,7 +34,9 @@ public class Util {
     }
 
     public static boolean isPhoneNumber(String phoneNumber) {
-        if (StringUtil.isEmpty(phoneNumber)) return false;
+        if (StringUtil.isEmpty(phoneNumber)) {
+            return false;
+        }
         Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9])|(17[0-9]))\\d{8}$");
         Matcher matcher = p.matcher(phoneNumber);
         return matcher.matches();
